@@ -1,0 +1,10 @@
+.headContainer {
+    margin-top: 20px;
+    text-align: center;
+}
+.headImg {
+    position: relative;
+    left: 400px;
+    width: 120px;
+    height: 60px;
+}
