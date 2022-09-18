@@ -1,0 +1,55 @@
+.tablePlaceA {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.loadingTable{
+    border:5px double black;
+    width:600px;
+    height:200px;
+    text-align: center;
+}
+.loadingImg {
+    width: 60px;
+    animation: loadingImg-spin infinite 3s linear;
+}
+@keyframes loadingImg-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.tableHead {
+    background-color: #f7fff2;
+    font-size: 20px;
+}
+#popup_detailInfo{
+    display: none;
+    position: absolute;
+    top: 110px;
+    left: 420px;
+    background-color: #d9d9d9;
+    height: 300px;
+    width: 300px;
+}
+.internManageBody{
+    text-align: center;
+}
+.internInfoTable{
+    width: 600px;
+    height: 200px;
+}
+.addedInfo {
+
+}
+.addedInfo:hover {
+    background-color: #d9d9d9;
+}
+
+.boardWrite {
+    margin : 20px;
+    padding: 5px 10px 20px 10px ;
+    border: 1px solid black;
+}
