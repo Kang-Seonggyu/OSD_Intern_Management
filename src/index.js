@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Header from "./Header";
-import Body from "./Body";
+import HeaderContainer from "./Container/Common/HeaderContainer";
+import BodyContainer from "./Container/Common/BodyContainer";
+import FooterContainer from "./Container/Common/FooterContainer";
 
 const container = ReactDOM.createRoot(document.getElementById('container'));
 container.render(
-    <div>
-        <Header />
-        <Body />
+    <div className="internProjectPage">
+        <HeaderContainer />
+        <BodyContainer />
+        <FooterContainer />
     </div>
 
 );

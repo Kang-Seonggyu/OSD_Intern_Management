@@ -1,0 +1,56 @@
+.body {
+    margin : 0;
+}
+.headContainer {
+    margin-top: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0px;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+.headImg {
+    position : relative;
+    left: 0%;
+    display: inline;
+    margin-left: 15px;
+    width: 120px;
+    height: 60px;
+}
+.mainTitle {
+    position : relative;
+    left: 25%;
+    font-size: 40px;
+}
+
+.FooterContainer {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 20px;
+    border-top: 1px solid black;
+
+    background-color: white;
+}
+
+.menuClicked {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+}
+
+.fullscreen {
+    position: fixed;
+    top : 0;
+    width: 0%;
+    height: 0%;
+
+}
+.fullscreen.active {
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0.5;
+}
