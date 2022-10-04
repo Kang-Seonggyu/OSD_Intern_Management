@@ -4,7 +4,9 @@
 }
 .menu {
     height : 30px;
-    margin-left : 10px;
+    margin-left : 13px;
+    margin-top: 0px;
+    padding-bottom: 7px;
     cursor : pointer;
 }
 .menu.odd {
@@ -27,7 +29,7 @@
 }
 
 .headImg {
-    position : absolute;
+    position : relative;
     width: 80px !important;
     height: 40px !important;
     margin: 10px 0 0 10px;

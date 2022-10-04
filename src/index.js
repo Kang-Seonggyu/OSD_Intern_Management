@@ -4,6 +4,7 @@ import HeaderContainer from "./Container/Common/HeaderContainer";
 import BodyContainer from "./Container/Common/BodyContainer";
 import FooterContainer from "./Container/Common/FooterContainer";
 import NaviContainer from "./Container/Common/NaviContainer";
+import Fullscreen from "./Container/Common/Fullscreen";
 
 const container = ReactDOM.createRoot(document.getElementById('container'));
 container.render(
@@ -12,6 +13,7 @@ container.render(
         <BodyContainer />
         <NaviContainer />
         <FooterContainer />
+        <Fullscreen />
     </div>
 
 );

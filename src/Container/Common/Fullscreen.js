@@ -4,3 +4,5 @@ import React from "react";
 function Fullscreen() {
     return(<div className="fullscreen" id="fullscreen"></div>)
 }
+
+export default Fullscreen;

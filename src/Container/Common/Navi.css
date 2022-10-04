@@ -1,0 +1,12 @@
+.Navi-box {
+    margin-top:  10px;
+    margin-left : 10px
+}
+
+a {
+    text-decoration: none;
+    color : black;
+    display: inline-block;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
