@@ -1,3 +1,4 @@
+
 function DASHBOARD () {
     // 임시로 배열 만들기.
     function makeArray () {
@@ -10,8 +11,6 @@ function DASHBOARD () {
 
     return (
         <div>
-            <div className="fullscreen"></div>
-
             <ol>
                 {makeArray()}
                 End !
