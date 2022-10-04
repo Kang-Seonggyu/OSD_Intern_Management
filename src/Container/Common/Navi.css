@@ -3,10 +3,10 @@
     margin-left : 10px
 }
 
-a {
+.Navi-Link {
     text-decoration: none;
     color : black;
     display: inline-block;
-    margin-top: 3px;
-    margin-bottom: 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

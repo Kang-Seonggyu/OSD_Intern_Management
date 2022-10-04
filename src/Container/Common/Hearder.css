@@ -1,11 +1,11 @@
 .menu-box {
+    margin-left : 13px;
     height : 30px;
     width: 30px;
 }
 .menu {
     height : 30px;
-    margin-left : 13px;
-    margin-top: 0px;
+    margin-top: 13px;
     padding-bottom: 7px;
     cursor : pointer;
 }
@@ -20,8 +20,13 @@
     animation-fill-mode: forwards;
 }
 @keyframes menu-spin-forward {
-    from {transform : rotate(0deg)}
-    to {transform: rotate(90deg)}
+    from {
+        transform : rotate(0deg);
+    }
+    to {
+        transform: rotate(90deg);
+    }
+
 }
 @keyframes menu-spin-reverse {
     from {transform : rotate(90deg)}
@@ -29,7 +34,7 @@
 }
 
 .headImg {
-    position : relative;
+    position : absolute;
     width: 80px !important;
     height: 40px !important;
     margin: 10px 0 0 10px;

@@ -1,0 +1,15 @@
+.Dashboard {
+    display: grid;
+}
+.Dashboard.main {
+    flex : 1 1;
+    width: 100%;
+}
+.Calendar {
+    width: 45%;
+}
+
+
+.Bob-freinds {
+    width: 45%;
+}

@@ -1,3 +1,4 @@
+import './DASHBOARD.css'
 
 function DASHBOARD () {
     // 임시로 배열 만들기.
@@ -10,11 +11,17 @@ function DASHBOARD () {
     }
 
     return (
-        <div>
-            <ol>
-                {makeArray()}
-                End !
-            </ol>
+        <div className="Dashboard">
+            <div className="Dashboard main">
+                <div className="Calendar">캘린더의 내용이 적혀있습니다.</div>
+                <div className="Bob-friends">밥친구의 내용이 적혀있습니다.</div>
+            </div>
+            <div>
+                <ol>
+                    {makeArray()}
+                    End !
+                </ol>
+            </div>
         </div>
     )
 }
