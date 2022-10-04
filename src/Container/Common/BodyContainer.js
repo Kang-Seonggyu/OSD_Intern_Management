@@ -5,13 +5,15 @@ import DASHBOARD from "../../Pages/DASHBOARD";
 
 function BodyContainer () {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<DASHBOARD />} />
-                <Route path="/board" element={<BoardWrite />} />
-            </Routes>
+        <div className="BodyContainer" id="BodyContainer">
+            <Router>
+                <Routes>
+                    <Route path="/" element={<DASHBOARD />} />
+                    <Route path="/board" element={<BoardWrite />} />
+                </Routes>
 
-        </Router>
+            </Router>
+        </div>
     )
 }
 

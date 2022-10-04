@@ -1,28 +1,20 @@
 .body {
     margin : 0;
 }
-.headContainer {
-    margin-top: 10px;
-    margin-left: 0px;
-    margin-right: 0px;
+
+.HeaderContainer {
+    display: block;
+    margin: 0;
     padding: 0px;
+    height: 60px;
     width: 100%;
+    background: white;
     border-bottom: 1px solid black;
 }
-.headImg {
-    position : relative;
-    left: 0%;
-    display: inline;
-    margin-left: 15px;
-    width: 120px;
-    height: 60px;
-}
-.mainTitle {
-    position : relative;
-    left: 25%;
-    font-size: 40px;
-}
 
+.BodyContainer {
+    margin: 0 0 30px 0;
+}
 .FooterContainer {
     display: block;
     position: fixed;
@@ -32,6 +24,9 @@
     border-top: 1px solid black;
 
     background-color: white;
+}
+.FooterContainer.darkmode {
+    background-color: gray;
 }
 
 .menuClicked {
@@ -44,11 +39,10 @@
 .fullscreen {
     position: fixed;
     top : 0;
-    width: 0%;
-    height: 0%;
-
+    display: none;
 }
-.fullscreen.active {
+.fullscreen.darkmode {
+    display: block;
     width: 100%;
     height: 100%;
     background: black;

@@ -14,7 +14,7 @@ function DASHBOARD () {
 
             <ol>
                 {makeArray()}
-                아 !
+                End !
             </ol>
         </div>
     )

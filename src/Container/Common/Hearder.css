@@ -1,0 +1,13 @@
+.headImg {
+    position : relative;
+    left: 0%;
+    display: inline;
+    margin-left: 15px;
+    width: 90px;
+    height: 60px;
+}
+.mainTitle {
+    position : relative;
+    left: 25%;
+    font-size: 40px;
+}
