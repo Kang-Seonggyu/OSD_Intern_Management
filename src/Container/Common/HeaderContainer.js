@@ -33,14 +33,12 @@ function HeaderContainer() {
         <span className="menu-box">
             <img className="menu" id="menu" src="https://cdn-icons-png.flaticon.com/512/2976/2976215.png" alt="Menu" onClick={menuClick}/>
         </span>
-        <a href="https://onesoftdigm.com/index.php?getLang=ko">
+        <a href="/">
             <img src="https://onesoftdigm.com/img/logo.png" alt="원소프트다임, Logo" style={{ height : "30px"}} className="headImg" />
         </a>
 
-        <span>
-            <a href="/" className="mainTitle">
+        <span className="mainTitle">
                 INTERN PROJECT
-            </a>
         </span>
 
     </div>

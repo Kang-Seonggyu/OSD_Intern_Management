@@ -13,8 +13,18 @@ function DASHBOARD () {
     return (
         <div className="Dashboard">
             <div className="Dashboard main">
-                <div className="Calendar">캘린더의 내용이 적혀있습니다.</div>
-                <div className="Bob-friends">밥친구의 내용이 적혀있습니다.</div>
+                <div className="Calendar">캘린더</div>
+                <div className="Bob-friends">
+                    <p className="Bob-tag">이번 주 밥친구</p>
+                    <div className="Bob-this-week">
+                        <p>날짜 - 메뉴</p>
+                        <p>OOO, OOO, OOO, OOO</p>
+                    </div>
+                    <p className="Bob-tag">다음 주 밥친구</p>
+                    <div className="Bob-next-week">
+                        OOO, OOO, OOO, OOO
+                    </div>
+                </div>
             </div>
             <div>
                 <ol>
