@@ -2,14 +2,17 @@
     display: grid;
 }
 .Dashboard.main {
-    flex : 1 1;
-    width: 100%;
+    grid-template-columns : 1fr 1fr;
 }
 .Calendar {
-    width: 45%;
+    height: 25rem;
+    border: 1px solid black;
+    margin: 0 5px 0 5px;
 }
 
 
-.Bob-freinds {
-    width: 45%;
+.Bob-friends {
+    height: 25rem;
+    border: 1px solid black;
+    margin: 0 5px 0 5px;
 }
