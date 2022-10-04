@@ -1,3 +1,32 @@
+.menu-box {
+    height : 30px;
+    width: 30px;
+}
+
+.menu {
+    height : 30px;
+    margin-left : 10px;
+    cursor : pointer;
+}
+.menu.odd {
+    animation-name: menu-spin-forward;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+.menu.even {
+    animation-name: menu-spin-reverse;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+@keyframes menu-spin-forward {
+    from {transform : rotate(0deg)}
+    to {transform: rotate(90deg)}
+}
+@keyframes menu-spin-reverse {
+    from {transform : rotate(90deg)}
+    to {transform: rotate(0deg)}
+}
+
 .headImg {
     position : relative;
     left: 0%;
@@ -11,3 +40,4 @@
     left: 25%;
     font-size: 40px;
 }
+
