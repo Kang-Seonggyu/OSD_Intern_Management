@@ -1,6 +1,7 @@
 import React from "react";
 import "./FrameStyle.css"
 import "./Hearder.css"
+import Button from "../../Components/Common/Button";
 
 function HeaderContainer() {
     const menuClick = () => {
@@ -40,6 +41,7 @@ function HeaderContainer() {
         <span className="mainTitle">
                 INTERN PROJECT
         </span>
+        <Button className="Log-INandOUT">로그인</Button>
 
     </div>
   );
