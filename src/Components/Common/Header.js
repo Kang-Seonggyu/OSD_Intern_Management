@@ -86,7 +86,9 @@ const MenuSpinReverse = keyframes`
       transform: rotate(0deg)
     }
 `
-
+const Spacer = styled.div`
+  height: 60px;
+`
 function Header ({menuClick}) {
     return(
         <>
@@ -102,6 +104,7 @@ function Header ({menuClick}) {
                 </MainTitle>
                 <LogInButton>로그인</LogInButton>
             </HeaderBlock>
+            <Spacer />
         </>
     )
 }

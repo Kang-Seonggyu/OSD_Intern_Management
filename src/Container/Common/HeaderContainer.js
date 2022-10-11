@@ -1,9 +1,6 @@
-import React from "react";
-import "./FrameStyle.css"
-import "./Hearder.css"
-import Button from "../../Components/Common/Button";
 import Header from "../../Components/Common/Header";
 import NaviBar from "../../Components/Common/NaviBar";
+import Footer from "../../Components/Common/Footer";
 
 function HeaderContainer() {
     const menuClick = () => {
@@ -28,17 +25,6 @@ function HeaderContainer() {
   return (
     <div>
       <Header menuClick={menuClick} />
-        <div>
-            <p>dd</p>
-            <p>dd</p>
-            <p>dd</p>
-            <p>dd</p>
-            <p>dd</p>
-            <p>dd</p>
-            <p>dd</p>
-            <p>dd</p>
-            <p>dd</p>
-        </div>
       <NaviBar />
     </div>
   );
