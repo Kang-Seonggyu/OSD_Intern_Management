@@ -1,0 +1,67 @@
+.menu {
+    width : 30px;
+    height : 30px;
+    margin-top: 13px;
+    padding-bottom: 7px;
+    cursor : pointer;
+}
+.menu.odd {
+    animation-name: MenuSpinForward;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+.menu.even {
+    animation-name: MenuSpinReverse;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes MenuSpinForward {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(90deg)
+    }
+}
+@keyframes MenuSpinReverse {
+     from {
+         transform: rotate(90deg)
+     }
+     to {
+         transform: rotate(0deg)
+     }
+ }
+
+.NaviContainer {
+    position: fixed;
+    display: block;
+    top : calc(60px - 100%);
+    left: 0;
+    width: 150px;
+    height: 100%;
+    background-color: white;
+    border-right : 1px solid black;
+
+
+    z-index: 2;
+}
+.NaviContainer.odd {
+    animation-name: NaviDown;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+.NaviContainer.even {
+    animation-name: NaviUp;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+@keyframes NaviDown {
+    from { transform : translateY(0%)}
+    to { transform: translateY(100%)}
+}
+@keyframes NaviUp {
+    from { transform: translateY(100%)}
+    to { transform: translateY(0%)}
+
+}

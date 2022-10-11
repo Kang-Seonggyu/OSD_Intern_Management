@@ -1,5 +1,6 @@
 import styled, {keyframes} from "styled-components";
 import React from "react";
+import './Animation.css'
 
 const HeaderBlock = styled.div`
   display: block;
