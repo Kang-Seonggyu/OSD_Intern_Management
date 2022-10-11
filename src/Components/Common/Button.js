@@ -12,6 +12,7 @@ const buttonStyle = css`
   outline: none;
   cursor: pointer;
 `
+
 const StyledButton = styled.button`
     ${buttonStyle}
 `;
