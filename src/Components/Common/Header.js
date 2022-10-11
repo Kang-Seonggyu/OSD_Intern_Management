@@ -87,19 +87,7 @@ const MenuSpinReverse = keyframes`
     }
 `
 
-function Header () {
-    const menuClick = () => {
-        const menuToggle = document.getElementById("menu")
-        if (menuToggle.className === 'menu odd') {
-            menuToggle.className = 'menu even'
-
-        }
-        else {
-            menuToggle.className = 'menu odd'
-        }
-
-    }
-
+function Header ({menuClick}) {
     return(
         <>
             <HeaderBlock>

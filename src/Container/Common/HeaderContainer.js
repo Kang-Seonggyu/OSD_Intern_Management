@@ -2,47 +2,44 @@ import React from "react";
 import "./FrameStyle.css"
 import "./Hearder.css"
 import Button from "../../Components/Common/Button";
+import Header from "../../Components/Common/Header";
+import NaviBar from "../../Components/Common/NaviBar";
 
 function HeaderContainer() {
     const menuClick = () => {
         const menuToggle = document.getElementById("menu")
         const NaviToggle = document.getElementById("Navi")
-        const fullToggle = document.getElementById("fullscreen")
+        //const fullToggle = document.getElementById("fullscreen")
 
 
         if (menuToggle.className === 'menu odd') {
             menuToggle.className = 'menu even'
             NaviToggle.className = 'NaviContainer even'
-            fullToggle.className = 'fullscreen'
-
-        }
-        else if (menuToggle.className === 'menu even') {
-            menuToggle.className = 'menu odd'
-            NaviToggle.className = 'NaviContainer odd'
-            fullToggle.className = 'fullscreen darkmode'
+            //fullToggle.className = 'fullscreen'
 
         }
         else {
             menuToggle.className = 'menu odd'
             NaviToggle.className = 'NaviContainer odd'
-            fullToggle.className = 'fullscreen darkmode'
+            //fullToggle.className = 'fullscreen darkmode'
         }
     }
 
   return (
-    <div className="HeaderContainer" id="HeaderContainer">
-        <span className="menu-box">
-            <img className="menu" id="menu" src="https://cdn-icons-png.flaticon.com/512/2976/2976215.png" alt="Menu" onClick={menuClick}/>
-        </span>
-        <a href="/">
-            <img src="https://onesoftdigm.com/img/logo.png" alt="원소프트다임, Logo" style={{ height : "30px"}} className="headImg" />
-        </a>
-
-        <span className="mainTitle">
-                INTERN PROJECT
-        </span>
-        <Button className="Log-INandOUT">로그인</Button>
-
+    <div>
+      <Header menuClick={menuClick} />
+        <div>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+        </div>
+      <NaviBar />
     </div>
   );
 }
