@@ -1,5 +1,4 @@
 import styled, {keyframes} from "styled-components";
-import Button from "./Button";
 import React from "react";
 
 const HeaderBlock = styled.div`
@@ -24,7 +23,8 @@ const MenuBlock = styled.span`
 `;
 
 const Menu = styled.img`
-  height : 30px;
+  width : 30px;
+  height : 30px; 
   margin-top: 13px;
   padding-bottom: 7px;
   cursor : pointer;
@@ -32,14 +32,29 @@ const Menu = styled.img`
     animation-name: MenuSpinForward;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
-  }  
+  }
   .even {
     animation-name: MenuSpinReverse;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
   }
 `;
-
+const MenuSpinForward = keyframes`
+    from {
+        transform : rotate(0deg);
+    }
+    to {
+        transform: rotate(90deg);
+    }
+`
+const MenuSpinReverse = keyframes`
+    from {
+      transform : rotate(90deg)
+    }
+    to {
+      transform: rotate(0deg)
+    }
+`
 const HeadImg = styled.img`
   position : absolute;
   width: 80px !important;
@@ -70,22 +85,7 @@ const LogInButton = styled.button`
   right : 20px;
 `
 
-const MenuSpinForward = keyframes`
-    from {
-        transform : rotate(0deg);
-    }
-    to {
-        transform: rotate(90deg);
-    }
-`
-const MenuSpinReverse = keyframes`
-    from {
-      transform : rotate(90deg)
-    }
-    to {
-      transform: rotate(0deg)
-    }
-`
+
 const Spacer = styled.div`
   height: 60px;
 `

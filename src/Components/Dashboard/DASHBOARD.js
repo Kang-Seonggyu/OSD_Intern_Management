@@ -1,4 +1,4 @@
-import './DASHBOARD.css'
+import '../../Pages/DASHBOARD.css'
 
 function DASHBOARD () {
     // 임시로 배열 만들기.
