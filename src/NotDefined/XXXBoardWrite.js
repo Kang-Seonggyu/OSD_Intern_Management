@@ -6,7 +6,7 @@ import { Form } from "react-bootstrap";
 // 유튜브 참고 : https://www.youtube.com/watch?v=K5oJvVf_eOA&list=PLrTFeWWAg1chZ4uUrDm8Q-kFjKt-hVEXE&index=10
 // 에디터 참고 : https://ckeditor.com/docs/ckeditor5/latest/installation/getting-started/frameworks/react.html
 
-function BoardWrite () {
+function XXXBoardWrite () {
     return(
         <div className="boardWrite">
             <h2>글쓰기</h2>
@@ -34,4 +34,4 @@ function BoardWrite () {
     );
 }
 
-export default BoardWrite;
+export default XXXBoardWrite;
