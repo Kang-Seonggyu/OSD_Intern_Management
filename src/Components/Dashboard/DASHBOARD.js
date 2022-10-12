@@ -5,7 +5,8 @@ import DashCalendar from "./DashCalendar";
 const standardSize = 10;
 
 const DashboardBlock = styled.div`
-  margin-top : 10px
+  margin-top : 10px;
+  z-index : 1;
 `;
 
 const DashboardMainBlock = styled.div`

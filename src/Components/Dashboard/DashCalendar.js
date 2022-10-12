@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import moment from 'moment';
 import styled from "styled-components";
+import {sizeNum} from './variable'
 
-
-const CalendarBlock = styled.div`
+const DCalendarBlock = styled.div`
   height: 25rem;
   margin: 0 5px 0 10px;
   padding: 10px;
@@ -11,7 +11,7 @@ const CalendarBlock = styled.div`
   justify-items: center;
 `;
 
-const CalendarController = styled.div`
+const DCalendarController = styled.div`
   display: flex;
   flex-direction: row;
   text-align: center;
@@ -19,22 +19,24 @@ const CalendarController = styled.div`
   justify-items: center;
 `;
 
-const CalendarTable = styled.table`
+const DCalendarTable = styled.table`
   display: flex;
-  width: 50vw;
+  width: sizeNum * 50vw;
   height: 50vh;
 `
-const CalendarTableBody = styled.tbody`
+const DCalendarTalbeHead = styled.thead`
+  
+`
+const DCalendarTableBody = styled.tbody`
   display: flex;
   flex-direction: column;
 `;
 
-const CalendarTr = styled.tr`
+const DCalendarTr = styled.tr`
   display: flex;
-  flex-direction: row;
 `
 
-const CalendarWeekIndex = styled.td`
+const DCalendarWeekIndex = styled.td`
   font-size: 2vh;
   width: 4vw;
   height: 3vh;
@@ -43,23 +45,24 @@ const CalendarWeekIndex = styled.td`
   background-color: #22b8cf;
 `;
 
-const CalendarWeekDays = styled.div`
+const DCalendarWeekDays = styled.span`
     display: flex;
     border: 1px solid rgba(0, 0, 0, 0.09);
     font-size: 2vh;
     width: 4vw;
     height: 7vh;
 `
-const CalendarDate = styled.div`
+const DCalendarDate = styled.span`
   width: 3vw;
   height: 4vh;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
 `
-const CalendarEvent = styled.div`
+const DCalendarEvent = styled.span`
   width: 10vw;
-  height: 3vh;
+  height: 2vh;
+  font-size: 1.5vm;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -79,14 +82,13 @@ function DashCalendar () {
     //console.log(testWeek)
 
 
-    const calendarArr=(standardSize)=>{
+    const calendarArr=()=>{
 
-        const _standardSize = standardSize
         let result = [];
         let week = firstWeek;
         for ( week; week <= lastWeek; week++) {
             result = result.concat(
-                <CalendarTr key={week}>
+                <DCalendarTr key={week}>
                     {
                         Array(7).fill(0).map((data, index) => {
                             // index : 0~6 반복
@@ -100,17 +102,17 @@ function DashCalendar () {
                                 // 일요일 인 날에는 빨간글씨
                                 if(index === 0) {
                                     return(
-                                        <CalendarWeekDays key={index} className="week-days" style={{backgroundColor:'lightgreen', color:"red"}} >
-                                            <CalendarDate id={date}>{days.format('D')}</CalendarDate>
-                                        </CalendarWeekDays>
+                                        <DCalendarWeekDays key={index} style={{backgroundColor:'lightgreen', color:"red"}} >
+                                            <DCalendarDate id={date}>{days.format('D')}</DCalendarDate>
+                                        </DCalendarWeekDays>
                                     );
                                 }
                                 // 일요일 아닌 날에는 검정글씨
                                 else {
                                     return(
-                                        <CalendarWeekDays key={index} className="week-days" style={{backgroundColor:'lightgreen'}} >
-                                            <CalendarDate id={date}>{days.format('D')}</CalendarDate>
-                                        </CalendarWeekDays>
+                                        <DCalendarWeekDays key={index} style={{backgroundColor:'lightgreen'}} >
+                                            <DCalendarDate id={date}>{days.format('D')}</DCalendarDate>
+                                        </DCalendarWeekDays>
                                     );
                                 }
 
@@ -118,9 +120,9 @@ function DashCalendar () {
                             // 이번 달이 아닌 날들에는 회색으로 처리
                             else if(days.format('MM') !== today.format('MM')){
                                 return(
-                                    <CalendarWeekDays key={index} className="week-days" style={{color:'lightgray'}} >
-                                        <CalendarDate id={date}>{days.format('D')}</CalendarDate>
-                                    </CalendarWeekDays>
+                                    <DCalendarWeekDays key={index} className="week-days" style={{color:'lightgray'}} >
+                                        <DCalendarDate id={date}>{days.format('D')}</DCalendarDate>
+                                    </DCalendarWeekDays>
                                 );
                             }
                             // 이번 달에 속한 날
@@ -128,53 +130,54 @@ function DashCalendar () {
                                 // 일요일 인 날에는 빨간글씨
                                 if (index === 0) {
                                     return (
-                                        <CalendarWeekDays key={index} className="week-days" style={{color : 'red'}}>
-                                            <CalendarDate id={date}>{days.format('D')}</CalendarDate>
-                                        </CalendarWeekDays>
+                                        <DCalendarWeekDays key={index} className="week-days" style={{color : 'red'}}>
+                                            <DCalendarDate id={date}>{days.format('D')}</DCalendarDate>
+                                        </DCalendarWeekDays>
                                     );
                                 }
                                 // 일요일 아닌 날에는 검정글씨
                                 else {
                                     return (
-                                        <CalendarWeekDays key={index} className="week-days">
-                                            <CalendarDate id={date}>{days.format('D')}</CalendarDate>
-                                            <CalendarEvent>test</CalendarEvent>
-                                        </CalendarWeekDays>
+                                        <DCalendarWeekDays key={index} className="week-days"  style={{flexDirection:"column"}}>
+                                            <DCalendarDate id={date}>{days.format('D')}</DCalendarDate>
+                                            <DCalendarEvent>test</DCalendarEvent>
+                                            <DCalendarEvent>test</DCalendarEvent>
+                                        </DCalendarWeekDays>
                                     );
                                 }
                             }
                         })
                     }
-                </CalendarTr>
+                </DCalendarTr>
             );
         }
         return result;
     }
 
     return (
-        <CalendarBlock>
-            <CalendarController>
+        <DCalendarBlock>
+            <DCalendarController>
                 <button onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'year')) }} > « </button>
                 <button onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }} > ‹ </button>
                 <span>{today.format('YYYY 년 MM 월')}</span>
                 <button onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }} > › </button>
                 <button onClick={()=>{ setMoment(getMoment.clone().add(1, 'year')) }} > » </button>
-            </CalendarController>
-            <CalendarTable>
-                <CalendarTableBody>
-                    <CalendarTr>
-                        <CalendarWeekIndex>일</CalendarWeekIndex>
-                        <CalendarWeekIndex>월</CalendarWeekIndex>
-                        <CalendarWeekIndex>화</CalendarWeekIndex>
-                        <CalendarWeekIndex>수</CalendarWeekIndex>
-                        <CalendarWeekIndex>목</CalendarWeekIndex>
-                        <CalendarWeekIndex>금</CalendarWeekIndex>
-                        <CalendarWeekIndex>토</CalendarWeekIndex>
-                    </CalendarTr>
+            </DCalendarController>
+            <DCalendarTable>
+                <DCalendarTableBody>
+                    <DCalendarTr>
+                        <DCalendarWeekIndex>일</DCalendarWeekIndex>
+                        <DCalendarWeekIndex>월</DCalendarWeekIndex>
+                        <DCalendarWeekIndex>화</DCalendarWeekIndex>
+                        <DCalendarWeekIndex>수</DCalendarWeekIndex>
+                        <DCalendarWeekIndex>목</DCalendarWeekIndex>
+                        <DCalendarWeekIndex>금</DCalendarWeekIndex>
+                        <DCalendarWeekIndex>토</DCalendarWeekIndex>
+                    </DCalendarTr>
                     {calendarArr()}
-                </CalendarTableBody>
-            </CalendarTable>
-        </CalendarBlock>
+                </DCalendarTableBody>
+            </DCalendarTable>
+        </DCalendarBlock>
     );
 }
 

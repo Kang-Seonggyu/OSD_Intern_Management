@@ -41,9 +41,10 @@ const NaviLink = styled.a`
 function NaviBar () {
     return (
         <NaviBlock id="Navi">
-                <NaviLink href="/"> <i className="fas fa-tv fa-fw me-1"></i> Dashboard </NaviLink>
-                <NaviLink href="/board"> <i className="fas fa-edit fa-fw me-1"></i> New Post </NaviLink>
-                <NaviLink href="https://onesoftdigm.com/index.php?getLang=ko"> <i className="fas fa-building fa-fw me-1"></i> Company </NaviLink>
+            <NaviLink href="/"> <i className="fas fa-tv fa-fw me-1"></i> Dashboard </NaviLink>
+            <NaviLink href="/Calendar"> <i className="fas fa-calendar-alt fa-fw me-1"></i> Calendar </NaviLink>
+            <NaviLink href="/board"> <i className="fas fa-edit fa-fw me-1"></i> New Post </NaviLink>
+            <NaviLink href="https://onesoftdigm.com/index.php?getLang=ko"> <i className="fas fa-building fa-fw me-1"></i> Company </NaviLink>
         </NaviBlock>
     )
 }
