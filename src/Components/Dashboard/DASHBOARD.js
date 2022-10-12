@@ -2,17 +2,28 @@ import styled from "styled-components";
 import Bobfriend from "./DashBob";
 import DashCalendar from "./DashCalendar";
 
+const standardSize = 10;
+
 const DashboardBlock = styled.div`
   margin-top : 10px
 `;
 
-const DashboardMain = styled.div`
+const DashboardMainBlock = styled.div`
   display: grid;
   grid-template-columns : 1fr 1fr;
+  align-items: center;
+  justify-items: center;
 `;
 
+const DashboardMain = styled.div`
+  margin-top: 50px;
+  width: ${standardSize*3.5}vw;  
+  height: ${standardSize*6.2}vh;
+  border: 1px solid black;
+`
 
-function DASHBOARD () {
+
+function DASHBOARD (  ) {
     // 임시로 배열 만들기.
     function makeArray () {
         let num = [];
@@ -24,10 +35,14 @@ function DASHBOARD () {
 
     return (
         <DashboardBlock>
-            <DashboardMain>
-                <DashCalendar />
-                <Bobfriend />
-            </DashboardMain>
+            <DashboardMainBlock>
+                <DashboardMain>
+                    <DashCalendar/>
+                </DashboardMain>
+                <DashboardMain>
+                    <Bobfriend />
+                </DashboardMain>
+            </DashboardMainBlock>
             <div>
                 <ol>
                     {makeArray()}

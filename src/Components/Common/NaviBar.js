@@ -4,7 +4,6 @@ const NaviBlock = styled.div`
     position: fixed;
     display: block;
     top : calc(60px - 100%);
-    left: 0;
     width: 150px;
     height: 100%;
     background-color: white;
@@ -36,8 +35,7 @@ const NaviLink = styled.a`
     text-decoration: none;
     color : black;
     display: inline-block;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin : 5px 0px 5px 5px;
 `
 
 function NaviBar () {

@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 const BobBlock = styled.div`
   height: 25rem;
-  border: 1px solid black;
   margin: 0 10px 0 5px;
+  padding: 10px;
 `;
 const BobLabel  = styled.div`
     margin-left: 2rem;
@@ -14,7 +14,7 @@ const BobTextbox = styled.div`
     padding: 7px;
 `;
 
-function Bobfriend () {
+function DashBob () {
     return (
         <BobBlock>
             <BobLabel>이번 주 밥친구</BobLabel>
@@ -30,4 +30,4 @@ function Bobfriend () {
     )
 }
 
-export default Bobfriend;
+export default DashBob;
