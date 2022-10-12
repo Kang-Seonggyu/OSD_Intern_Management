@@ -1,20 +1,24 @@
 import Header from "../../Components/Common/Header";
 import NaviBar from "../../Components/Common/NaviBar";
+import DarkMode from "../../Components/Common/DarkMode";
+import {useState} from "react";
 
 function HeaderContainer() {
+    const [menuToggle, setMenuToggle] = useState(false);
 
     const menuClick = () => {
-        const menuToggle = document.getElementById("menu")
+        const menuClick = document.getElementById("menu")
         const NaviToggle = document.getElementById("Navi")
 
-        if (menuToggle.className === 'menu odd') {
-            menuToggle.className = 'menu even'
-            NaviToggle.className = 'NaviContainer even'
-
+        if (menuClick.className === 'menu odd') {
+            menuClick.className = 'menu even';
+            NaviToggle.className = 'NaviContainer even';
+            setMenuToggle(false);
         }
         else {
-            menuToggle.className = 'menu odd'
-            NaviToggle.className = 'NaviContainer odd'
+            menuClick.className = 'menu odd';
+            NaviToggle.className = 'NaviContainer odd';
+            setMenuToggle(true);
         }
     }
 
@@ -22,6 +26,9 @@ function HeaderContainer() {
     <div>
       <Header menuClick={menuClick} />
       <NaviBar />
+        {
+            menuToggle === true ? <DarkMode /> : <></>
+        }
     </div>
   );
 }

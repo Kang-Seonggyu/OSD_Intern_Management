@@ -1,4 +1,16 @@
-import '../../Pages/DASHBOARD.css'
+import styled from "styled-components";
+import Bobfriend from "./DashBob";
+import DashCalendar from "./DashCalendar";
+
+const DashboardBlock = styled.div`
+  margin-top : 10px
+`;
+
+const DashboardMain = styled.div`
+  display: grid;
+  grid-template-columns : 1fr 1fr;
+`;
+
 
 function DASHBOARD () {
     // 임시로 배열 만들기.
@@ -11,28 +23,18 @@ function DASHBOARD () {
     }
 
     return (
-        <div className="Dashboard">
-            <div className="Dashboard main">
-                <div className="Calendar">캘린더</div>
-                <div className="Bob-friends">
-                    <p className="Bob-tag">이번 주 밥친구</p>
-                    <div className="Bob-this-week">
-                        <p>날짜 - 메뉴</p>
-                        <p>OOO, OOO, OOO, OOO</p>
-                    </div>
-                    <p className="Bob-tag">다음 주 밥친구</p>
-                    <div className="Bob-next-week">
-                        OOO, OOO, OOO, OOO
-                    </div>
-                </div>
-            </div>
+        <DashboardBlock>
+            <DashboardMain>
+                <DashCalendar />
+                <Bobfriend />
+            </DashboardMain>
             <div>
                 <ol>
                     {makeArray()}
                     End !
                 </ol>
             </div>
-        </div>
+        </DashboardBlock>
     )
 }
 

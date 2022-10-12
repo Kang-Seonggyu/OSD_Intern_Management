@@ -1,11 +1,12 @@
 import HeaderContainer from "../Container/Common/HeaderContainer";
 import FooterContainer from "../Container/Common/FooterContainer";
+import DASHBOARD from "../Components/Dashboard/DASHBOARD";
 
 function DashboardPage () {
     return (
         <div>
             <HeaderContainer />
-            This is Dashboard Page I want to be a good Programer.
+            <DASHBOARD />
             <FooterContainer />
         </div>
     )
