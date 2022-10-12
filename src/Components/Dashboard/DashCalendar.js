@@ -24,9 +24,7 @@ const DCalendarTable = styled.table`
   width: sizeNum * 50vw;
   height: 50vh;
 `
-const DCalendarTalbeHead = styled.thead`
-  
-`
+
 const DCalendarTableBody = styled.tbody`
   display: flex;
   flex-direction: column;
@@ -36,7 +34,7 @@ const DCalendarTr = styled.tr`
   display: flex;
 `
 
-const DCalendarWeekIndex = styled.td`
+const DCalendarWeekIndex = styled.th`
   font-size: 2vh;
   width: 4vw;
   height: 3vh;
@@ -48,13 +46,14 @@ const DCalendarWeekIndex = styled.td`
 const DCalendarWeekDays = styled.span`
     display: flex;
     border: 1px solid rgba(0, 0, 0, 0.09);
-    font-size: 2vh;
+    
     width: 4vw;
     height: 7vh;
 `
 const DCalendarDate = styled.span`
   width: 3vw;
-  height: 4vh;
+  height: 3vh;
+  font-size: 2vh;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -166,13 +165,9 @@ function DashCalendar () {
             <DCalendarTable>
                 <DCalendarTableBody>
                     <DCalendarTr>
-                        <DCalendarWeekIndex>일</DCalendarWeekIndex>
-                        <DCalendarWeekIndex>월</DCalendarWeekIndex>
-                        <DCalendarWeekIndex>화</DCalendarWeekIndex>
-                        <DCalendarWeekIndex>수</DCalendarWeekIndex>
-                        <DCalendarWeekIndex>목</DCalendarWeekIndex>
-                        <DCalendarWeekIndex>금</DCalendarWeekIndex>
-                        <DCalendarWeekIndex>토</DCalendarWeekIndex>
+                        { ['일','월','화','수','목','금','토'].map((day) => {
+                            return( <DCalendarWeekIndex>{day}</DCalendarWeekIndex> )
+                        })}
                     </DCalendarTr>
                     {calendarArr()}
                 </DCalendarTableBody>
