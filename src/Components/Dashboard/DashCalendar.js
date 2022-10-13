@@ -11,7 +11,8 @@ const DCalendarBlock = styled.div`
 `;
 
 const DCalendarController = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 30px 30px 1fr 30px 30px;
   align-items: center;
   justify-items: center;
 `;
@@ -155,7 +156,7 @@ function DashCalendar () {
             <DCalendarController>
                 <button onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'year')) }} > « </button>
                 <button onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }} > ‹ </button>
-                <p>{today.format('YYYY 년 MM 월')}</p>
+                <span>{today.format('YYYY 년 MM 월')}</span>
                 <button onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }} > › </button>
                 <button onClick={()=>{ setMoment(getMoment.clone().add(1, 'year')) }} > » </button>
             </DCalendarController>
