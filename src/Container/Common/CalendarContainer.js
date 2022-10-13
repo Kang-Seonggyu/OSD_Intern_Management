@@ -1,4 +1,4 @@
-import Calendar from "../../Components/Common/Calendar";
+import Calendar from "../../Components/Schedule/Calendar";
 
 function CalendarContainer () {
     return (

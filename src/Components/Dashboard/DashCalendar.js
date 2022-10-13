@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import moment from 'moment';
 import styled from "styled-components";
-import {sizeNum} from './variable'
 
 const DCalendarBlock = styled.div`
   height: 25rem;
@@ -13,15 +12,13 @@ const DCalendarBlock = styled.div`
 
 const DCalendarController = styled.div`
   display: flex;
-  flex-direction: row;
-  text-align: center;
   align-items: center;
   justify-items: center;
 `;
 
 const DCalendarTable = styled.table`
   display: flex;
-  width: sizeNum * 50vw;
+  width: 50vw;
   height: 50vh;
 `
 
@@ -158,7 +155,7 @@ function DashCalendar () {
             <DCalendarController>
                 <button onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'year')) }} > « </button>
                 <button onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }} > ‹ </button>
-                <span>{today.format('YYYY 년 MM 월')}</span>
+                <p>{today.format('YYYY 년 MM 월')}</p>
                 <button onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }} > › </button>
                 <button onClick={()=>{ setMoment(getMoment.clone().add(1, 'year')) }} > » </button>
             </DCalendarController>
@@ -166,7 +163,7 @@ function DashCalendar () {
                 <DCalendarTableBody>
                     <DCalendarTr>
                         { ['일','월','화','수','목','금','토'].map((day) => {
-                            return( <DCalendarWeekIndex>{day}</DCalendarWeekIndex> )
+                            return( <DCalendarWeekIndex key={day}>{day}</DCalendarWeekIndex> )
                         })}
                     </DCalendarTr>
                     {calendarArr()}
