@@ -57,9 +57,16 @@ const TableBody = styled.div`
   min-width: 90px;
   height: auto;
   min-height: 90px;
-  .date {
-    padding-left: 8px;
-    text-align: left;
+  padding-left: 8px;
+  text-align: left;
+  .birthday {
+    background: lightpink;
+  }
+  .vacation {
+    background: lightcyan;    
+  }
+  .Event {
+    background: lightyellow;
   }
 `
 
@@ -95,7 +102,10 @@ function Calendar () {
                         { exampleDay().map((day) => {
                             return(
                                 <TableBody key={day}>
-                                    <div className="date">{day}</div>
+                                    <div >{day}</div>
+                                    <div className="birthday">생일</div>
+                                    <div className="vacation">휴가</div>
+                                    <div className="Event">행사</div>
                                 </TableBody>)
                         }) }
                     </CalendarBox>
