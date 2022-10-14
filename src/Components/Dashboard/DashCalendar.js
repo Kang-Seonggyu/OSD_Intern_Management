@@ -91,7 +91,9 @@ function DashCalendar () {
                             // index : 0~6 반복
                             let days = today.clone().startOf('year').week(week).startOf('week').add(index, 'day'); //d로해도되지만 직관성
                             let date = `Date-${days.format('YYYYMMDD')}`
-                            ////console.log(date)
+                            //console.log(days)
+                            //console.log(date)
+
 
                             //----------------------------날짜처리 하는 구간---------------------------
                             // 오늘 날짜
