@@ -21,7 +21,9 @@ const ControlButton = styled.button`
   margin : 3px
 `
 const CalendarBlock = styled.div`
-  width: 99%;
+  display: grid;
+  grid-auto-rows: 30px 1fr;
+  width: 100%;
   height: 90%;
 `
 const CalendarIndex = styled.div`
@@ -29,9 +31,26 @@ const CalendarIndex = styled.div`
   justify-content: space-around;
 `
 const CalendarBox = styled.div`
+  position: relative;
+  margin: 2px;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 1px;
+`
+const NaviBox = styled.div`
+  position: absolute;
+  color: black;
+  width: 100%;
+  height: 99%;
+  cursor: pointer;
+  background: black;
+  opacity: 0;
+  z-index: 2;
+  &:hover {
+    opacity: 0.4;
+    background-color: lightgray;
+  }
+
 `
 const TableHead = styled.div`
   height: 3vh;
@@ -90,7 +109,7 @@ const PushTag = (key, loadedMoment,weekend ,anothorM, today) => {
         </TableBody>
     )
 }
-function DashCalendar(props) {
+function DashCalendar({onClick}) {
     const [getMoment, setMoment] = useState(moment())
 
     const today = getMoment;
@@ -141,15 +160,16 @@ function DashCalendar(props) {
     return (
         <>
             <ControllerBlock>
-                <ControlButton>«</ControlButton>
-                <ControlButton>‹</ControlButton>
+                <ControlButton onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'year')) }}>«</ControlButton>
+                <ControlButton onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }}>‹</ControlButton>
                 <span>{today.format('YY 년 MM 월')}</span>
-                <ControlButton>›</ControlButton>
-                <ControlButton>»</ControlButton>
+                <ControlButton onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }}>›</ControlButton>
+                <ControlButton onClick={()=>{ setMoment(getMoment.clone().add(1, 'year')) }}>»</ControlButton>
             </ControllerBlock>
             <CalendarBlock>
                 <CalendarIndex>Index</CalendarIndex>
                 <CalendarBox>
+                    <NaviBox onClick={onClick} />
                     { ['일','월','화','수','목','금','토'].map((day) => {
                         return( <TableHead key={day} className="tableHead"><div>{day}</div></TableHead> )
                     })}

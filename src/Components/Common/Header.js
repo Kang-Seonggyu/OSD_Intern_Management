@@ -101,7 +101,7 @@ function Header ({menuClick}) {
                     <HeadImg src="https://onesoftdigm.com/img/logo.png" alt="원소프트다임, Logo" style={{ height : "30px"}} />
                 </a>
                 <MainTitle>
-                    INTERN PROJECT
+                    Test Project
                 </MainTitle>
                 <LogInButton>로그인</LogInButton>
             </HeaderBlock>

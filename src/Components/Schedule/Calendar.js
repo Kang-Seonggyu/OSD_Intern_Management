@@ -158,11 +158,11 @@ function Calendar () {
                     <button><i className="fas fa-redo fa-fw me-1" /></button>
                     <Spacer style={{gridColumn:"2/4",gridRow : "1"}}></Spacer>
                     <button style={{gridColumn:"4/6",gridRow : "1"}}>일정추가</button>
-                    <ControlButton>«</ControlButton>
-                    <ControlButton>‹</ControlButton>
-                    <span>{today.format('YYYY 년 MM 월')}</span>
-                    <ControlButton>›</ControlButton>
-                    <ControlButton>»</ControlButton>
+                    <ControlButton onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'year')) }}>«</ControlButton>
+                    <ControlButton onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }}>‹</ControlButton>
+                    <span>{today.format('YY 년 MM 월')}</span>
+                    <ControlButton onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }}>›</ControlButton>
+                    <ControlButton onClick={()=>{ setMoment(getMoment.clone().add(1, 'year')) }}>»</ControlButton>
                 </CalendarControllerBlock>
                 <CalendarBlock>
                     <CalendarIndex>

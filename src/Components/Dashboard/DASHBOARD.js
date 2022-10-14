@@ -24,7 +24,7 @@ const DashboardMain = styled.div`
 `
 
 
-function DASHBOARD (  ) {
+function DASHBOARD ( {onClick} ) {
     // 임시로 배열 만들기.
     function makeArray () {
         let num = [];
@@ -38,7 +38,7 @@ function DASHBOARD (  ) {
         <DashboardBlock>
             <DashboardMainBlock>
                 <DashboardMain>
-                    <DashCalendar/>
+                    <DashCalendar onClick={onClick}/>
                 </DashboardMain>
                 <DashboardMain>
                     <Bobfriend />
