@@ -31,14 +31,16 @@ const ControlButton = styled.button`
 const CalendarBlock = styled.div`
   width: 95vw;
   min-width: 640px;
-  height: 80vh;
-  min-height: 490px;
+  height: 73vh;
+  min-height: 600px;
   border: 1px solid black;
 `
 const CalendarIndex = styled.div`
   display: flex;
   justify-content: flex-end;
   padding-right: 8px;
+  
+  height: 30px;
 `
 const CalendarBox = styled.div`
   margin: 2px;
@@ -158,7 +160,7 @@ function Calendar () {
                     <button style={{gridColumn:"4/6",gridRow : "1"}}>일정추가</button>
                     <ControlButton>«</ControlButton>
                     <ControlButton>‹</ControlButton>
-                    <span>날짜</span>
+                    <span>{today.format('YYYY 년 MM 월')}</span>
                     <ControlButton>›</ControlButton>
                     <ControlButton>»</ControlButton>
                 </CalendarControllerBlock>
@@ -168,7 +170,7 @@ function Calendar () {
                     </CalendarIndex>
                     <CalendarBox>
                         { ['일','월','화','수','목','금','토'].map((day) => {
-                            return( <TableHead key={day}>{day}</TableHead> )
+                            return( <TableHead key={day} className="tableHead">{day}</TableHead> )
                         })}
                         {calendarArr()}
 
