@@ -29,7 +29,30 @@ const CalendarBlock = styled.div`
 const CalendarIndex = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  .birthday {
+    background: lightpink;
+  }
+
+  .vacation {
+    background: lightcyan;
+  }
+
+  .Event {
+    background: #ffffb5;  
+  }
+  .etc {
+    background: #bcc5fd;
+  }
 `
+const IndexingBar = styled.div`
+  width: 3vw;
+  height: 3vh;
+  min-height: 15px;
+  max-height: 25px;
+  font-size: 2vh;
+`;
+
 const CalendarBox = styled.div`
   position: relative;
   margin: 2px;
@@ -54,6 +77,7 @@ const NaviBox = styled.div`
 `
 const TableHead = styled.div`
   height: 3vh;
+  min-height: 21px;
   background: lightgreen;
   text-align: center;
 `
@@ -81,7 +105,12 @@ const TableBody = styled.div`
   }
 
   .Event {
-    background: lightyellow;
+    background: #ffffb5;
+    width: 90%;
+    padding-left: 6px;
+  }
+  .etc {
+    background: #bcc5fd;
     width: 90%;
     padding-left: 6px;
   }
@@ -167,7 +196,12 @@ function DashCalendar({onClick}) {
                 <ControlButton onClick={()=>{ setMoment(getMoment.clone().add(1, 'year')) }}>»</ControlButton>
             </ControllerBlock>
             <CalendarBlock>
-                <CalendarIndex>Index</CalendarIndex>
+                <CalendarIndex>
+                    <IndexingBar className="birthday"/>생일
+                    <IndexingBar className="vacation"/>휴가
+                    <IndexingBar className="Event"/>행사
+                    <IndexingBar className="etc"/>기타
+                </CalendarIndex>
                 <CalendarBox>
                     <NaviBox onClick={onClick} />
                     { ['일','월','화','수','목','금','토'].map((day) => {

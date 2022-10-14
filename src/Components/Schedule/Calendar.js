@@ -37,11 +37,35 @@ const CalendarBlock = styled.div`
 `
 const CalendarIndex = styled.div`
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   padding-right: 8px;
-  
+
   height: 30px;
+  .birthday {
+    background: lightpink;
+  }
+
+  .vacation {
+    background: lightcyan;
+  }
+
+  .Event {
+    background: #ffffb5;  
+  }
+  .etc {
+    background: #bcc5fd;
+  }
 `
+const IndexingBar = styled.div`
+  margin: 7px;
+  width: 5vw;
+  max-width: 50px ;
+  height: 3vh;
+  min-height: 15px;
+  max-height: 25px;
+  font-size: 2vh;
+`;
 const CalendarBox = styled.div`
   margin: 2px;
   display: grid;
@@ -51,6 +75,7 @@ const CalendarBox = styled.div`
 `
 const TableHead = styled.div`
   background: lightgreen;
+
 `
 const TableBody = styled.div`
   background: white;
@@ -74,30 +99,39 @@ const TableBody = styled.div`
     padding-left: 6px;
   }
   .Event {
-    background: lightyellow;
+    background: #ffffb5;
+    width: 90%;
+    padding-left: 6px;
+  }
+  .etc {
+    background: #bcc5fd;
     width: 90%;
     padding-left: 6px;
   }
 `
 const PushTag = (key, loadedMoment,weekend ,anothorM, today) => {
     return (
-        <TableBody key={key} >
-            {
-                anothorM ?
-                    <div id={key} className="date" style={{color : "lightgray"}}>{loadedMoment.format('D')}</div>
-                    :
+        today?
+            <TableBody key={key} style={{background:"#c8ffc8"}}>
+                {
                     weekend ?
-                        today ?
-                            <div id={key} className="date" style={{background:"#c8ffc8", color : "red"}}>{loadedMoment.format('D')}</div>
+                        <div id={key} className="date" style={{ color : "red"}}>{loadedMoment.format('D')}</div>
                             :
-                            <div id={key} className="date" style={{color : "red"}}>{loadedMoment.format('D')}</div>
+                        <div id={key} className="date" >{loadedMoment.format('D')}</div>
+                }
+            </TableBody>
+            :
+            <TableBody key={key} >
+                {
+                    anothorM ?
+                        <div id={key} className="date" style={{color : "lightgray"}}>{loadedMoment.format('D')}</div>
                         :
-                        today ?
-                            <div id={key} className="date"  style={{background:"#c8ffc8"}}>{loadedMoment.format('D')}</div>
-                            :
-                            <div id={key} className="date">{loadedMoment.format('D')}</div>
-            }
-        </TableBody>
+                        weekend ?
+                            <div id={key} className="date" style={{ color : "red"}}>{loadedMoment.format('D')}</div>
+                                :
+                            <div id={key} className="date" >{loadedMoment.format('D')}</div>
+                }
+            </TableBody>
     )
 }
 
@@ -166,7 +200,10 @@ function Calendar () {
                 </CalendarControllerBlock>
                 <CalendarBlock>
                     <CalendarIndex>
-                        Index
+                        <IndexingBar className="birthday"/>생일
+                        <IndexingBar className="vacation"/>휴가
+                        <IndexingBar className="Event"/>행사
+                        <IndexingBar className="etc"/>기타
                     </CalendarIndex>
                     <CalendarBox>
                         { ['일','월','화','수','목','금','토'].map((day) => {
