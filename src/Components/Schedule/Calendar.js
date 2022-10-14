@@ -77,6 +77,27 @@ const TableBody = styled.div`
     padding-left: 6px;
   }
 `
+const PushTag = (key, loadedMoment,weekend ,anothorM, today) => {
+    return (
+        <TableBody key={key} >
+            {
+                anothorM ?
+                    <div id={key} className="date" style={{color : "lightgray"}}>{loadedMoment.format('D')}</div>
+                    :
+                    weekend ?
+                        today ?
+                            <div id={key} className="date" style={{background:"#c8ffc8", color : "red"}}>{loadedMoment.format('D')}</div>
+                            :
+                            <div id={key} className="date" style={{color : "red"}}>{loadedMoment.format('D')}</div>
+                        :
+                        today ?
+                            <div id={key} className="date"  style={{background:"#c8ffc8"}}>{loadedMoment.format('D')}</div>
+                            :
+                            <div id={key} className="date">{loadedMoment.format('D')}</div>
+            }
+        </TableBody>
+    )
+}
 
 function Calendar () {
 
@@ -101,47 +122,26 @@ function Calendar () {
                 if (moment().format('YYYYMMDD') === days.format('YYYYMMDD')) {
                     // 일요일 인 날에는 빨간글씨
                     if(day === 0) {
-                        result.push(
-                            <TableBody key={date} style={{backgroundColor:'lightgreen', color:"red"}} >
-                                <div id={date}>{days.format('D')}</div>
-                            </TableBody>
-                        );
+                        result.push(PushTag(date, days, 1,0,1));
                     }
                     // 일요일 아닌 날에는 검정글씨
                     else {
-                        result.push(
-                            <TableBody key={date} style={{backgroundColor:'lightgreen'}} >
-                                <div id={date}>{days.format('D')}</div>
-                            </TableBody>
-                        );
+                        result.push(PushTag(date, days, 0,0,1));
                     }
                 }
                 // !이번달 => 이번 달이 아닌 날들은 글씨를 회색처리.
                 else if(days.format('MM') !== today.format('MM')){
-                    result.push(
-                        <TableBody key={date} className="week-days" style={{color:'lightgray'}} >
-                            <div id={date}>{days.format('D')}</div>
-                        </TableBody>
-                    );
+                    result.push (PushTag(date, days,0,1));
                 }
                 // 이번 달에 속한 날
                 else {
                     // 일요일 인 날에는 빨간글씨
                     if (day === 0) {
-                        result.push (
-                            <TableBody key={date} className="week-days" style={{color: 'red'}}>
-                                <div id={date}>{days.format('D')}</div>
-
-                            </TableBody>
-                        );
+                        result.push (PushTag(date, days, 1,0));
                     }
                     // 일요일 아닌 날에는 검정글씨
                     else {
-                        result.push (
-                            <TableBody key={date} className="week-days" style={{flexDirection: "column"}}>
-                                <div id={date}>{days.format('D')}</div>
-                            </TableBody>
-                        );
+                        result.push (PushTag(date, days, 0, 0));
                     }
                 }
             }
