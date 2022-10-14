@@ -115,9 +115,9 @@ const PushTag = (key, loadedMoment,weekend ,anothorM, today) => {
             <TableBody key={key} style={{background:"#c8ffc8"}}>
                 {
                     weekend ?
-                        <div id={key} className="date" style={{ color : "red"}}>{loadedMoment.format('D')}</div>
+                        <div id={key} className="date" style={{ color : "red"}}>{loadedMoment.format('D')} Today !</div>
                             :
-                        <div id={key} className="date" >{loadedMoment.format('D')}</div>
+                        <div id={key} className="date" >{loadedMoment.format('D')} Today! </div>
                 }
             </TableBody>
             :
