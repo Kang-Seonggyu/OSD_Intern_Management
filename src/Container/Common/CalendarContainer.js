@@ -1,6 +1,6 @@
 import Calendar from "../../Components/Schedule/Calendar";
-import AskModal from "../../Components/Common/AskModal";
 import {useState} from "react";
+import AddNewEvent from "../../Components/Schedule/AddNewEvent";
 
 function CalendarContainer(props) {
 
@@ -18,7 +18,7 @@ function CalendarContainer(props) {
     return (
         <div>
             <Calendar AddEventClick={AddEventClick} />
-            <AskModal
+            <AddNewEvent
                 visible={NewEvent}
                 onCancel={CancelClick}
                 onConfirm={ConfirmClick}
