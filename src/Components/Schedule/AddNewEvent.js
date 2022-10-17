@@ -81,6 +81,7 @@ const StyledButton = styled.button`
     }
 `;
 
+
 const AddNewEvent = ({
                      visible,
                      onConfirm,
@@ -88,7 +89,96 @@ const AddNewEvent = ({
                      pickItem,
                      SelectItem
                     }) =>
+
 {
+    const [categoryError, setCategoryError] = useState(false)
+
+    const NewEventForm = () => {
+        // 생일을 선택한 경우
+        if(pickItem === "birthday") {
+            setCategoryError(false)
+            return (
+                <>
+                    <div style={{marginTop: "11px"}}>
+                        <label>생일</label>
+                        <div>
+                            <span> <select className="DateCell" id="birthMonth">
+                                    <option value="01">1</option>
+                                    <option value="02">2</option>
+                                    <option value="03">3</option>
+                                    <option value="04">4</option>
+                                    <option value="05">5</option>
+                                    <option value="06">6</option>
+                                    <option value="07">7</option>
+                                    <option value="08">8</option>
+                                    <option value="09">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                 </select> </span> 월
+                            <span> <select className="DateCell" id="birthDay">
+                                      <option value="01">1</option>
+                                      <option value="02">2</option>
+                                      <option value="03">3</option>
+                                      <option value="04">4</option>
+                                      <option value="05">5</option>
+                                      <option value="06">6</option>
+                                      <option value="07">7</option>
+                                      <option value="08">8</option>
+                                      <option value="09">9</option>
+                                      <option value="10">10</option>
+                                      <option value="11">11</option>
+                                      <option value="12">12</option>
+                                      <option value="13">13</option>
+                                      <option value="14">14</option>
+                                      <option value="15">15</option>
+                                      <option value="16">16</option>
+                                      <option value="17">17</option>
+                                      <option value="18">18</option>
+                                      <option value="19">19</option>
+                                      <option value="20">20</option>
+                                      <option value="21">21</option>
+                                      <option value="22">22</option>
+                                      <option value="23">23</option>
+                                      <option value="24">24</option>
+                                      <option value="25">25</option>
+                                      <option value="26">26</option>
+                                      <option value="27">27</option>
+                                      <option value="28">28</option>
+                                      <option value="29">29</option>
+                                      <option value="30">30</option>
+                                      <option value="31">31</option>
+                                 </select> </span> 일
+                        </div>
+                    </div>
+                </>
+            )
+        }
+        else {
+            {
+                // 생일 외에 다른 것을 고를 경우
+                if(pickItem === "Event" || pickItem === "others") {
+                    setCategoryError(false)
+                }
+                // 아무것도 고르지 않을 경우
+                // 에러 상태 'true'로 변경
+                else {
+                    setCategoryError(true)
+                }
+            }
+            return (
+                <>
+                    <span style={{marginTop :"10px"}}>
+                        <label htmlFor="startDate" style={{marginRight:"120px"}}>시작 일자</label>
+                        <label htmlFor="endDate">종료 일자</label>
+                        <input type="date" id="startDate"></input>
+                        <input type="date" id="endDate"></input>
+                    </span>
+                </>
+            )
+        }
+    }
+
     if (!visible) return null;
 
     return (
@@ -110,109 +200,18 @@ const AddNewEvent = ({
                     <option value="Event">OSD 행사</option>
                     <option value="others">출장</option>
                     <option value="others">기타(워크샾 등)</option>
-
                 </select>
-                {
-                    // 선택이 안되어있을 때
-                    pickItem === undefined ?
-                        <>
-                        <span style={{marginTop :"10px"}}>
-                            <label htmlFor="startDate" style={{marginRight:"120px"}}>시작 일자</label>
-                            <label htmlFor="endDate">종료 일자</label>
-                            <input type="date" id="startDate"></input>
-                            <input type="date" id="endDate"></input>
-                        </span>
-                            <div className="buttons" style={{justifyContent:"center"}}>
-                                <StyledButton onClick={onCancel}>취소</StyledButton>
+                <NewEventForm />
+                        <div className="buttons" style={{justifyContent: "center"}}>
+                            <StyledButton onClick={onCancel}>취소</StyledButton>
+                            {categoryError === true ?
                                 <div className="NotConfirm">
                                     <StyledButton className="NoPick">저장</StyledButton>
                                 </div>
-                            </div>
-                        </>
-                        :
-                        // 생일을 선택한 경우
-                        pickItem === "birthday" ?
-                        <>
-                            <div style={{marginTop :"11px"}}>
-                                <label>생일</label>
-                                <div>
-                                    <span>
-                                         <select className="DateCell" id="birthMonth" >
-                                            <option value="01">1</option>
-                                            <option value="02">2</option>
-                                            <option value="03">3</option>
-                                            <option value="04">4</option>
-                                            <option value="05">5</option>
-                                            <option value="06">6</option>
-                                            <option value="07">7</option>
-                                            <option value="08">8</option>
-                                            <option value="09">9</option>
-                                            <option value="10">10</option>
-                                            <option value="11">11</option>
-                                            <option value="12">12</option>
-                                         </select>
-                                    </span> 월
-                                    <span>
-                                         <select className="DateCell" id="birthDay">
-                                              <option value="01">1</option>
-                                              <option value="02">2</option>
-                                              <option value="03">3</option>
-                                              <option value="04">4</option>
-                                              <option value="05">5</option>
-                                              <option value="06">6</option>
-                                              <option value="07">7</option>
-                                              <option value="08">8</option>
-                                              <option value="09">9</option>
-                                              <option value="10">10</option>
-                                              <option value="11">11</option>
-                                              <option value="12">12</option>
-                                              <option value="13">13</option>
-                                              <option value="14">14</option>
-                                              <option value="15">15</option>
-                                              <option value="16">16</option>
-                                              <option value="17">17</option>
-                                              <option value="18">18</option>
-                                              <option value="19">19</option>
-                                              <option value="20">20</option>
-                                              <option value="21">21</option>
-                                              <option value="22">22</option>
-                                              <option value="23">23</option>
-                                              <option value="24">24</option>
-                                              <option value="25">25</option>
-                                              <option value="26">26</option>
-                                              <option value="27">27</option>
-                                              <option value="28">28</option>
-                                              <option value="29">29</option>
-                                              <option value="30">30</option>
-                                              <option value="31">31</option>
-                                         </select>
-                                    </span> 일
-                                </div>
-
-                            </div>
-                            <div className="buttons" style={{justifyContent:"center"}}>
-                                <StyledButton onClick={onCancel}>취소</StyledButton>
+                                :
                                 <StyledButton onClick={onConfirm}>저장</StyledButton>
-                            </div>
-                        </>
-                        :
-                        // 생일 외에 다른 것을 선택한 경우
-                        <>
-                            <span style={{marginTop :"10px"}}>
-                                <label htmlFor="startDate" style={{marginRight:"120px"}}>시작 일자</label>
-                                <label htmlFor="endDate">종료 일자</label>
-                                <input type="date" id="startDate"></input>
-                                <input type="date" id="endDate"></input>
-                            </span>
-                            <div className="buttons" style={{justifyContent:"center"}}>
-                                <StyledButton onClick={onCancel}>취소</StyledButton>
-                                <StyledButton onClick={onConfirm}>저장</StyledButton>
-                            </div>
-                        </>
-                }
-
-
-
+                            }
+                        </div>
             </AddNewEventBlock>
         </Fullscreen>
     );

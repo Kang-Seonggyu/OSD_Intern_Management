@@ -9,9 +9,11 @@ function CalendarContainer() {
 
     const AddEventClick = () => {
         setNewEvent(true);
+        console.log(pickItem)
     };
     const CancelClick = () => {
         setNewEvent(false);
+        setPickItem("default")
     };
     const ConfirmClick = () => {
         setNewEvent(false);
@@ -24,6 +26,7 @@ function CalendarContainer() {
             new_EventTag.innerHTML = `새로운 이벤트`;
 
         seletedDate.appendChild(new_EventTag)
+        setPickItem("default")
 
         //console.log(startDay) 형식 : 2022-10-17 과 같이 나타남
 
