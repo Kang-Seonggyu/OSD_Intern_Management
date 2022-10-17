@@ -4,12 +4,13 @@ import AddNewEvent from "../../Components/Schedule/AddNewEvent";
 
 function CalendarContainer() {
 
+    // 일정추가 창 보여주것을 정하는 State
     const [NewEvent, setNewEvent] = useState(false);
+    // 일정분류 선택지 정보를 담는 State
     const [pickItem, setPickItem] = useState()
 
     const AddEventClick = () => {
         setNewEvent(true);
-        console.log(pickItem)
     };
     const CancelClick = () => {
         setNewEvent(false);
@@ -19,18 +20,18 @@ function CalendarContainer() {
         setNewEvent(false);
         let startDay = document.getElementById('startDate').value;
         let endDay = document.getElementById('endDate').value;
+        let title = document.getElementById('EventTitle').value;
 
         let seletedDate = document.getElementById(`Date-${startDay}`);
         let new_EventTag = document.createElement('div');
             new_EventTag.setAttribute('class',`${pickItem}`);
-            new_EventTag.innerHTML = `새로운 이벤트`;
+            new_EventTag.innerHTML = `${title}`;
 
         seletedDate.appendChild(new_EventTag)
         setPickItem("default")
 
         //console.log(startDay) 형식 : 2022-10-17 과 같이 나타남
 
-        // 여기에 저장하는 코드 입력해야함
     };
     const SelectItem = () => {
         let selectedItem = document.getElementById("EventCategory").value;

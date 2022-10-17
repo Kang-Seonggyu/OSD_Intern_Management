@@ -185,8 +185,8 @@ const AddNewEvent = ({
         <Fullscreen>
             <AddNewEventBlock>
                 <h1>일정추가</h1>
-                <label htmlFor="title">제목 <span style={{fontSize:"15px"}}>(휴가와 생일은 이름을 입력해주세요.)</span></label>
-                <input id="title" placeholder="제목을 입력하세요."></input>
+                <label htmlFor="EventTitle">제목 <span style={{fontSize:"15px"}}>(휴가와 생일은 이름을 입력해주세요.)</span></label>
+                <input id="EventTitle" placeholder="제목을 입력하세요."></input>
                 <label htmlFor="name">이름</label>
                 <input id="name" placeholder="이름을 입력하세요."></input>
                 <label htmlFor="EventCategory">일정 분류</label>
