@@ -19,7 +19,7 @@ const AddNewEventBlock = styled.div`
     flex-direction: column;
     width : 460px;
     background : white;
-    box-shadow : 0px 0px 8px rgba(0, 0, 0, 0.125);
+    box-shadow : 0 0 8px rgba(0, 0, 0, 0.125);
     h1 {
       margin-top: 0;
       padding-top: 4px;
@@ -71,16 +71,20 @@ const StyledButton = styled.button`
     }
 `;
 
-const AddNewEvent = ( { visible, onConfirm, onCancel }) => {
-    const [pickItem, setPickItem] = useState()
+const AddNewEvent = ({
+                     visible,
+                     onConfirm,
+                     onCancel,
+                     pickItem,
+                     SelectItem
+                    }) =>
+{
+
 
     if (!visible) return null;
 
-    const selectItem = () => {
-        let selectedItem = document.getElementById("EventCategory").value;
-        console.log(selectedItem)
-        setPickItem(selectedItem)
-    }
+
+
 
     return (
         <Fullscreen>
@@ -91,11 +95,11 @@ const AddNewEvent = ( { visible, onConfirm, onCancel }) => {
                 <label htmlFor="name">이름</label>
                 <input id="name" placeholder="이름을 입력하세요."></input>
                 <label htmlFor="EventCategory">일정 분류</label>
-                <select onChange={selectItem} id="EventCategory">
+                <select onChange={SelectItem} id="EventCategory">
                     <option value="" disabled hidden>선택</option>
-                    <option value="Business">출장</option>
-                    <option value="BirthDay" >생일</option>
-                    <option value="OSD_Party">OSD행사</option>
+                    <option value="birthday" >생일</option>
+                    <option value="Event">OSD 행사</option>
+                    <option value="others">출장</option>
                     <option value="others">기타(워크샾 등)</option>
                 </select>
                 { 

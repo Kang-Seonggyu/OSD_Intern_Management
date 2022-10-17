@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import moment from 'moment';
 import styled from "styled-components";
+import CalendarController from "./CalendarController";
 
 const CalTotalBlock = styled.div`
   width: 100%;
@@ -11,23 +12,7 @@ const CalTotalBlock = styled.div`
   align-items: center;
   justify-items: center;
 `
-const CalendarControllerBlock = styled.div`
-  display: grid;
-  grid-template-columns: 50px 30px 1fr 30px 50px;
-  width: 95vw;
-  min-width: 640px;
-  height: 60px;
-  margin-top : 10px;
-  align-items: center;
-  justify-items: center;
-`
-const Spacer = styled.div`
-`
-const ControlButton = styled.button`
-  border: none;
-  text-align: center;
-  cursor: pointer;
-`
+
 const CalendarBlock = styled.div`
   width: 95vw;
   min-width: 640px;
@@ -53,7 +38,7 @@ const CalendarIndex = styled.div`
   .Event {
     background: #ffffb5;  
   }
-  .etc {
+  .others {
     background: #bcc5fd;
   }
 `
@@ -103,13 +88,19 @@ const TableBody = styled.div`
     width: 90%;
     padding-left: 6px;
   }
-  .etc {
+  .others {
     background: #bcc5fd;
     width: 90%;
     padding-left: 6px;
   }
 `
-const PushTag = (key, loadedMoment,weekend ,anothorM, today) => {
+const PushTag = (
+        key,
+        loadedMoment,
+        weekend,
+        anotherM,
+        today
+    ) => {
     return (
         today?
             <TableBody key={key} style={{background:"#c8ffc8"}}>
@@ -123,7 +114,7 @@ const PushTag = (key, loadedMoment,weekend ,anothorM, today) => {
             :
             <TableBody key={key} >
                 {
-                    anothorM ?
+                    anotherM ?
                         <div id={key} className="date" style={{color : "lightgray"}}>{loadedMoment.format('D')}</div>
                         :
                         weekend ?
@@ -135,7 +126,7 @@ const PushTag = (key, loadedMoment,weekend ,anothorM, today) => {
     )
 }
 
-function Calendar ( {AddEventClick}) {
+function Calendar ( {AddEventClick} ) {
 
     const [getMoment, setMoment] = useState(moment())
 
@@ -151,7 +142,7 @@ function Calendar ( {AddEventClick}) {
         for ( week; week <= lastWeek; week++) {
             for ( let day=0 ; day < 7 ; day ++ ) {
                 let days = today.clone().startOf('year').week(week).startOf('week').add(day, 'day'); //d로해도되지만 직관성
-                let date = `Date-${days.format('YYYYMMDD')}`
+                let date = `Date-${days.format('YYYY-MM-DD')}`
                 //------------------------------- 날짜 처리하는 구간 -------------------------------//
                 // 크게 3분류(오늘, !이번달, 이번달)로 나눠서 처리.
                 // 오늘 날짜 처리
@@ -188,22 +179,18 @@ function Calendar ( {AddEventClick}) {
     return(
         <div>
             <CalTotalBlock>
-                <CalendarControllerBlock>
-                    <button><i className="fas fa-redo fa-fw me-1" /></button>
-                    <Spacer style={{gridColumn:"2/4",gridRow : "1"}}></Spacer>
-                    <button style={{gridColumn:"4/6",gridRow : "1"}} onClick={AddEventClick}>일정추가</button>
-                    <ControlButton onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'year')) }}>«</ControlButton>
-                    <ControlButton onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }}>‹</ControlButton>
-                    <span>{today.format('YY 년 MM 월')}</span>
-                    <ControlButton onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }}>›</ControlButton>
-                    <ControlButton onClick={()=>{ setMoment(getMoment.clone().add(1, 'year')) }}>»</ControlButton>
-                </CalendarControllerBlock>
+                <CalendarController
+                    AddEventClick={AddEventClick}
+                    setMoment={setMoment}
+                    getMoment={getMoment}
+                    today={today}
+                />
                 <CalendarBlock>
                     <CalendarIndex>
                         <IndexingBar className="birthday"/>생일
                         <IndexingBar className="vacation"/>휴가
                         <IndexingBar className="Event"/>행사
-                        <IndexingBar className="etc"/>기타
+                        <IndexingBar className="others"/>기타
                     </CalendarIndex>
                     <CalendarBox>
                         { ['일','월','화','수','목','금','토'].map((day) => {
