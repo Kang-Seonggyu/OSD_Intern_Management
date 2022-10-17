@@ -1,6 +1,5 @@
 import DASHBOARD from "../../Components/Dashboard/DASHBOARD";
 import {useNavigate} from "react-router-dom";
-import AskModal from "../../Components/Common/AskModal";
 
 
 function DashboardContainer (props) {
@@ -13,7 +12,6 @@ function DashboardContainer (props) {
     return (
         <>
             <DASHBOARD onClick={CalendarClick}/>
-            <AskModal visible/>
         </>
     )
 }

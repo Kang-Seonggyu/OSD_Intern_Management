@@ -135,7 +135,7 @@ const PushTag = (key, loadedMoment,weekend ,anothorM, today) => {
     )
 }
 
-function Calendar () {
+function Calendar ( {AddEventClick}) {
 
     const [getMoment, setMoment] = useState(moment())
 
@@ -191,7 +191,7 @@ function Calendar () {
                 <CalendarControllerBlock>
                     <button><i className="fas fa-redo fa-fw me-1" /></button>
                     <Spacer style={{gridColumn:"2/4",gridRow : "1"}}></Spacer>
-                    <button style={{gridColumn:"4/6",gridRow : "1"}}>일정추가</button>
+                    <button style={{gridColumn:"4/6",gridRow : "1"}} onClick={AddEventClick}>일정추가</button>
                     <ControlButton onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'year')) }}>«</ControlButton>
                     <ControlButton onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }}>‹</ControlButton>
                     <span>{today.format('YY 년 MM 월')}</span>
