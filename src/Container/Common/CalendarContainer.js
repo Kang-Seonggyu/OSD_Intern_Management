@@ -19,11 +19,9 @@ function CalendarContainer() {
         let endDay = document.getElementById('endDate').value;
 
         let seletedDate = document.getElementById(`Date-${startDay}`);
-        console.log(pickItem)
         let new_EventTag = document.createElement('div');
             new_EventTag.setAttribute('class',`${pickItem}`);
             new_EventTag.innerHTML = `새로운 이벤트`;
-
 
         seletedDate.appendChild(new_EventTag)
 
