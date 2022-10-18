@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import Calendar from "../../Components/Schedule/Calendar";
-import AddNewEvent from "../../Components/Schedule/AddNewEvent";
+import Calendar from "../../Components/Calendar/Calendar";
+import AddNewEvent from "../../Components/Calendar/AddNewEvent";
 
 function CalendarContainer(props) {
 

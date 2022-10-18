@@ -40,7 +40,7 @@ const AddNewEventBlock = styled.div`
     font-weight: bold;
   }
   input {
-    margin-left : 15px;
+    margin-left : 10px;
     width: 200px;
   }
   select {
