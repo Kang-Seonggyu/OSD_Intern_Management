@@ -81,6 +81,8 @@ const StyledButton = styled.button`
     }
 `;
 
+// visible : 해당 이벤트가 보일지 말지 정하는 param / con (bool)
+//
 
 const AddNewEvent = ({
                      visible,
@@ -91,12 +93,13 @@ const AddNewEvent = ({
                     }) =>
 
 {
-    const [categoryError, setCategoryError] = useState(false)
+    const [NoCategory, setNoCategory] = useState(false)
 
-    const NewEventForm = () => {
+    // 일정 분류 선택시 아래 선택란이 변경되는 부분
+    const DateForm = () => {
         // 생일을 선택한 경우
         if(pickItem === "birthday") {
-            setCategoryError(false)
+            setNoCategory(false)
             return (
                 <>
                     <div style={{marginTop: "11px"}}>
@@ -158,12 +161,12 @@ const AddNewEvent = ({
             {
                 // 생일 외에 다른 것을 고를 경우
                 if(pickItem === "Event" || pickItem === "others") {
-                    setCategoryError(false)
+                    setNoCategory(false)
                 }
                 // 아무것도 고르지 않을 경우
                 // 에러 상태 'true'로 변경
                 else {
-                    setCategoryError(true)
+                    setNoCategory(true)
                 }
             }
             return (
@@ -171,8 +174,8 @@ const AddNewEvent = ({
                     <span style={{marginTop :"10px"}}>
                         <label htmlFor="startDate" style={{marginRight:"120px"}}>시작 일자</label>
                         <label htmlFor="endDate">종료 일자</label>
-                        <input type="date" id="startDate"></input>
-                        <input type="date" id="endDate"></input>
+                        <input type="date" disabled={NoCategory} id="startDate"></input>
+                        <input type="date" disabled={NoCategory} id="endDate"></input>
                     </span>
                 </>
             )
@@ -198,13 +201,13 @@ const AddNewEvent = ({
                     <option value="default" disabled style={{ color: "#ccc" }}>선택</option>
                     <option value="birthday" >생일</option>
                     <option value="Event">OSD 행사</option>
-                    <option value="others">출장</option>
+                    <option value="others">출장</option>kjiu
                     <option value="others">기타(워크샾 등)</option>
                 </select>
-                <NewEventForm />
+                <DateForm />
                         <div className="buttons" style={{justifyContent: "center"}}>
                             <StyledButton onClick={onCancel}>취소</StyledButton>
-                            {categoryError === true ?
+                            {NoCategory === true ?
                                 <div className="NotConfirm">
                                     <StyledButton className="NoPick">저장</StyledButton>
                                 </div>

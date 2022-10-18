@@ -73,6 +73,9 @@ const TableBody = styled.div`
   .date {
     padding-left: 8px;
   }
+  .weekend {
+    color : red;
+  }
   .birthday {
     background: lightpink;
     width: 90%;
