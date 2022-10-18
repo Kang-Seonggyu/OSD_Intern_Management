@@ -18,7 +18,6 @@ const CalendarBlock = styled.div`
   min-width: 640px;
   height: 72vh;
   min-height: 600px;
-  border: 1px solid black;
 `
 const CalendarIndex = styled.div`
   display: flex;
@@ -36,7 +35,7 @@ const CalendarIndex = styled.div`
   }
 
   .Event {
-    background: #ffffb5;  
+    background: #ffffb5;
   }
   .others {
     background: #bcc5fd;
@@ -57,6 +56,9 @@ const CalendarBox = styled.div`
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 1px;
   text-align: center;
+  .today {
+    background: #c8ffc8;
+  }
 `
 const TableHead = styled.div`
   background: lightgreen;
@@ -64,53 +66,55 @@ const TableHead = styled.div`
 `
 const TableBody = styled.div`
   background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   grid-auto-rows: minmax(10rem, auto);
   width: 100%;
   min-width: 90px;
   height: auto;
   min-height: 90px;
   text-align: left;
+
   .date {
+    width: 100%;
     padding-left: 8px;
+    text-align: left;
   }
   .weekend {
     color : red;
   }
   .anotherMonth {
-    background: darkgrey !important;
+    color: lightgray !important;
   }
   .birthday {
     background: lightpink;
     width: 90%;
-    padding-left: 6px;
   }
   .vacation {
     background: lightcyan;
     width: 90%;
-    padding-left: 6px;
   }
   .Event {
     background: #ffffb5;
     width: 90%;
-    padding-left: 6px;
   }
   .others {
     background: #bcc5fd;
     width: 90%;
-    padding-left: 6px;
   }
 `
 const PushTag = (
-        key,
-        loadedMoment,
-        dayClass
-    ) => {
+    key,
+    loadedMoment,
+    dayClass
+) => {
     // 다른 달의 경우 모두 회색으로 처리
     if (dayClass === "anotherMonth"
     ) {
         return (
             <TableBody id={key} key={key}>
-                <div className="date" style={{color: "lightgray"}}> {loadedMoment.format('D')} </div>
+                <div className="date anotherMonth"> {loadedMoment.format('D')} </div>
             </TableBody>
         )
     }
@@ -119,23 +123,23 @@ const PushTag = (
         // 오늘의 경우
         if (dayClass === "Today") {
             return (
-                <TableBody id={key} key={key} style={{background: "#c8ffc8"}}>
+                <TableBody id={key} key={key} className="today">
                     <div className="date"> {loadedMoment.format('D')} </div>
                 </TableBody>
             )
         }
         else {
             return(
-            <TableBody id={key} key={key}>
-                {
-                    dayClass === "week" ?
-                        // 평일일 경우 날짜를 검정색으로
-                        <div className="date"> {loadedMoment.format('D')} </div>
-                        :
-                        // 주말일 경우 날짜를 빨간색으로
-                        <div className="date weekend"> {loadedMoment.format('D')} </div>
-                }
-            </TableBody>)
+                <TableBody id={key} key={key}>
+                    {
+                        dayClass === "week" ?
+                            // 평일일 경우 날짜를 검정색으로
+                            <div className="date"> {loadedMoment.format('D')} </div>
+                            :
+                            // 주말일 경우 날짜를 빨간색으로
+                            <div className="date weekend"> {loadedMoment.format('D')} </div>
+                    }
+                </TableBody>)
         }
     }
 }
@@ -164,7 +168,7 @@ function Calendar ( {AddEventClick} ) {
                 // (이번달, !이번달)로 나눠서 처리.
                 // 이번달은 글씨를 (평일 : 검정, 주말 : 빨강) 처리.
                 if(days.format('MM') === today.format('MM')){
-                    // // 오늘 날짜 처리
+                    // 오늘 날짜 처리
                     if (moment().format('YYYYMMDD') === days.format('YYYYMMDD')) {
                         result.push(PushTag(date, days, "Today"));
                     }
