@@ -204,11 +204,11 @@ function DashCalendar({onClick}) {
     return (
         <>
             <ControllerBlock>
-                <DControlButton title="1년전" onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'year')) }}>«</DControlButton>
-                <DControlButton title="1달전" onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }}>‹</DControlButton>
+                <ControlButton title="1년전" onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'year')) }}>«</ControlButton>
+                <ControlButton title="1달전" onClick={()=>{ setMoment(getMoment.clone().subtract(1, 'month')) }}>‹</ControlButton>
                 <span>{today.format('YY 년 MM 월')}</span>
-                <DControlButton title="1달후" onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }}>›</DControlButton>
-                <DControlButton title="1년후" onClick={()=>{ setMoment(getMoment.clone().add(1, 'year')) }}>»</DControlButton>
+                <ControlButton title="1달후" onClick={()=>{ setMoment(getMoment.clone().add(1, 'month')) }}>›</ControlButton>
+                <ControlButton title="1년후" onClick={()=>{ setMoment(getMoment.clone().add(1, 'year')) }}>»</ControlButton>
             </ControllerBlock>
             <CalendarBlock>
                 <CalendarIndex>
