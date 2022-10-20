@@ -45,7 +45,7 @@ function DASHBOARD ( {onClick} ) {
                     <Bobfriend />
                 </DashboardMain>
             </DashboardMainBlock>
-            <Holiday />
+
             <div>
                 <ol>
                     {makeArray()}

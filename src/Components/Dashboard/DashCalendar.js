@@ -81,7 +81,6 @@ const TableHead = styled.div`
   text-align: center;
 `
 const TableBody = styled.div`
-  display: inline-block;
   background: white;
   grid-auto-rows: minmax(15rem, auto);
   width: 100%;
