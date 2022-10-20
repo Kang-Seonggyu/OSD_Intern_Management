@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Bobfriend from "./DashBob";
 import DashCalendar from "./DashCalendar";
+import Holiday from "../Calendar/Holiday";
 
 const standardSize = 10;
 
@@ -44,6 +45,7 @@ function DASHBOARD ( {onClick} ) {
                     <Bobfriend />
                 </DashboardMain>
             </DashboardMainBlock>
+            <Holiday />
             <div>
                 <ol>
                     {makeArray()}
