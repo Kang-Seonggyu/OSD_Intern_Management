@@ -41,7 +41,7 @@ const CalendarIndex = styled.div`
   .Event {
     background: #ffffb5;  
   }
-  .etc {
+  .others {
     background: #bcc5fd;
   }
 `
@@ -81,40 +81,57 @@ const TableHead = styled.div`
   text-align: center;
 `
 const TableBody = styled.div`
+  display: inline-block;
   background: white;
   grid-auto-rows: minmax(15rem, auto);
   width: 100%;
   height: 7vh;
   text-align: left;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 
   .date {
+    width: 100%;
     padding-left: 8px;
+    text-align: left;
   }
-  .weekend {
+  .sunday {
     color : red;
+  }
+  
+  .holiday {
+    background: #ffd7a3;
+    width: 90%;
+    padding-left: 6px;
+    font-size: 1vh;
   }
 
   .birthday {
     background: lightpink;
     width: 90%;
     padding-left: 6px;
+    font-size: 1vh;
   }
 
   .vacation {
     background: lightcyan;
     width: 90%;
     padding-left: 6px;
+    font-size: 1vh;
   }
 
   .Event {
     background: #ffffb5;
     width: 90%;
     padding-left: 6px;
+    font-size: 1vh;
   }
-  .etc {
+  .others {
     background: #bcc5fd;
     width: 90%;
     padding-left: 6px;
+    font-size: 1vh;
   }
 
 `
@@ -152,7 +169,7 @@ const PushTag = (
                             <div className="date"> {loadedMoment.format('D')} </div>
                             :
                             // 주말일 경우 날짜를 빨간색으로
-                            <div className="date weekend"> {loadedMoment.format('D')} </div>
+                            <div className="date sunday"> {loadedMoment.format('D')} </div>
                     }
                 </TableBody>)
         }
@@ -174,7 +191,7 @@ function DashCalendar({onClick}) {
         for (week; week <= lastWeek; week++) {
             for (let day = 0; day < 7; day++) {
                 let days = today.clone().startOf('year').week(week).startOf('week').add(day, 'day'); // 'D' 로해도되지만 직관성
-                let date = `Date-${days.format('YYYYMMDD')}`
+                let date = `Date-${days.format('YYYY-MM-DD')}`
                 //------------------------------- 날짜 처리하는 구간 -------------------------------//
                 // (이번달, !이번달)로 나눠서 처리.
                 // 이번달은 글씨를 (평일 : 검정, 주말 : 빨강) 처리.
@@ -185,7 +202,7 @@ function DashCalendar({onClick}) {
                     }
                     // 일요일 인 날에는 빨간글씨
                     else if (day === 0) {
-                        result.push (PushTag(date, days, "weekend"));
+                        result.push (PushTag(date, days, "sunday"));
                     }
                     // 일요일 아닌 날에는 검정글씨
                     else {
@@ -215,7 +232,7 @@ function DashCalendar({onClick}) {
                     <IndexingBar className="birthday"/>생일
                     <IndexingBar className="vacation"/>휴가
                     <IndexingBar className="Event"/>행사
-                    <IndexingBar className="etc"/>기타
+                    <IndexingBar className="others"/>기타
                 </CalendarIndex>
                 <CalendarBox>
                     <NaviBox onClick={onClick} />

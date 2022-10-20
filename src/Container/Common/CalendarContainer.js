@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
+import Holiday from "../../Components/Calendar/Holiday";
 
 function CalendarContainer(props) {
 
@@ -10,10 +11,6 @@ function CalendarContainer(props) {
     const [pickItem, setPickItem] = useState();
     // 카테고리 미선택 확인
     const [NoCategory, setNoCategory] = useState(true);
-
-    function inputDataCheck (e) {
-
-    }
 
 
     const AddEventClick = () => {
@@ -46,8 +43,8 @@ function CalendarContainer(props) {
 
             let selectedDays = document.getElementById(`Date-${startDay}`);
             let new_EventTag = document.createElement('div');
-            new_EventTag.setAttribute('class',`${pickItem}`);
-            new_EventTag.innerHTML = `${title}`;
+                new_EventTag.setAttribute('class',`${pickItem}`);
+                new_EventTag.innerHTML = `${title}`;
 
             selectedDays.appendChild(new_EventTag)
             setPickItem(undefined)
@@ -73,6 +70,7 @@ function CalendarContainer(props) {
                 pickItem={pickItem}
                 SelectItem={SelectItem}
             />
+            <Holiday />
         </div>
     );
 }
