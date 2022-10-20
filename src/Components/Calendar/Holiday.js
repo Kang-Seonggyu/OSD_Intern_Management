@@ -13,12 +13,10 @@ import {useState, useEffect} from "react";
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-function HolidayList () {
-    const [loading, setLoading] = useState(true);
+function Holiday ( {SeeingDate} ) {
     const [Holidays, setHolidays] = useState([]);
 
     const API_KEY = "E6c3ACjloHKJTdlaQSkPVuUcoZEWV8zH9knCD4EFe7gqpiCWNhNwdX8laJuPFjvAouKFvRsoV%2FruPjl2kz4Yqw%3D%3D"
-
     let solYear = '2022';
     let solMonth = '10';
     const operation = 'getHoliDeInfo';
@@ -31,47 +29,53 @@ function HolidayList () {
         //console.log("res :" ,res ,"json :", json)
 
         setHolidays(json.response.body.items.item)
-        setLoading(false);
     }
 
     useEffect(() => {
         getHolidays()
     }, [])
 
-    const MakeEvent = ( Data ) => {
-        let event_year = Data.Data.locdate.toString().substring(0,4);
-        let event_month = Data.Data.locdate.toString().substring(4,6).padStart(2,0);
-        let event_day = Data.Data.locdate.toString().substring(6,8).padStart(2,0);
+    console.log(Holidays)
 
-        let event_ID = `Date-${event_year}-${event_month}-${event_day}`;
-        let selected_Day = document.getElementById(`${event_ID}`);
+    let HolidayList = [];
 
-        let new_EventTag = document.createElement('div');
-            new_EventTag.setAttribute('class',`holiday`);
-            new_EventTag.innerHTML = `${Data.Data.dateName}`;
+    Holidays.map((holiday) => {
+        HolidayList.push({holiday})
+    })
 
-        selected_Day.appendChild(new_EventTag);
-    }
+    console.log(HolidayList)
+
+    // useEffect(() => {
+    //     {
+    //         Holidays && Holidays.map((day) => (
+    //             <MakeEvent key={day.locdate} Data={day} />
+    //         ))}
+    // }, [Holidays])
 
 
-    //console.log(Holidays)
+    // const MakeEvent = ( Data ) => {
+    //     let event_year = Data.Data.locdate.toString().substring(0,4);
+    //     let event_month = Data.Data.locdate.toString().substring(4,6).padStart(2,0);
+    //     let event_day = Data.Data.locdate.toString().substring(6,8).padStart(2,0);
+    //
+    //     let event_ID = `Date-${event_year}-${event_month}-${event_day}`;
+    //     let selected_Day = document.getElementById(`${event_ID}`);
+    //
+    //     let new_EventTag = document.createElement('div');
+    //         new_EventTag.setAttribute('class',`holiday`);
+    //         new_EventTag.innerHTML = `${Data.Data.dateName}`;
+    //
+    //     selected_Day.appendChild(new_EventTag);
+    // }
 
-    return (
-        loading?
-            <div>
-                로딩중!
-            </div>
-            :
-            <div>
-                {
-                    Holidays && Holidays.map((day) => (
-                    <div key={day.locdate}>
-                        <MakeEvent Data={day} />
-                    </div>
-                ))}
-            </div>
-    )
+    return <div>여기</div>
 
+            // <div>
+            //     {
+            //         Holidays && Holidays.map((day) => (
+            //             <MakeEvent key={day.locdate} Data={day} />
+            //     ))}
+            // </div>
 }
 
-export default HolidayList;
+export default Holiday;

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
-import Holiday from "../../Components/Calendar/Holiday";
+import HolidayList from "../../Components/Calendar/Holiday";
 
 function CalendarContainer(props) {
 
@@ -70,7 +70,7 @@ function CalendarContainer(props) {
                 pickItem={pickItem}
                 SelectItem={SelectItem}
             />
-            <Holiday />
+            <HolidayList />
         </div>
     );
 }
