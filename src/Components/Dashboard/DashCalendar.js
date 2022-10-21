@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import moment from 'moment';
 import styled from "styled-components";
+import Holiday from "../Calendar/Holiday";
+import {HolidayList} from "../Calendar/Holiday";
 
 const ControllerBlock = styled.div`
   margin-top : 5px;
@@ -239,6 +241,11 @@ function DashCalendar({onClick}) {
                         return( <TableHead key={day} className="tableHead"><div>{day}</div></TableHead> )
                     })}
                     {calendarArr()}
+                    <Holiday />
+                    { console.log(HolidayList)}
+                    {HolidayList.map((day) => <div key={day.locdate}>{day.dateName}</div>)}
+
+
                 </CalendarBox>
 
             </CalendarBlock>

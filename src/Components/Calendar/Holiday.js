@@ -13,6 +13,8 @@ import {useState, useEffect} from "react";
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+export let HolidayList = [];
+
 function Holiday ( {SeeingDate} ) {
     const [Holidays, setHolidays] = useState([]);
 
@@ -31,19 +33,14 @@ function Holiday ( {SeeingDate} ) {
         setHolidays(json.response.body.items.item)
     }
 
+
     useEffect(() => {
         getHolidays()
     }, [])
 
-    console.log(Holidays)
+    HolidayList = Holidays
 
-    let HolidayList = [];
 
-    Holidays.map((holiday) => {
-        HolidayList.push({holiday})
-    })
-
-    console.log(HolidayList)
 
     // useEffect(() => {
     //     {
@@ -68,8 +65,6 @@ function Holiday ( {SeeingDate} ) {
     //     selected_Day.appendChild(new_EventTag);
     // }
 
-    return <div>여기</div>
-
             // <div>
             //     {
             //         Holidays && Holidays.map((day) => (
@@ -78,4 +73,5 @@ function Holiday ( {SeeingDate} ) {
             // </div>
 }
 
-export default Holiday;
+
+export default  Holiday;

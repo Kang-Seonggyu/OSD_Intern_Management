@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import PopupInfo from "./PopUpInfo";
 import "./table.css"
-import NoPopUp from "./NoPopUp";
+import TestReturn from "./TestReturn";
 
 function InfoTable (){
     const [loading, setLoading] = useState(true)
@@ -45,7 +45,7 @@ function InfoTable (){
                 </thead>
                 <tbody>
                 { Infos && Infos.map((infoData) =>
-                    <tr key={infoData.intern_number} className="addedInfo" onMouseEnter={PopupInfo} onMouseOut={NoPopUp}>
+                    <tr key={infoData.intern_number} className="addedInfo" onMouseEnter={PopupInfo} onMouseOut={TestReturn}>
                         <th id={infoData.intern_number}>{infoData.intern_number}</th>
                         <th id={infoData.intern_number}>{infoData.intern_name}</th>
                         <th id={infoData.intern_number}>{infoData.intern_duty}</th>
