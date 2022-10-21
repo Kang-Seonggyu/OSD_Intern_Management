@@ -17,7 +17,6 @@ function DashboardContainer (props) {
     return (
         <>
             <DASHBOARD onClick={CalendarClick}/>
-            <CounterContainer />
         </>
     )
 }
