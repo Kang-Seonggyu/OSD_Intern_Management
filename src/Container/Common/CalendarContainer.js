@@ -61,6 +61,10 @@ function CalendarContainer(props) {
         setNoCategory(false);
         setPickItem(selectItem);
     }
+    const onReload = () => {
+        window.location.reload();
+    }
+
 
     const { year, month  } = useSelector(state => ({
         year : state.momenter.year,
@@ -79,6 +83,7 @@ function CalendarContainer(props) {
         <div>
             <Calendar
                 AddEventClick={AddEventClick}
+                onReload={onReload}
                 year={year}
                 month={month}
                 yearIncreaseButton={yearIncreaseButton}
