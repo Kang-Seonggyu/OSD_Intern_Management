@@ -3,6 +3,8 @@ import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
 import HolidayList from "../../Components/Calendar/Holiday";
 import Counter from "../../Components/Common/Counter";
+import {useDispatch, useSelector} from "react-redux";
+import {monthDecrease, monthIncrease, yearDecrease, yearIncrease} from "../../Components/modules/momenter";
 
 function CalendarContainer(props) {
 
@@ -60,9 +62,30 @@ function CalendarContainer(props) {
         setPickItem(selectItem);
     }
 
+    const { year, month  } = useSelector(state => ({
+        year : state.momenter.year,
+        month : state.momenter.month
+    }));
+
+    const dispatch = useDispatch();
+
+    const yearIncreaseButton = () => dispatch(yearIncrease());
+    const yearDecreaseButton = () => dispatch(yearDecrease());
+    const monthIncreaseButton = () => dispatch(monthIncrease());
+    const monthDecreaseButton = () => dispatch(monthDecrease());
+
+
     return (
         <div>
-            <Calendar AddEventClick={AddEventClick} />
+            <Calendar
+                AddEventClick={AddEventClick}
+                year={year}
+                month={month}
+                yearIncreaseButton={yearIncreaseButton}
+                yearDecreaseButton={yearDecreaseButton}
+                monthIncreaseButton={monthIncreaseButton}
+                monthDecreaseButton={monthDecreaseButton}
+            />
             <AddNewEvent
                 visible={NewEvent}
                 onCancel={CancelClick}

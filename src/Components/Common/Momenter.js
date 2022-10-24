@@ -3,7 +3,7 @@ function Momenter ( {year, month, yearIncreaseButton, yearDecreaseButton, monthI
         <span>
             <button onClick={yearDecreaseButton} >«</button>
             <button onClick={monthDecreaseButton}>‹</button>
-            <h1 style={{ display : "inline-block"}}>{year}년 {month}월</h1>
+            <h1 style={{ display : "inline-block"}}>{year}년 {month.toString().padStart(2,0)}월</h1>
             <button onClick={monthIncreaseButton}>›</button>
             <button onClick={yearIncreaseButton}>»</button>
         </span>
