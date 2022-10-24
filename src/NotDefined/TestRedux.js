@@ -1,73 +1,238 @@
-import { createStore } from 'redux';
+// 다른 달의 경우 모두 회색으로 처리
+// if (dayClass === "anotherMonth"
+// ) {
+//     return (
+//         <TableBody id={key} key={key}>
+//             <div className="date anotherMonth"> {loadedMoment.format('D')} </div>
+//         </TableBody>
+//     )
+// }
+// // 이번 달의 경우 (오늘,평일,주말) 각각 따로 처리
+// else {
+//     if (isHoliday) {
+//         if (isEvent) {
+//             // 오늘의 경우
+//             if (dayClass === "Today") {
+//                 return (
+//                     <TableBody id={key} key={key} className="today">
+//                         <div className="date">
+//                             {loadedMoment.format('D')}
+//                             <div className="holiday">
+//                                 {isHoliday}
+//                             </div>
+//                             <div className={isEvent}>
+//                                 {eventTitle}
+//                             </div>
+//                         </div>
+//                     </TableBody>
+//                 )
+//             }
+//             else {
+//                 return(
+//                     <TableBody id={key} key={key}>
+//                         {
+//                             dayClass === "week" ?
+//                                 // 평일일 경우 날짜를 검정색으로
+//                                 <div className="date">
+//                                     {loadedMoment.format('D')}
+//                                     <div className="holiday">
+//                                         {isHoliday}
+//                                     </div>
+//                                     <div className={isEvent}>
+//                                         {eventTitle}
+//                                     </div>
+//                                 </div>
+//                                 :
+//                                 // 주말일 경우 날짜를 빨간색으로
+//                                 <div className="date sunday">
+//                                     {loadedMoment.format('D')}
+//                                     <div className="holiday">
+//                                         {isHoliday}
+//                                     </div>
+//                                     <div className={isEvent}>
+//                                         {eventTitle}
+//                                     </div>
+//                                 </div>
+//                         }
+//                     </TableBody>)
+//             }
+//         }
+//         else {
+//             // 오늘의 경우
+//             if (dayClass === "Today") {
+//                 return (
+//                     <TableBody id={key} key={key} className="today">
+//                         <div className="date">
+//                             {loadedMoment.format('D')}
+//                             <div className="holiday">
+//                                 {isHoliday}
+//                             </div>
+//                         </div>
+//                     </TableBody>
+//                 )
+//             }
+//             else {
+//                 return(
+//                     <TableBody id={key} key={key}>
+//                         {
+//                             dayClass === "week" ?
+//                                 // 평일일 경우 날짜를 검정색으로
+//                                 <div className="date">
+//                                     {loadedMoment.format('D')}
+//                                     <div className="holiday">
+//                                         {isHoliday}
+//                                     </div>
+//                                 </div>
+//                                 :
+//                                 // 주말일 경우 날짜를 빨간색으로
+//                                 <div className="date sunday">
+//                                     {loadedMoment.format('D')}
+//                                     <div className="holiday">
+//                                         {isHoliday}
+//                                     </div>
+//                                 </div>
+//                         }
+//                     </TableBody>)
+//             }
+//         }
+//     }
+//     else {
+//         if (isEvent) {
+//             if (dayClass === "Today") {
+//                 return (
+//                     <TableBody id={key} key={key} className="today">
+//                         <div className="date">
+//                             {loadedMoment.format('D')}
+//                             <div className={isEvent}>
+//                                 {eventTitle}
+//                             </div>
+//                         </div>
+//                     </TableBody>
+//                 )
+//             }
+//             else {
+//                 return(
+//                     <TableBody id={key} key={key}>
+//                         {
+//                             dayClass === "week" ?
+//                                 // 평일일 경우 날짜를 검정색으로
+//                                 <div className="date">
+//                                     {loadedMoment.format('D')}
+//                                     <div className={isEvent}>
+//                                         {eventTitle}
+//                                     </div>
+//                                 </div>
+//                                 :
+//                                 // 주말일 경우 날짜를 빨간색으로
+//                                 <div className="date sunday">
+//                                     {loadedMoment.format('D')}
+//                                     <div className={isEvent}>
+//                                         {eventTitle}
+//                                     </div>
+//                                 </div>
+//                         }
+//                     </TableBody>)
+//             }
+//         }
+//         else {
+//             if (dayClass === "Today") {
+//                 return (
+//                     <TableBody id={key} key={key} className="today">
+//                         <div className="date">
+//                             {loadedMoment.format('D')}
+//                         </div>
+//                     </TableBody>
+//                 )
+//             }
+//             else {
+//                 return(
+//                     <TableBody id={key} key={key}>
+//                         {
+//                             dayClass === "week" ?
+//                                 // 평일일 경우 날짜를 검정색으로
+//                                 <div className="date">
+//                                     {loadedMoment.format('D')}
+//                                 </div>
+//                                 :
+//                                 // 주말일 경우 날짜를 빨간색으로
+//                                 <div className="date sunday">
+//                                     {loadedMoment.format('D')}
+//                                 </div>
+//                         }
+//                     </TableBody>)
+//             }
+//         }
+//     }
+//
+// }
 
-// createStore는 스토어를 만들어주는 함수입니다.
-// 리액트 프로젝트에서는 단 하나의 스토어를 만듭니다.
-
-/* 리덕스에서 관리 할 상태 정의 */
-const initialState = {
-    counter: 0,
-    list: []
-};
-
-/* 액션 타입 정의 */
-// 액션 타입은 주로 대문자로 작성합니다.
-const INCREASE = 'INCREASE';
-const DECREASE = 'DECREASE';
-const ADD_HOLIDAY_LIST = 'ADD_HOLIDAY_LIST';
-
-
-/* 액션 생성함수 정의 */
-// 액션 생성함수는 주로 camelCase 로 작성합니다.
-const increase = () => ({
-    type: INCREASE // 액션 객체에는 type 값이 필수입니다.
-});
-
-const decrease = () => ({
-    type: DECREASE
-});
-
-const addHolidayList = item => ({
-    type: ADD_HOLIDAY_LIST,
-    item
-});
-
-/* 리듀서 만들기 */
-// 위 액션 생성함수들을 통해 만들어진 객체들을 참조하여
-// 새로운 상태를 만드는 함수를 만들어봅시다.
-// 주의: 리듀서에서는 불변성을 꼭 지켜줘야 합니다!
-
-function testReducer(state = initialState, action) {
-    // state 의 초깃값을 initialState 로 지정했습니다.
-    switch (action.type) {
-        case INCREASE:
-            return {
-                ...state,
-                counter: state.counter + 1
-            };
-        case DECREASE:
-            return {
-                ...state,
-                counter: state.counter - 1
-            };
-        case ADD_HOLIDAY_LIST:
-            return {
-                ...state,
-                list: state.list.concat(action.item)
-            };
-        default:
-            return state;
-    }
-}
-
-/* 스토어 만들기 */
-const store = createStore(testReducer);
-
-console.log(store.getState()); // 현재 store 안에 들어있는 상태를 조회합니다.
-
-// 스토어안에 들어있는 상태가 바뀔 때 마다 호출되는 listener 함수
-const listener = () => {
-    const state = store.getState();
-    console.log(state);
-};
-
-const unsubscribe = store.subscribe(listener);
+// //------------------------------- 날짜 처리하는 구간 -------------------------------//
+// // (이번달, !이번달)로 나눠서 처리.
+// // 이번달은 글씨를 (평일 : 검정, 주말 : 빨강) 처리.
+// if(days.format('MM') === today.format('MM')){
+//     if (date in event) {
+//         if (date === `Date-${startDate}` && confirm) {
+//             // 오늘 날짜 처리
+//             if (moment().format('YYYYMMDD') === days.format('YYYYMMDD')) {
+//                 result.push(PushTag(date, days, "Today", event[date], pickItem, eventTitle));
+//             }
+//             // 일요일 인 날에는 빨간글씨
+//             else if (day === 0) {
+//                 result.push (PushTag(date, days, "sunday", event[date], pickItem, eventTitle));
+//             }
+//             // 일요일 아닌 날에는 검정글씨
+//             else {
+//                 result.push (PushTag(date, days, "week", event[date], pickItem, eventTitle));
+//             }
+//         }
+//         else {
+//             if (moment().format('YYYYMMDD') === days.format('YYYYMMDD')) {
+//                 result.push(PushTag(date, days, "Today", event[date], '', ''));
+//             }
+//             // 일요일 인 날에는 빨간글씨
+//             else if (day === 0) {
+//                 result.push (PushTag(date, days, "sunday", event[date], '', ''));
+//             }
+//             // 일요일 아닌 날에는 검정글씨
+//             else {
+//                 result.push (PushTag(date, days, "week", event[date], '', ''));
+//             }
+//         }
+//
+//     }
+//     else {
+//         if(date === `Date-${startDate}` && confirm) {
+//             // 오늘 날짜 처리
+//             if (moment().format('YYYYMMDD') === days.format('YYYYMMDD')) {
+//                 result.push(PushTag(date, days, "Today", '', pickItem, eventTitle));
+//             }
+//             // 일요일 인 날에는 빨간글씨
+//             else if (day === 0) {
+//                 result.push (PushTag(date, days, "sunday", '', pickItem, eventTitle));
+//             }
+//             // 일요일 아닌 날에는 검정글씨
+//             else {
+//                 result.push (PushTag(date, days, "week", '', pickItem, eventTitle));
+//             }
+//         }
+//         else {
+//             // 오늘 날짜 처리
+//             if (moment().format('YYYYMMDD') === days.format('YYYYMMDD')) {
+//                 result.push(PushTag(date, days, "Today", '', '', ''));
+//             }
+//             // 일요일 인 날에는 빨간글씨
+//             else if (day === 0) {
+//                 result.push (PushTag(date, days, "sunday", '', '', ''));
+//             }
+//             // 일요일 아닌 날에는 검정글씨
+//             else {
+//                 result.push (PushTag(date, days, "week", '', '', ''));
+//             }
+//         }
+//
+//     }
+// }
+// // 이번달이 아닌 경우 모두 회색처리.
+// else {
+//     result.push (PushTag(date, days,"anotherMonth"));
+// }

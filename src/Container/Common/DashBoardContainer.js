@@ -1,6 +1,7 @@
 import DASHBOARD from "../../Components/Dashboard/DASHBOARD";
 import {useNavigate} from "react-router-dom";
-import CounterContainer from "./CounterContainer";
+import { useSelector, useDispatch} from "react-redux";
+import { yearIncrease, yearDecrease, monthDecrease, monthIncrease} from "../../Components/modules/momenter";
 
 
 function DashboardContainer (props) {
@@ -10,13 +11,29 @@ function DashboardContainer (props) {
         navigate('/calendar');
     };
 
-    const CalendarControl = ({ CalcType, amount }) => {
+    const { year, month } = useSelector(state => ({
+        year : state.momenter.year,
+        month : state.momenter.month
+    }));
 
-    }
+    const dispatch = useDispatch();
+
+    const yearIncreaseButton = () => dispatch(yearIncrease());
+    const yearDecreaseButton = () => dispatch(yearDecrease());
+    const monthIncreaseButton = () => dispatch(monthIncrease());
+    const monthDecreaseButton = () => dispatch(monthDecrease());
 
     return (
         <>
-            <DASHBOARD onClick={CalendarClick}/>
+            <DASHBOARD
+                onClick={CalendarClick}
+                year={year}
+                month={month}
+                yearIncreaseButton={yearIncreaseButton}
+                yearDecreaseButton={yearDecreaseButton}
+                monthIncreaseButton={monthIncreaseButton}
+                monthDecreaseButton={monthDecreaseButton}
+            />
         </>
     )
 }
