@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
 import HolidayList from "../../Components/Calendar/Holiday";
-import Counter from "../../Components/Common/Counter";
 import {useDispatch, useSelector} from "react-redux";
 import {monthDecrease, monthIncrease, yearDecrease, yearIncrease} from "../../Components/modules/momenter";
 
