@@ -89,7 +89,7 @@ const DTableBody = styled.div`
   background: white;
   grid-auto-rows: minmax(15rem, auto);
   width: 100%;
-  height: 7vh;
+  height: 8vh;
   text-align: left;
   max-width: 100%;
   white-space: nowrap;
