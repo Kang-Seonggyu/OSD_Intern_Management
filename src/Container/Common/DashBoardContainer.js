@@ -11,9 +11,8 @@ function DashboardContainer (props) {
         navigate('/calendar');
     };
 
-    const { year, month } = useSelector(state => ({
-        year : state.momenter.year,
-        month : state.momenter.month
+    const { momentValue } = useSelector(state => ({
+        momentValue : state.momenter.momentValue,
     }));
 
     const dispatch = useDispatch();
@@ -27,8 +26,7 @@ function DashboardContainer (props) {
         <>
             <DASHBOARD
                 onClick={CalendarClick}
-                year={year}
-                month={month}
+                momentValue={momentValue}
                 yearIncreaseButton={yearIncreaseButton}
                 yearDecreaseButton={yearDecreaseButton}
                 monthIncreaseButton={monthIncreaseButton}

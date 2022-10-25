@@ -65,6 +65,9 @@ const DCalendarBox = styled.div`
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 1px;
   margin: 3px;
+  .today {
+    background: #c8ffc8;
+  }
 `
 
 const NaviBox = styled.div`
@@ -161,15 +164,13 @@ const DPushTag = (key,
 
 function DashCalendar({
                           onClick,
-                          year,
-                          month,
+                          momentValue,
                           yearIncreaseButton,
                           yearDecreaseButton,
                           monthIncreaseButton,
                           monthDecreaseButton
                       }) {
     const [Holidays, setHolidays] = useState([]);
-    const [getMoment, setMoment] = useState(moment())
 
     //// 나중에 API 받으면 수정해야할 부분
     ////
@@ -180,15 +181,14 @@ function DashCalendar({
     ////
     //////////////////수정 여기까지
 
-    const today = getMoment;
     // 이번달의 첫번째 주
-    const firstWeek = today.clone().startOf('month').week();
+    const firstWeek = momentValue.clone().startOf('month').week();
     // 이번달의 마지막 주 (만약 마지막 주가 1이 나온다면 53번째 주로 변경)
-    const lastWeek = today.clone().endOf('month').week() === 1? 53 : today.clone().endOf('month').week();
+    const lastWeek = momentValue.clone().endOf('month').week() === 1? 53 : momentValue.clone().endOf('month').week();
 
     const API_KEY = "E6c3ACjloHKJTdlaQSkPVuUcoZEWV8zH9knCD4EFe7gqpiCWNhNwdX8laJuPFjvAouKFvRsoV%2FruPjl2kz4Yqw%3D%3D"
-    let solYear = year;
-    let solMonth = month.toString().padStart(2,0);
+    let solYear = momentValue.format('YYYY');
+    let solMonth = momentValue.format('MM');
     const operation = 'getHoliDeInfo';
 
     let url = `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/${operation}?solYear=${solYear}&solMonth=${solMonth}&ServiceKey=${API_KEY}&_type=json`;
@@ -223,7 +223,7 @@ function DashCalendar({
         }
         for (week; week <= lastWeek; week++) {
             for (let day = 0; day < 7; day++) {
-                let days = today.clone().startOf('year').week(week).startOf('week').add(day, 'day'); // 'D' 로해도되지만 직관성
+                let days = momentValue.clone().startOf('year').week(week).startOf('week').add(day, 'day'); // 'D' 로해도되지만 직관성
                 let date = `Date-${days.format('YYYY-MM-DD')}`
 
                 let todayCheck = moment().format('YYYYMMDD') === days.format('YYYYMMDD') ? 'Today' : 'week';
@@ -231,7 +231,7 @@ function DashCalendar({
                 //------------------------------- 날짜 처리하는 구간 -------------------------------//
                 // (이번달, !이번달)로 나눠서 처리.
                 // 이번달은 글씨를 (평일 : 검정, 주말 : 빨강) 처리.
-                if (days.format('MM') === today.format('MM')) {
+                if (days.format('MM') === momentValue.format('MM')) {
                     if (date in event) {
                         result.push(DPushTag(date, days, dayCheck, event[date]));
                     } else {
@@ -246,31 +246,15 @@ function DashCalendar({
         }
         return result;
     }
-    const yearPlusClick =()=> {
-        setMoment(getMoment.clone().add(1, 'year'))
-        yearIncreaseButton()
-    }
-    const yearMinusClick=()=> {
-        setMoment(getMoment.clone().subtract(1, 'year'))
-        yearDecreaseButton()
-    }
-    const monthPlusClick =()=> {
-        setMoment(getMoment.clone().add(1, 'month'))
-        monthIncreaseButton()
-    }
-    const monthMinusClick =()=> {
-        setMoment(getMoment.clone().subtract(1, 'month'))
-        monthDecreaseButton()
-    }
 
     return (
         <div>
             <DControllerBlock>
-                <DControlButton title="1년전" onClick={yearMinusClick}>«</DControlButton>
-                <DControlButton title="1달전" onClick={monthMinusClick}>‹</DControlButton>
-                <span>{year}년{month}월</span>
-                <DControlButton title="1달후" onClick={monthPlusClick}>›</DControlButton>
-                <DControlButton title="1년후" onClick={yearPlusClick}>»</DControlButton>
+                <DControlButton title="1년전" onClick={yearDecreaseButton}>«</DControlButton>
+                <DControlButton title="1달전" onClick={monthDecreaseButton}>‹</DControlButton>
+                <span>{momentValue.format('YYYY 년 MM 월')}</span>
+                <DControlButton title="1달후" onClick={monthIncreaseButton}>›</DControlButton>
+                <DControlButton title="1년후" onClick={yearIncreaseButton}>»</DControlButton>
             </DControllerBlock>
             <DCalendarBlock>
                 <DCalendarIndex>

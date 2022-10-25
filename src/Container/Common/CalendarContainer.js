@@ -13,6 +13,12 @@ function CalendarContainer(props) {
     const [pickItem, setPickItem] = useState();
     // 카테고리 미선택 확인
     const [NoCategory, setNoCategory] = useState(true);
+    const [input, setInput] = useState({
+        eventTitle: '',
+        writer: '',
+        startDate: '',
+        endDate: '',
+    })
 
 
     const AddEventClick = () => {
@@ -65,10 +71,10 @@ function CalendarContainer(props) {
     }
 
 
-    const { year, month  } = useSelector(state => ({
-        year : state.momenter.year,
-        month : state.momenter.month
+    const { momentValue } = useSelector(state => ({
+        momentValue: state.momenter.momentValue,
     }));
+
 
     const dispatch = useDispatch();
 
@@ -83,8 +89,7 @@ function CalendarContainer(props) {
             <Calendar
                 AddEventClick={AddEventClick}
                 onReload={onReload}
-                year={year}
-                month={month}
+                momentValue={momentValue}
                 yearIncreaseButton={yearIncreaseButton}
                 yearDecreaseButton={yearDecreaseButton}
                 monthIncreaseButton={monthIncreaseButton}
