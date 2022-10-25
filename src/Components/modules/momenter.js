@@ -14,6 +14,9 @@ export const yearDecrease = () => ({ type: YEAR_DECREASE });
 export const monthIncrease = () => ({ type : MONTH_INCREASE });
 export const monthDecrease = () => ({ type : MONTH_DECREASE });
 
+export const monthIncreaseAsync = () => dispatch => {
+    setTimeout(() => dispatch(monthIncrease()), 1000);
+};
 /* 초기 상태 선언 */
 const initialState = {
     momentValue : moment()

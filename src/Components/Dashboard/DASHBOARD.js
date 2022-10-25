@@ -30,7 +30,7 @@ function DASHBOARD ({ onClick,
                         yearIncreaseButton,
                         yearDecreaseButton,
                         monthDecreaseButton,
-                        monthIncreaseButton
+                        monthIncreaseButton,
     })  {
     // 임시로 배열 만들기.
     function makeArray () {

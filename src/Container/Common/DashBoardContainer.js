@@ -1,7 +1,13 @@
 import DASHBOARD from "../../Components/Dashboard/DASHBOARD";
 import {useNavigate} from "react-router-dom";
 import { useSelector, useDispatch} from "react-redux";
-import { yearIncrease, yearDecrease, monthDecrease, monthIncrease} from "../../Components/modules/momenter";
+import {
+    yearIncrease,
+    yearDecrease,
+    monthDecrease,
+    monthIncrease,
+    monthIncreaseAsync
+} from "../../Components/modules/momenter";
 
 
 function DashboardContainer (props) {
