@@ -162,7 +162,6 @@ const PushTag = (
 
 function Calendar ({
                        AddEventClick,
-                       confirm,
                        onReload,
                        momentValue,
                        monthDecreaseButton,
@@ -270,14 +269,14 @@ function Calendar ({
                 <h3>시작일자 : {newEventData.startDate} 종료일자 : {newEventData.endDate}</h3>
                 <div>
                     { newEventData.title == ''? 
-                        <div>제목 빔</div> 
+                        <div>제목 비어있음</div> 
                         :
-                        <div>굳</div>
+                        <div>제목 작성 완료</div>
                     }
                     { newEventData.category == ''?
-                        <div>카테고리 빔</div>
+                        <div>카테고리 비어있음</div>
                         :
-                        <div>굳</div>
+                        <div>카테고리 설정 완료</div>
                     }
                 </div>
 

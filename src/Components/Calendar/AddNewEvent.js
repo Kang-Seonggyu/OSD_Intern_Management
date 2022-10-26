@@ -76,14 +76,11 @@ const StyledButton = styled.button`
     margin-left : 1.75rem;
   }
 `;
-
 const AddNewEvent = ({
                          visible,       // 해당 이벤트가 보일지 말지 정하는 param / con (bool)
                          onConfirm,     // 확인 버튼을 누를 때 발생할 이벤트
                          onCancel,      // 취소 버튼을 누를 때 발생할 이벤트
-                         writer,
                          noPickItem,
-                         endDate,
                          onChangeInput,
                          changeE_category,
                          newEventData,
@@ -99,69 +96,54 @@ const AddNewEvent = ({
         <Fullscreen>
             <AddNewEventBlock>
                 <h1>일정추가</h1>
+
                 <label htmlFor="EventTitle">제목 <span style={{fontSize:"15px"}}>(휴가와 생일은 이름을 입력해주세요.)</span></label>
-                <input id="EventTitle" name="eventTitle" placeholder="제목을 입력하세요." value={newEventData.title} onChange={changeE_title}></input>
+                <span>
+                    <input id="EventTitle" name="eventTitle" placeholder="제목을 입력하세요." value={newEventData.title} onChange={changeE_title}></input>
+                    {newEventData.title===''?'비어있음':''}
+                </span>
+
                 <label htmlFor="name">작성자</label>
-                <input id="name" name="writer" placeholder="이름을 입력하세요." value={writer} onChange={onChangeInput}></input>
+                <span>
+                    <input id="name" name="writer" placeholder="이름을 입력하세요." value={newEventData.writer} onChange={onChangeInput}></input>
+                </span>
                 <label htmlFor="EventCategory">일정분류</label>
-                <select
+                <span>
+                    <select
                     defaultValue="default"
                     onChange={changeE_category}
                     id="EventCategory"
-                >
-                    <option value="default" disabled style={{ color: "#ccc" }}>선택</option>
-                    <option value="birthday" >생일</option>
-                    <option value="Event">OSD 행사</option>
-                    <option value="others">출장</option>
-                    <option value="others">기타(워크샾 등)</option>
-                </select>
+                    >
+                        <option value="default" disabled style={{ color: "#ccc" }}>선택</option>
+                        <option value="birthday" >생일</option>
+                        <option value="Event">OSD 행사</option>
+                        <option value="others">출장</option>
+                        <option value="others">기타(워크샾 등)</option>
+                    </select>
+                    {newEventData.category===''?'비어있음':''}
+                </span>
                 <span style={{marginTop : "10px"}}>
                     <label htmlFor="startDate" style={{marginRight:"123px"}}>{newEventData.category ==="birthday"? "생년월일" : "시작일자"}</label>
                     <label htmlFor="endDate">{newEventData.category==="birthday"? "　" : "종료일자"}</label>
                 </span>
-                {
-                    newEventData.category !== '' ?
-                        newEventData.category==="birthday"?
-                            <div style={{marginTop :"7px"}}>
-                                <input
-                                    type="date"
-                                    disabled={noPickItem}
-                                    id="startDate"
-                                    name="startDate"
-                                    value={newEventData.startDate}
-                                    onChange={changeE_startDate}
-                                />
-                                <div className="buttons" style={{justifyContent: "center"}}>
-                                    <StyledButton onClick={onCancel}>취소</StyledButton>
-                                    <StyledButton onClick={onConfirm}>저장</StyledButton>
-                                </div>
-                            </div>
-                            :
-                            <div style={{marginTop :"4px"}}>
-                                <span >
-                                    <input type="date" disabled={noPickItem} id="startDate" name="startDate" style={{marginTop:"5px" }} value={newEventData.startDate} onChange={changeE_startDate}></input>
-                                    <input type="date" disabled={noPickItem} id="endDate" name="endDate" value={newEventData.endDate} onChange={changeE_endDate}></input>
-                                </span>
-                                <div className="buttons" style={{justifyContent: "center"}}>
-                                    <StyledButton onClick={onCancel}>취소</StyledButton>
-                                    <StyledButton onClick={onConfirm}>저장</StyledButton>
-                                </div>
-                            </div>
+                <span >
+                    <input type="date" disabled={noPickItem} id="startDate" name="startDate" style={{marginTop:"5px" }} value={newEventData.startDate} onChange={changeE_startDate}></input>
+                    { newEventData.category ==="birthday"?
+                        <></>
                         :
-                        <div style={{marginTop :"4px"}}>
-                            <span>
-                                <input type="date" disabled={noPickItem} id="startDate" name="startDate" style={{marginTop:"5px" }} value={newEventData.startDate} onChange={changeE_startDate}></input>
-                                <input type="date" disabled={noPickItem} id="endDate" name="endDate" value={newEventData.endDate} onChange={changeE_endDate}></input>
-                            </span>
-                            <div className="buttons" style={{justifyContent: "center"}}>
-                                <StyledButton onClick={onCancel}>취소</StyledButton>
-                                <div className="NotConfirm">
-                                    <StyledButton className="NoPick">저장</StyledButton>
-                                </div>
-                            </div>
-                        </div>
-                }
-
+                        <input type="date" disabled={noPickItem} id="endDate" name="endDate" value={newEventData.endDate} onChange={changeE_endDate}></input>
+                    }
+                </span>
+                <div className="buttons" style={{justifyContent: "center"}}>
+                    <StyledButton onClick={onCancel}>취소</StyledButton>
+                    <StyledButton onClick={onConfirm}>저장</StyledButton>
+                </div>
+                <div className="buttons" style={{justifyContent: "center"}}>
+                    <StyledButton onClick={onCancel}>취소</StyledButton>
+                    <div className="NotConfirm">
+                        <StyledButton className="NoPick">저장</StyledButton>
+                    </div>
+                </div>
             </AddNewEventBlock>
         </Fullscreen>
     );

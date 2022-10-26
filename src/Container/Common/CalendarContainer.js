@@ -46,42 +46,17 @@ function CalendarContainer(props) {
 
     // 일정추가 창 보여주것을 정하는 State
     const [NewEvent, setNewEvent] = useState(false);
-    // 일정분류 선택지 정보를 담는 State
-    const [pickItem, setPickItem] = useState();
+
     // 카테고리 미선택 확인
     let noPickItem;
     if (newEventData.category === '') {noPickItem=true}
     else {noPickItem=false}
-
-    const [confirm, setConfirm] = useState(false);
-
-    const [input, setInput] = useState({
-        eventTitle: '',
-        writer: '',
-        startDate: '',
-        endDate: '',
-    })
-
-    const [nEvent, setNEvent] = useState({});
-
-
-    const { eventTitle, writer, startDate, endDate } = input;
-
-    const onChangeInput = e => {
-        const {name, value} = e.target
-        const nextInput = {
-            ...input,
-            [name]: value,
-        }
-        setInput(nextInput)
-    }
 
     const AddEventClick = () => {
         setNewEvent(true);
     };
     const CancelClick = () => {
         setNewEvent(false);
-        setPickItem(undefined)
         makeE_setNull()
     };
     const ConfirmClick = (e) => {
@@ -93,42 +68,29 @@ function CalendarContainer(props) {
             e.preventDefault()
             alert('날짜를 입력하세요')
         }
-
         else {
             setNewEvent(false);
-            setConfirm(true)
-
-            setNEvent(input)
-
-
-            setPickItem(undefined)
             makeE_setNull()
-
             //console.log(startDay) 형식 : 2022-10-17 과 같이 나타남
         }
-
     };
 
     const onReload = () => {
         window.location.reload();
     }
 
-
-
     return (
         <div>
             <Calendar
-                AddEventClick={AddEventClick}
-                confirm={confirm}
-                startDate={newEventData.startDate}
-                onReload={onReload}
-                momentValue={momentValue}
+                AddEventClick={AddEventClick}   // 일정추가 클릭
+                onReload={onReload}             // 새로고침
+                momentValue={momentValue}       // 현재 보고있는 모멘트 값
                 yearIncreaseButton={yearIncreaseButton}
                 yearDecreaseButton={yearDecreaseButton}
                 monthIncreaseButton={monthIncreaseButton}
                 monthDecreaseButton={monthDecreaseButton}
-                loadingHoliday={loadingHoliday}
-                Holidays={holiday}
+                loadingHoliday={loadingHoliday} // 공휴일 정보 로딩 확인
+                Holidays={holiday}              // 공휴일 정보
                 newEventData={newEventData}
                 changeE_title={changeE_title}
                 changeE_category={changeE_category}
@@ -137,10 +99,6 @@ function CalendarContainer(props) {
                 visible={NewEvent}
                 onCancel={CancelClick}
                 onConfirm={ConfirmClick}
-                eventTitle={eventTitle}
-                writer={writer}
-                startDate={startDate}
-                endDate={endDate}
                 newEventData={newEventData}
                 noPickItem={noPickItem}
                 changeE_title={changeE_title}
