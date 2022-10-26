@@ -10,6 +10,7 @@ const YEAR_DECREASE = 'momenter/YEAR_DECREASE';
 const CHANGE_TITLE = 'momenter/CHANGE_TITLE';
 const CHANGE_CATEGORY = 'momenter/CHANGE_CATEGORY';
 const CHANGE_STARTDATE = 'momenter/CHANGE_STARTDATE';
+const CHANGE_ENDDATE = 'momenter/CHANGE_ENDDATE';
 const SET_NULL = 'momenter/SET_NULL';
 
 const GET_HOLIDAY = 'momenter/GET_HOLIDAY';
@@ -26,6 +27,7 @@ export const monthDecrease = () => ({ type : MONTH_DECREASE });
 export const changeTitle = eventTitle => ({ type : CHANGE_TITLE, eventTitle});
 export const changeCategory = category => ({ type : CHANGE_CATEGORY, category});
 export const changeStartDate = date => ({ type : CHANGE_STARTDATE, date});
+export const changeEndDate = date => ({ type : CHANGE_ENDDATE, date});
 export const setNull = () => ({ type : SET_NULL});
 
 /* 초기 상태 선언 */
@@ -39,7 +41,7 @@ const initialState = {
         title : '',
         category : '',
         startDate : '',
-        endDate : '',
+        endDate : ''
     },
 };
 
@@ -110,6 +112,14 @@ export default function momenter(state = initialState, action) {
                 newEventInfo: {
                     ...state.newEventInfo,
                     startDate: action.date
+                }
+            }
+        case CHANGE_ENDDATE :
+            return {
+                ...state,
+                newEventInfo: {
+                    ...state.newEventInfo,
+                    endDate: action.date
                 }
             }
         case SET_NULL :

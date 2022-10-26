@@ -7,7 +7,7 @@ import {
     monthDecrease,
     changeTitle,
     changeCategory,
-    setNull
+    setNull, changeStartDate, changeEndDate
 } from "../../Components/modules/momenter";
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
@@ -34,6 +34,8 @@ function CalendarContainer(props) {
 
     const changeE_title = e => dispatch(changeTitle(e.target.value));
     const changeE_category = e => dispatch(changeCategory(e.target.value));
+    const changeE_startDate = e => dispatch(changeStartDate(e.target.value));
+    const changeE_endDate = e => dispatch(changeEndDate(e.target.value));
     const makeE_setNull = () => dispatch(setNull())
 
     useEffect(() => {
@@ -87,7 +89,7 @@ function CalendarContainer(props) {
             e.preventDefault() //제출완료 페이지로 넘어가는 것 방지
             alert('제목을 입력하세요')
         }
-        else if(input.startDate === ''){
+        else if(newEventData.startDate === ''){
             e.preventDefault()
             alert('날짜를 입력하세요')
         }
@@ -118,8 +120,7 @@ function CalendarContainer(props) {
             <Calendar
                 AddEventClick={AddEventClick}
                 confirm={confirm}
-                startDate={nEvent.startDate}
-                noPickItem={noPickItem}
+                startDate={newEventData.startDate}
                 onReload={onReload}
                 momentValue={momentValue}
                 yearIncreaseButton={yearIncreaseButton}
@@ -144,6 +145,8 @@ function CalendarContainer(props) {
                 noPickItem={noPickItem}
                 changeE_title={changeE_title}
                 changeE_category={changeE_category}
+                changeE_startDate={changeE_startDate}
+                changeE_endDate={changeE_endDate}
             />
         </div>
     );

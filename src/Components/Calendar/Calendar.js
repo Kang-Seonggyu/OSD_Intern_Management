@@ -163,15 +163,13 @@ const PushTag = (
 function Calendar ({
                        AddEventClick,
                        confirm,
-                       startDate,
-                       pickItem,
                        onReload,
+                       momentValue,
                        monthDecreaseButton,
                        monthIncreaseButton,
                        yearDecreaseButton,
                        yearIncreaseButton,
                        loadingHoliday,
-                       momentValue,
                        Holidays,
                        newEventData,
                        changeE_category,
@@ -214,14 +212,14 @@ function Calendar ({
                 // 이번달은 글씨를 (평일 : 검정, 주말 : 빨강) 처리.
                 if (days.format('MM') === momentValue.format('MM')) {
                     if (date in event) {
-                        if (date === `Date-${startDate}` && confirm) {
-                            result.push(PushTag(date, days, dayCheck, event[date], pickItem, newEventData.title));
+                        if (date === `Date-${newEventData.startDate}`) {
+                            result.push(PushTag(date, days, dayCheck, event[date], newEventData.category, newEventData.title));
                         } else {
                             result.push(PushTag(date, days, dayCheck, event[date], '', ''));
                         }
                     } else {
-                        if (date === `Date-${startDate}` && confirm) {
-                            result.push(PushTag(date, days, dayCheck, '', pickItem, newEventData.title));
+                        if (date === `Date-${newEventData.startDate}`) {
+                            result.push(PushTag(date, days, dayCheck, '', newEventData.category, newEventData.title));
                         } else {
                             result.push(PushTag(date, days, dayCheck, '', '', ''));
                         }
@@ -268,7 +266,8 @@ function Calendar ({
             <TestBlock>
                 <input value={newEventData.title} onChange={changeE_title} />
                 <input value={newEventData.category} onChange={changeE_category} />
-                <h2>제목 : {newEventData.title} /// 2번 값 : {newEventData.category}</h2>
+                <h3>제목 : {newEventData.title}카테고리 값 : {newEventData.category}</h3>
+                <h3>시작일자 : {newEventData.startDate} 종료일자 : {newEventData.endDate}</h3>
                 <div>
                     { newEventData.title == ''? 
                         <div>제목 빔</div> 

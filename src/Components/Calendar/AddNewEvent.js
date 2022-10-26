@@ -83,18 +83,17 @@ const AddNewEvent = ({
                          onCancel,      // 취소 버튼을 누를 때 발생할 이벤트
                          writer,
                          noPickItem,
-                         startDate,
                          endDate,
                          onChangeInput,
                          changeE_category,
                          newEventData,
-                         changeE_title
+                         changeE_title,
+                         changeE_startDate,
+                         changeE_endDate
                      }) =>
 
 {
     if (!visible) return null;
-
-
 
     return (
         <Fullscreen>
@@ -124,7 +123,14 @@ const AddNewEvent = ({
                     newEventData.category !== '' ?
                         newEventData.category==="birthday"?
                             <div style={{marginTop :"7px"}}>
-                                <input type="date" disabled={noPickItem} id="startDate" name="startDate" value={startDate} onChange={onChangeInput}></input>
+                                <input
+                                    type="date"
+                                    disabled={noPickItem}
+                                    id="startDate"
+                                    name="startDate"
+                                    value={newEventData.startDate}
+                                    onChange={changeE_startDate}
+                                />
                                 <div className="buttons" style={{justifyContent: "center"}}>
                                     <StyledButton onClick={onCancel}>취소</StyledButton>
                                     <StyledButton onClick={onConfirm}>저장</StyledButton>
@@ -133,8 +139,8 @@ const AddNewEvent = ({
                             :
                             <div style={{marginTop :"4px"}}>
                                 <span >
-                                    <input type="date" disabled={noPickItem} id="startDate" name="startDate" style={{marginTop:"5px" }} value={startDate} onChange={onChangeInput}></input>
-                                    <input type="date" disabled={noPickItem} id="endDate" name="endDate" value={endDate} onChange={onChangeInput}></input>
+                                    <input type="date" disabled={noPickItem} id="startDate" name="startDate" style={{marginTop:"5px" }} value={newEventData.startDate} onChange={changeE_startDate}></input>
+                                    <input type="date" disabled={noPickItem} id="endDate" name="endDate" value={newEventData.endDate} onChange={changeE_endDate}></input>
                                 </span>
                                 <div className="buttons" style={{justifyContent: "center"}}>
                                     <StyledButton onClick={onCancel}>취소</StyledButton>
@@ -144,8 +150,8 @@ const AddNewEvent = ({
                         :
                         <div style={{marginTop :"4px"}}>
                             <span>
-                                <input type="date" disabled={noPickItem} id="startDate" name="startDate" style={{marginTop:"5px" }} value={startDate} onChange={onChangeInput}></input>
-                                <input type="date" disabled={noPickItem} id="endDate" name="endDate" value={endDate} onChange={onChangeInput}></input>
+                                <input type="date" disabled={noPickItem} id="startDate" name="startDate" style={{marginTop:"5px" }} value={newEventData.startDate} onChange={changeE_startDate}></input>
+                                <input type="date" disabled={noPickItem} id="endDate" name="endDate" value={newEventData.endDate} onChange={changeE_endDate}></input>
                             </span>
                             <div className="buttons" style={{justifyContent: "center"}}>
                                 <StyledButton onClick={onCancel}>취소</StyledButton>
