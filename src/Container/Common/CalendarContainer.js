@@ -1,80 +1,29 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {
+    yearDecrease,
+    yearIncrease,
+    monthIncrease,
+    monthDecrease,
+    changeTitle,
+    changeCategory,
+    setNull
+} from "../../Components/modules/momenter";
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
-import HolidayList from "../../Components/Calendar/Holiday";
-import {useDispatch, useSelector} from "react-redux";
-import {monthDecrease, monthIncrease, yearDecrease, yearIncrease} from "../../Components/modules/momenter";
+import {getHoliday} from "../../Components/modules/momenter";
 
 function CalendarContainer(props) {
 
-    // 일정추가 창 보여주것을 정하는 State
-    const [NewEvent, setNewEvent] = useState(false);
-    // 일정분류 선택지 정보를 담는 State
-    const [pickItem, setPickItem] = useState();
-    // 카테고리 미선택 확인
-    const [NoCategory, setNoCategory] = useState(true);
-    const [input, setInput] = useState({
-        eventTitle: '',
-        writer: '',
-        startDate: '',
-        endDate: '',
-    })
+    ////////////// Redux 구간 /////////////////////////////////////////////////
 
-
-    const AddEventClick = () => {
-        setNewEvent(true);
-    };
-    const CancelClick = () => {
-        setNoCategory(true);
-        setNewEvent(false);
-        setPickItem(undefined)
-    };
-    const ConfirmClick = (e) => {
-        if(document.getElementById('EventTitle').value == ''){
-            e.preventDefault() //제출완료 페이지로 넘어가는 것 방지
-            alert('제목을 입력하세요')
-        }
-        else if(document.getElementById('startDate').value == ''){
-            e.preventDefault()
-            alert('날짜를 입력하세요')
-        }
-            // else if(document.getElementById('endDate').value == ''){
-            //     e.preventDefault()
-            //     alert('날짜를 입력하세요')
-        // }
-        else {
-            setNoCategory(true);
-            setNewEvent(false);
-            let startDay = document.getElementById('startDate').value;
-            //let endDay = document.getElementById('endDate').value;
-            let title = document.getElementById('EventTitle').value;
-
-            let selectedDays = document.getElementById(`Date-${startDay}`);
-            let new_EventTag = document.createElement('div');
-                new_EventTag.setAttribute('class',`${pickItem}`);
-                new_EventTag.innerHTML = `${title}`;
-
-            selectedDays.appendChild(new_EventTag)
-            setPickItem(undefined)
-
-            //console.log(startDay) 형식 : 2022-10-17 과 같이 나타남
-        }
-
-    };
-    const SelectItem = () => {
-        let selectItem = document.getElementById("EventCategory").value;
-        setNoCategory(false);
-        setPickItem(selectItem);
-    }
-    const onReload = () => {
-        window.location.reload();
-    }
-
-
-    const { momentValue } = useSelector(state => ({
+    const { momentValue, holiday, loadingHoliday, newEventData} = useSelector(state => ({
         momentValue: state.momenter.momentValue,
+        holiday: state.momenter.holiday,
+        loadingHoliday: state.momenter.loading.GET_HOLIDAY,
+        newInput : state.momenter.newInput,
+        newEventData : state.momenter.newEventInfo
     }));
-
 
     const dispatch = useDispatch();
 
@@ -83,27 +32,119 @@ function CalendarContainer(props) {
     const monthIncreaseButton = () => dispatch(monthIncrease());
     const monthDecreaseButton = () => dispatch(monthDecrease());
 
+    const changeE_title = e => dispatch(changeTitle(e.target.value));
+    const changeE_category = e => dispatch(changeCategory(e.target.value));
+    const makeE_setNull = () => dispatch(setNull())
+
+    useEffect(() => {
+        dispatch(getHoliday(momentValue));
+    }, [momentValue]);
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    // 일정추가 창 보여주것을 정하는 State
+    const [NewEvent, setNewEvent] = useState(false);
+    // 일정분류 선택지 정보를 담는 State
+    const [pickItem, setPickItem] = useState();
+    // 카테고리 미선택 확인
+    let noPickItem;
+    if (newEventData.category === '') {noPickItem=true}
+    else {noPickItem=false}
+
+    const [confirm, setConfirm] = useState(false);
+
+    const [input, setInput] = useState({
+        eventTitle: '',
+        writer: '',
+        startDate: '',
+        endDate: '',
+    })
+
+    const [nEvent, setNEvent] = useState({});
+
+
+    const { eventTitle, writer, startDate, endDate } = input;
+
+    const onChangeInput = e => {
+        const {name, value} = e.target
+        const nextInput = {
+            ...input,
+            [name]: value,
+        }
+        setInput(nextInput)
+    }
+
+    const AddEventClick = () => {
+        setNewEvent(true);
+    };
+    const CancelClick = () => {
+        setNewEvent(false);
+        setPickItem(undefined)
+        makeE_setNull()
+    };
+    const ConfirmClick = (e) => {
+        if(newEventData.title === ''){
+            e.preventDefault() //제출완료 페이지로 넘어가는 것 방지
+            alert('제목을 입력하세요')
+        }
+        else if(input.startDate === ''){
+            e.preventDefault()
+            alert('날짜를 입력하세요')
+        }
+
+        else {
+            setNewEvent(false);
+            setConfirm(true)
+
+            setNEvent(input)
+
+
+            setPickItem(undefined)
+            makeE_setNull()
+
+            //console.log(startDay) 형식 : 2022-10-17 과 같이 나타남
+        }
+
+    };
+
+    const onReload = () => {
+        window.location.reload();
+    }
+
+
 
     return (
         <div>
             <Calendar
                 AddEventClick={AddEventClick}
+                confirm={confirm}
+                startDate={nEvent.startDate}
+                noPickItem={noPickItem}
                 onReload={onReload}
                 momentValue={momentValue}
                 yearIncreaseButton={yearIncreaseButton}
                 yearDecreaseButton={yearDecreaseButton}
                 monthIncreaseButton={monthIncreaseButton}
                 monthDecreaseButton={monthDecreaseButton}
+                loadingHoliday={loadingHoliday}
+                Holidays={holiday}
+                newEventData={newEventData}
+                changeE_title={changeE_title}
+                changeE_category={changeE_category}
             />
             <AddNewEvent
                 visible={NewEvent}
                 onCancel={CancelClick}
                 onConfirm={ConfirmClick}
-                NoCategory={NoCategory}
-                pickItem={pickItem}
-                SelectItem={SelectItem}
+                eventTitle={eventTitle}
+                writer={writer}
+                startDate={startDate}
+                endDate={endDate}
+                newEventData={newEventData}
+                noPickItem={noPickItem}
+                changeE_title={changeE_title}
+                changeE_category={changeE_category}
             />
-            <HolidayList />
         </div>
     );
 }

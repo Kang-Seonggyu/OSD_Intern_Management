@@ -1,4 +1,5 @@
 import DASHBOARD from "../../Components/Dashboard/DASHBOARD";
+import { useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import { useSelector, useDispatch} from "react-redux";
 import {
@@ -6,8 +7,8 @@ import {
     yearDecrease,
     monthDecrease,
     monthIncrease,
-    monthIncreaseAsync
 } from "../../Components/modules/momenter";
+import { getHoliday } from "../../Components/modules/momenter";
 
 
 function DashboardContainer (props) {
@@ -17,9 +18,12 @@ function DashboardContainer (props) {
         navigate('/calendar');
     };
 
-    const { momentValue } = useSelector(state => ({
+    const { momentValue, holiday, loadingHoliday } = useSelector(state => ({
         momentValue : state.momenter.momentValue,
+        holiday: state.momenter.holiday,
+        loadingHoliday: state.momenter.loading.GET_HOLIDAY,
     }));
+
 
     const dispatch = useDispatch();
 
@@ -27,6 +31,10 @@ function DashboardContainer (props) {
     const yearDecreaseButton = () => dispatch(yearDecrease());
     const monthIncreaseButton = () => dispatch(monthIncrease());
     const monthDecreaseButton = () => dispatch(monthDecrease());
+
+    useEffect(() => {
+        dispatch(getHoliday(momentValue));
+    }, [momentValue]);
 
     return (
         <>
@@ -37,6 +45,8 @@ function DashboardContainer (props) {
                 yearDecreaseButton={yearDecreaseButton}
                 monthIncreaseButton={monthIncreaseButton}
                 monthDecreaseButton={monthDecreaseButton}
+                loadingHoliday={loadingHoliday}
+                Holidays={holiday}
             />
         </>
     )

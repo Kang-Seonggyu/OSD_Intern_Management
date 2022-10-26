@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import moment from 'moment';
-import styled from "styled-components";
 import palette from "../../library/styles/palette";
+import styled from "styled-components";
 
 const CalTotalBlock = styled.div`
   width: 100%;
@@ -107,7 +107,7 @@ const TableBody = styled.div`
   }
   .holiday {
     background: ${palette.holi};
-    width: 97%;
+    width: 90%;
   }
   .birthday {
     background: ${palette.birth};
@@ -126,6 +126,13 @@ const TableBody = styled.div`
     width: 90%;
   }
 `
+const TestBlock = styled.div`
+  margin-left : 30px;
+  margin-bottom: 100px;
+  width : 700px;
+  height: 200px;
+  border : 1px solid black
+`
 const PushTag = (
     key,
     loadedMoment,
@@ -134,173 +141,6 @@ const PushTag = (
     isEvent,
     eventTitle
 ) => {
-    // 다른 달의 경우 모두 회색으로 처리
-    // if (dayClass === "anotherMonth"
-    // ) {
-    //     return (
-    //         <TableBody id={key} key={key}>
-    //             <div className="date anotherMonth"> {loadedMoment.format('D')} </div>
-    //         </TableBody>
-    //     )
-    // }
-    // // 이번 달의 경우 (오늘,평일,주말) 각각 따로 처리
-    // else {
-    //     if (isHoliday) {
-    //         if (isEvent) {
-    //             // 오늘의 경우
-    //             if (dayClass === "Today") {
-    //                 return (
-    //                     <TableBody id={key} key={key} className="today">
-    //                         <div className="date">
-    //                             {loadedMoment.format('D')}
-    //                             <div className="holiday">
-    //                                 {isHoliday}
-    //                             </div>
-    //                             <div className={isEvent}>
-    //                                 {eventTitle}
-    //                             </div>
-    //                         </div>
-    //                     </TableBody>
-    //                 )
-    //             }
-    //             else {
-    //                 return(
-    //                     <TableBody id={key} key={key}>
-    //                         {
-    //                             dayClass === "week" ?
-    //                                 // 평일일 경우 날짜를 검정색으로
-    //                                 <div className="date">
-    //                                     {loadedMoment.format('D')}
-    //                                     <div className="holiday">
-    //                                         {isHoliday}
-    //                                     </div>
-    //                                     <div className={isEvent}>
-    //                                         {eventTitle}
-    //                                     </div>
-    //                                 </div>
-    //                                 :
-    //                                 // 주말일 경우 날짜를 빨간색으로
-    //                                 <div className="date sunday">
-    //                                     {loadedMoment.format('D')}
-    //                                     <div className="holiday">
-    //                                         {isHoliday}
-    //                                     </div>
-    //                                     <div className={isEvent}>
-    //                                         {eventTitle}
-    //                                     </div>
-    //                                 </div>
-    //                         }
-    //                     </TableBody>)
-    //             }
-    //         }
-    //         else {
-    //             // 오늘의 경우
-    //             if (dayClass === "Today") {
-    //                 return (
-    //                     <TableBody id={key} key={key} className="today">
-    //                         <div className="date">
-    //                             {loadedMoment.format('D')}
-    //                             <div className="holiday">
-    //                                 {isHoliday}
-    //                             </div>
-    //                         </div>
-    //                     </TableBody>
-    //                 )
-    //             }
-    //             else {
-    //                 return(
-    //                     <TableBody id={key} key={key}>
-    //                         {
-    //                             dayClass === "week" ?
-    //                                 // 평일일 경우 날짜를 검정색으로
-    //                                 <div className="date">
-    //                                     {loadedMoment.format('D')}
-    //                                     <div className="holiday">
-    //                                         {isHoliday}
-    //                                     </div>
-    //                                 </div>
-    //                                 :
-    //                                 // 주말일 경우 날짜를 빨간색으로
-    //                                 <div className="date sunday">
-    //                                     {loadedMoment.format('D')}
-    //                                     <div className="holiday">
-    //                                         {isHoliday}
-    //                                     </div>
-    //                                 </div>
-    //                         }
-    //                     </TableBody>)
-    //             }
-    //         }
-    //     }
-    //     else {
-    //         if (isEvent) {
-    //             if (dayClass === "Today") {
-    //                 return (
-    //                     <TableBody id={key} key={key} className="today">
-    //                         <div className="date">
-    //                             {loadedMoment.format('D')}
-    //                             <div className={isEvent}>
-    //                                 {eventTitle}
-    //                             </div>
-    //                         </div>
-    //                     </TableBody>
-    //                 )
-    //             }
-    //             else {
-    //                 return(
-    //                     <TableBody id={key} key={key}>
-    //                         {
-    //                             dayClass === "week" ?
-    //                                 // 평일일 경우 날짜를 검정색으로
-    //                                 <div className="date">
-    //                                     {loadedMoment.format('D')}
-    //                                     <div className={isEvent}>
-    //                                         {eventTitle}
-    //                                     </div>
-    //                                 </div>
-    //                                 :
-    //                                 // 주말일 경우 날짜를 빨간색으로
-    //                                 <div className="date sunday">
-    //                                     {loadedMoment.format('D')}
-    //                                     <div className={isEvent}>
-    //                                         {eventTitle}
-    //                                     </div>
-    //                                 </div>
-    //                         }
-    //                     </TableBody>)
-    //             }
-    //         }
-    //         else {
-    //             if (dayClass === "Today") {
-    //                 return (
-    //                     <TableBody id={key} key={key} className="today">
-    //                         <div className="date">
-    //                             {loadedMoment.format('D')}
-    //                         </div>
-    //                     </TableBody>
-    //                 )
-    //             }
-    //             else {
-    //                 return(
-    //                     <TableBody id={key} key={key}>
-    //                         {
-    //                             dayClass === "week" ?
-    //                                 // 평일일 경우 날짜를 검정색으로
-    //                                 <div className="date">
-    //                                     {loadedMoment.format('D')}
-    //                                 </div>
-    //                                 :
-    //                                 // 주말일 경우 날짜를 빨간색으로
-    //                                 <div className="date sunday">
-    //                                     {loadedMoment.format('D')}
-    //                                 </div>
-    //                         }
-    //                     </TableBody>)
-    //             }
-    //         }
-    //     }
-    //
-    // }
     const today = loadedMoment.format('YYYYMMDD') === moment().format('YYYYMMDD');
 
     return (
@@ -325,62 +165,30 @@ function Calendar ({
                        confirm,
                        startDate,
                        pickItem,
-                       eventTitle,
                        onReload,
                        monthDecreaseButton,
                        monthIncreaseButton,
                        yearDecreaseButton,
                        yearIncreaseButton,
+                       loadingHoliday,
                        momentValue,
+                       Holidays,
+                       newEventData,
+                       changeE_category,
+                       changeE_title
                    }) {
-
-    const [Holidays, setHolidays] = useState([]);
 
     // 이번달의 첫번째 주
     const firstWeek = momentValue.clone().startOf('month').week();
     // 이번달의 마지막 주 (만약 마지막 주가 1이 나온다면 53번째 주로 변경)
     const lastWeek = momentValue.clone().endOf('month').week() === 1? 53 : momentValue.clone().endOf('month').week();
 
-    const API_KEY = "E6c3ACjloHKJTdlaQSkPVuUcoZEWV8zH9knCD4EFe7gqpiCWNhNwdX8laJuPFjvAouKFvRsoV%2FruPjl2kz4Yqw%3D%3D"
-    let solYear = momentValue.format('YYYY');
-    let solMonth = momentValue.format('MM');
-    const operation = 'getHoliDeInfo';
-
-    let url = `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/${operation}?solYear=${solYear}&solMonth=${solMonth}&ServiceKey=${API_KEY}&_type=json`;
-
-    // const getHolidays = async() => {
-    //     let res = await fetch(url);
-    //     let json = await res.json();
-    //     //console.log("res :" ,res ,"json :", json)
-    //     if(json.response.body.items.item){
-    //         if (json.response.body.items.item.length) {
-    //             setHolidays(json.response.body.items.item)
-    //         } else {
-    //             setHolidays([json.response.body.items.item])
-    //         }
-    //     }
-    // }
-
-    const getHolidays = async () => {
-        let res = await fetch(url);
-        let json = await res.json();
-        const item = json.response.body.items.item;
-
-        if (item) {
-            setHolidays(item?.length ? item : [item]);
-        }
-    }
-
-
-    useEffect(() => {
-        getHolidays()
-    }, [solYear,solMonth]);
 
     const calendarArr=()=>{
         let result = [];
         let week = firstWeek;
         let event = {};
-        if(Holidays){
+        if(!loadingHoliday && Holidays){
             Holidays.map((holiday) => {
                 let event_year = holiday.locdate.toString().substring(0,4);
                 let event_month = holiday.locdate.toString().substring(4,6).padStart(2,0);
@@ -407,13 +215,13 @@ function Calendar ({
                 if (days.format('MM') === momentValue.format('MM')) {
                     if (date in event) {
                         if (date === `Date-${startDate}` && confirm) {
-                            result.push(PushTag(date, days, dayCheck, event[date], pickItem, eventTitle));
+                            result.push(PushTag(date, days, dayCheck, event[date], pickItem, newEventData.title));
                         } else {
                             result.push(PushTag(date, days, dayCheck, event[date], '', ''));
                         }
                     } else {
                         if (date === `Date-${startDate}` && confirm) {
-                            result.push(PushTag(date, days, dayCheck, '', pickItem, eventTitle));
+                            result.push(PushTag(date, days, dayCheck, '', pickItem, newEventData.title));
                         } else {
                             result.push(PushTag(date, days, dayCheck, '', '', ''));
                         }
@@ -423,76 +231,6 @@ function Calendar ({
                 else {
                     result.push(PushTag(date, days, "anotherMonth"));
                 }
-                // //------------------------------- 날짜 처리하는 구간 -------------------------------//
-                // // (이번달, !이번달)로 나눠서 처리.
-                // // 이번달은 글씨를 (평일 : 검정, 주말 : 빨강) 처리.
-                // if(days.format('MM') === today.format('MM')){
-                //     if (date in event) {
-                //         if (date === `Date-${startDate}` && confirm) {
-                //             // 오늘 날짜 처리
-                //             if (moment().format('YYYYMMDD') === days.format('YYYYMMDD')) {
-                //                 result.push(PushTag(date, days, "Today", event[date], pickItem, eventTitle));
-                //             }
-                //             // 일요일 인 날에는 빨간글씨
-                //             else if (day === 0) {
-                //                 result.push (PushTag(date, days, "sunday", event[date], pickItem, eventTitle));
-                //             }
-                //             // 일요일 아닌 날에는 검정글씨
-                //             else {
-                //                 result.push (PushTag(date, days, "week", event[date], pickItem, eventTitle));
-                //             }
-                //         }
-                //         else {
-                //             if (moment().format('YYYYMMDD') === days.format('YYYYMMDD')) {
-                //                 result.push(PushTag(date, days, "Today", event[date], '', ''));
-                //             }
-                //             // 일요일 인 날에는 빨간글씨
-                //             else if (day === 0) {
-                //                 result.push (PushTag(date, days, "sunday", event[date], '', ''));
-                //             }
-                //             // 일요일 아닌 날에는 검정글씨
-                //             else {
-                //                 result.push (PushTag(date, days, "week", event[date], '', ''));
-                //             }
-                //         }
-                //
-                //     }
-                //     else {
-                //         if(date === `Date-${startDate}` && confirm) {
-                //             // 오늘 날짜 처리
-                //             if (moment().format('YYYYMMDD') === days.format('YYYYMMDD')) {
-                //                 result.push(PushTag(date, days, "Today", '', pickItem, eventTitle));
-                //             }
-                //             // 일요일 인 날에는 빨간글씨
-                //             else if (day === 0) {
-                //                 result.push (PushTag(date, days, "sunday", '', pickItem, eventTitle));
-                //             }
-                //             // 일요일 아닌 날에는 검정글씨
-                //             else {
-                //                 result.push (PushTag(date, days, "week", '', pickItem, eventTitle));
-                //             }
-                //         }
-                //         else {
-                //             // 오늘 날짜 처리
-                //             if (moment().format('YYYYMMDD') === days.format('YYYYMMDD')) {
-                //                 result.push(PushTag(date, days, "Today", '', '', ''));
-                //             }
-                //             // 일요일 인 날에는 빨간글씨
-                //             else if (day === 0) {
-                //                 result.push (PushTag(date, days, "sunday", '', '', ''));
-                //             }
-                //             // 일요일 아닌 날에는 검정글씨
-                //             else {
-                //                 result.push (PushTag(date, days, "week", '', '', ''));
-                //             }
-                //         }
-                //
-                //     }
-                // }
-                // // 이번달이 아닌 경우 모두 회색처리.
-                // else {
-                //     result.push (PushTag(date, days,"anotherMonth"));
-                // }
             }
         }
         return result;
@@ -527,6 +265,24 @@ function Calendar ({
                     </CalendarBox>
                 </CalendarBlock>
             </CalTotalBlock>
+            <TestBlock>
+                <input value={newEventData.title} onChange={changeE_title} />
+                <input value={newEventData.category} onChange={changeE_category} />
+                <h2>제목 : {newEventData.title} /// 2번 값 : {newEventData.category}</h2>
+                <div>
+                    { newEventData.title == ''? 
+                        <div>제목 빔</div> 
+                        :
+                        <div>굳</div>
+                    }
+                    { newEventData.category == ''?
+                        <div>카테고리 빔</div>
+                        :
+                        <div>굳</div>
+                    }
+                </div>
+
+            </TestBlock>
         </div>
     )
 }

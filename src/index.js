@@ -11,7 +11,7 @@ import thunk from "redux-thunk";
 
 const store = createStore(
     rootReducer,
-    composeWithDevTools( applyMiddleware(thunk, logger) )
+    composeWithDevTools( applyMiddleware(thunk) )
 ); // 스토어 만들기
 
 const container = ReactDOM.createRoot(document.getElementById('container'));
