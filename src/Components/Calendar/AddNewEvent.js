@@ -76,14 +76,20 @@ const StyledButton = styled.button`
     margin-left : 1.75rem;
   }
 `;
+
+const ErrorMessage = styled.span`
+  margin-left: 10px;
+  font-size: 12px;
+  color: red;
+`
 const AddNewEvent = ({
                          visible,       // 해당 이벤트가 보일지 말지 정하는 param / con (bool)
-                         onConfirm,     // 확인 버튼을 누를 때 발생할 이벤트
                          onCancel,      // 취소 버튼을 누를 때 발생할 이벤트
-                         noPickItem,
+                         onConfirm,
                          onChangeInput,
                          changeE_category,
                          newEventData,
+                         noDataCheck,
                          changeE_title,
                          changeE_startDate,
                          changeE_endDate
@@ -100,7 +106,7 @@ const AddNewEvent = ({
                 <label htmlFor="EventTitle">제목 <span style={{fontSize:"15px"}}>(휴가와 생일은 이름을 입력해주세요.)</span></label>
                 <span>
                     <input id="EventTitle" name="eventTitle" placeholder="제목을 입력하세요." value={newEventData.title} onChange={changeE_title}></input>
-                    {newEventData.title===''?'비어있음':''}
+                    <ErrorMessage>{newEventData.title===''?'제목을 작성해주세요.':''} </ErrorMessage>
                 </span>
 
                 <label htmlFor="name">작성자</label>
@@ -120,30 +126,26 @@ const AddNewEvent = ({
                         <option value="others">출장</option>
                         <option value="others">기타(워크샾 등)</option>
                     </select>
-                    {newEventData.category===''?'비어있음':''}
+                    <ErrorMessage>{newEventData.category===''?'일정분류를 선택해주세요.':''} </ErrorMessage>
                 </span>
                 <span style={{marginTop : "10px"}}>
                     <label htmlFor="startDate" style={{marginRight:"123px"}}>{newEventData.category ==="birthday"? "생년월일" : "시작일자"}</label>
                     <label htmlFor="endDate">{newEventData.category==="birthday"? "　" : "종료일자"}</label>
                 </span>
                 <span >
-                    <input type="date" disabled={noPickItem} id="startDate" name="startDate" style={{marginTop:"5px" }} value={newEventData.startDate} onChange={changeE_startDate}></input>
+                    <input type="date" disabled={newEventData.category? false:true} id="startDate" name="startDate" style={{marginTop:"5px" }} value={newEventData.startDate} onChange={changeE_startDate}></input>
                     { newEventData.category ==="birthday"?
                         <></>
                         :
-                        <input type="date" disabled={noPickItem} id="endDate" name="endDate" value={newEventData.endDate} onChange={changeE_endDate}></input>
+                        <input type="date" disabled={newEventData.category? false:true} id="endDate" name="endDate" value={newEventData.endDate} onChange={changeE_endDate}></input>
                     }
                 </span>
+
                 <div className="buttons" style={{justifyContent: "center"}}>
                     <StyledButton onClick={onCancel}>취소</StyledButton>
-                    <StyledButton onClick={onConfirm}>저장</StyledButton>
+                    <StyledButton className={noDataCheck? 'NotConfirm':'good'} onClick={onConfirm}>저장</StyledButton>
                 </div>
-                <div className="buttons" style={{justifyContent: "center"}}>
-                    <StyledButton onClick={onCancel}>취소</StyledButton>
-                    <div className="NotConfirm">
-                        <StyledButton className="NoPick">저장</StyledButton>
-                    </div>
-                </div>
+                <div className={newEventData.category? '':'NotConfirm'} >테스팅</div>
             </AddNewEventBlock>
         </Fullscreen>
     );

@@ -12,6 +12,7 @@ import {
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
 import {getHoliday} from "../../Components/modules/momenter";
+import moment from "moment";
 
 function CalendarContainer(props) {
 
@@ -33,7 +34,11 @@ function CalendarContainer(props) {
     const monthDecreaseButton = () => dispatch(monthDecrease());
 
     const changeE_title = e => dispatch(changeTitle(e.target.value));
-    const changeE_category = e => dispatch(changeCategory(e.target.value));
+    const changeE_category = e => {
+        dispatch(changeStartDate(moment().format('YYYY-MM-DD')))
+        dispatch(changeEndDate(moment().format('YYYY-MM-DD')))
+        dispatch(changeCategory(e.target.value));
+    }
     const changeE_startDate = e => dispatch(changeStartDate(e.target.value));
     const changeE_endDate = e => dispatch(changeEndDate(e.target.value));
     const makeE_setNull = () => dispatch(setNull())
@@ -47,10 +52,10 @@ function CalendarContainer(props) {
     // 일정추가 창 보여주것을 정하는 State
     const [NewEvent, setNewEvent] = useState(false);
 
-    // 카테고리 미선택 확인
-    let noPickItem;
-    if (newEventData.category === '') {noPickItem=true}
-    else {noPickItem=false}
+    let noDataCheck;
+    if (newEventData.title !=='' && newEventData.category !=='')
+    {noDataCheck = false}
+    else { noDataCheck = true }
 
     const AddEventClick = () => {
         setNewEvent(true);
@@ -100,7 +105,7 @@ function CalendarContainer(props) {
                 onCancel={CancelClick}
                 onConfirm={ConfirmClick}
                 newEventData={newEventData}
-                noPickItem={noPickItem}
+                noDataCheck={noDataCheck}
                 changeE_title={changeE_title}
                 changeE_category={changeE_category}
                 changeE_startDate={changeE_startDate}
