@@ -13,7 +13,7 @@ import createSagaMiddleware from "redux-saga"
 const sagaMiddleWare =  createSagaMiddleware();
 const store = createStore(
     rootReducer,
-    composeWithDevTools( applyMiddleware(thunk, sagaMiddleWare) )
+    composeWithDevTools( applyMiddleware(thunk, logger, sagaMiddleWare ) )
 ); // 스토어 만들기
 sagaMiddleWare.run(rootSaga)
 

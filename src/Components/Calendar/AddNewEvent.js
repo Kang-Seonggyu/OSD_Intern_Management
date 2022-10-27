@@ -132,8 +132,8 @@ const AddNewEvent = ({
                     <label htmlFor="startDate" style={{marginRight:"123px"}}>{newEventData.category ==="birthday"? "생년월일" : "시작일자"}</label>
                     <label htmlFor="endDate">{newEventData.category==="birthday"? "　" : "종료일자"}</label>
                 </span>
-                <span >
-                    <input type="date" disabled={newEventData.category? false:true} id="startDate" name="startDate" style={{marginTop:"5px" }} value={newEventData.startDate} onChange={changeE_startDate}></input>
+                <span style={{marginTop:"5px" }}>
+                    <input type="date" disabled={newEventData.category? false:true} id="startDate" name="startDate" value={newEventData.startDate} onChange={changeE_startDate}></input>
                     { newEventData.category ==="birthday"?
                         <></>
                         :

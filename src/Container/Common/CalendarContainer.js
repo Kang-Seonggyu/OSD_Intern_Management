@@ -6,7 +6,7 @@ import {
     monthIncrease,
     monthDecrease,
 } from "../../modules/momenter";
-import { initialize, changeField } from "../../modules/newEventWrite"
+import {initialize, changeField, writeNewEvent} from "../../modules/newEventWrite"
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
 import {getHoliday} from "../../modules/momenter";
@@ -83,6 +83,12 @@ function CalendarContainer(props) {
         }
         else {
             setNewEvent(false);
+            dispatch(writeNewEvent({
+                title : newEventData.title,
+                category : newEventData.category,
+                startDate: newEventData.startDate,
+                endDate: newEventData.endDate
+            }))
             makeE_initialize()
         }
     };
