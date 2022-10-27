@@ -7,12 +7,16 @@ import {
     monthDecrease,
     changeTitle,
     changeCategory,
-    setNull, changeStartDate, changeEndDate
+    initialize,
+    changeStartDate,
+    changeEndDate,
+    changeField
 } from "../../Components/modules/momenter";
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
 import {getHoliday} from "../../Components/modules/momenter";
 import moment from "moment";
+import useActions from "../../library/useActions";
 
 function CalendarContainer(props) {
 
@@ -23,25 +27,35 @@ function CalendarContainer(props) {
         holiday: state.momenter.holiday,
         loadingHoliday: state.momenter.loading.GET_HOLIDAY,
         newInput : state.momenter.newInput,
-        newEventData : state.momenter.newEventInfo
+        newEventData : state.momenter.newEventData
     }));
 
     const dispatch = useDispatch();
 
-    const yearIncreaseButton = () => dispatch(yearIncrease());
-    const yearDecreaseButton = () => dispatch(yearDecrease());
-    const monthIncreaseButton = () => dispatch(monthIncrease());
-    const monthDecreaseButton = () => dispatch(monthDecrease());
+    const [
+        yearIncreaseButton,
+        yearDecreaseButton,
+        monthIncreaseButton,
+        monthDecreaseButton,
+        makeE_initialize
+    ] = useActions(
+        [
+            yearIncrease,
+            yearDecrease,
+            monthIncrease,
+            monthDecrease,
+            initialize
+        ],[]
+    );
 
-    const changeE_title = e => dispatch(changeTitle(e.target.value));
+    const changeE_title = e => dispatch(changeField({_key:'title', _value : e.target.value}))
     const changeE_category = e => {
-        dispatch(changeStartDate(moment().format('YYYY-MM-DD')))
-        dispatch(changeEndDate(moment().format('YYYY-MM-DD')))
-        dispatch(changeCategory(e.target.value));
+        dispatch(changeField({_key:'startDate', _value : moment().format('YYYY-MM-DD')}));
+        dispatch(changeField({_key:'endDate', _value :moment().format('YYYY-MM-DD')}));
+        dispatch(changeField({_key:'category', _value : e.target.value}));
     }
-    const changeE_startDate = e => dispatch(changeStartDate(e.target.value));
-    const changeE_endDate = e => dispatch(changeEndDate(e.target.value));
-    const makeE_setNull = () => dispatch(setNull())
+    const changeE_startDate = e => dispatch(changeField({_key:'startDate', _value : e.target.value}));
+    const changeE_endDate = e => dispatch(changeField({_key:'endDate', _value : e.target.value}));
 
     useEffect(() => {
         dispatch(getHoliday(momentValue));
@@ -62,21 +76,20 @@ function CalendarContainer(props) {
     };
     const CancelClick = () => {
         setNewEvent(false);
-        makeE_setNull()
+        makeE_initialize()
     };
     const ConfirmClick = (e) => {
         if(newEventData.title === ''){
             e.preventDefault() //제출완료 페이지로 넘어가는 것 방지
             alert('제목을 입력하세요')
         }
-        else if(newEventData.startDate === ''){
+        else if(newEventData.category === ''){
             e.preventDefault()
-            alert('날짜를 입력하세요')
+            alert('일정분류를 선택하세요')
         }
         else {
             setNewEvent(false);
-            makeE_setNull()
-            //console.log(startDay) 형식 : 2022-10-17 과 같이 나타남
+            makeE_initialize()
         }
     };
 
@@ -97,8 +110,8 @@ function CalendarContainer(props) {
                 loadingHoliday={loadingHoliday} // 공휴일 정보 로딩 확인
                 Holidays={holiday}              // 공휴일 정보
                 newEventData={newEventData}
-                changeE_title={changeE_title}
-                changeE_category={changeE_category}
+                changeTitle={changeE_title}
+                changeCategory={changeE_category}
             />
             <AddNewEvent
                 visible={NewEvent}
@@ -115,4 +128,4 @@ function CalendarContainer(props) {
     );
 }
 
-export default CalendarContainer;
+export default React.memo(CalendarContainer);

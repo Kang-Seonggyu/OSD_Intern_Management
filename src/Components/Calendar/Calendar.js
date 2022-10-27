@@ -129,6 +129,12 @@ const TableBody = styled.div`
 const TestBlock = styled.div`
   margin-left : 30px;
   margin-bottom: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
   width : 700px;
   height: 200px;
   border : 1px solid black
@@ -171,8 +177,8 @@ function Calendar ({
                        loadingHoliday,
                        Holidays,
                        newEventData,
-                       changeE_category,
-                       changeE_title
+                       changeTitle,
+                       changeCategory
                    }) {
 
     // 이번달의 첫번째 주
@@ -195,6 +201,7 @@ function Calendar ({
                 event[event_ID] = holiday.dateName;
             })
         }
+
 
         for ( week; week <= lastWeek; week++) {
             // day = [ 일,월,화,수,목,금,토 ]
@@ -263,21 +270,24 @@ function Calendar ({
                 </CalendarBlock>
             </CalTotalBlock>
             <TestBlock>
-                <input value={newEventData.title} onChange={changeE_title} />
-                <input value={newEventData.category} onChange={changeE_category} />
-                <h3>제목 : {newEventData.title}카테고리 값 : {newEventData.category}</h3>
-                <h3>시작일자 : {newEventData.startDate} 종료일자 : {newEventData.endDate}</h3>
-                <div>
-                    { newEventData.title == ''? 
-                        <div>제목 비어있음</div> 
-                        :
-                        <div>제목 작성 완료</div>
-                    }
-                    { newEventData.category == ''?
-                        <div>카테고리 비어있음</div>
-                        :
-                        <div>카테고리 설정 완료</div>
-                    }
+                <input
+                    style={{ margin : "5px" }}
+                    value={newEventData.title}
+                    onChange={changeTitle}
+                    placeholder="새로운 이벤트 제목"
+                />
+                <input
+                    style={{ margin : "5px" }}
+                    value={newEventData.category}
+                    onChange={changeCategory}
+                    placeholder="새로운 이벤트 카테고리"
+                />
+                <span>제목 : {newEventData.title}</span>
+                <span>카테고리 값 : {newEventData.category}</span>
+                <span>시작일자 : {newEventData.startDate}</span>
+                <span> 종료일자 : {newEventData.endDate}</span>
+                <div style={{gridColumn:"1/3"}}>{ newEventData.title == ''? '제목 비어있음' : '제목 작성 완료'} /
+                    { newEventData.category == ''?' 카테고리 비어있음' : ' 카테고리 설정 완료' }
                 </div>
 
             </TestBlock>
