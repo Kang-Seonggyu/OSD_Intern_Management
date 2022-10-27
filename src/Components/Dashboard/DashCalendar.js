@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import moment from 'moment';
 import styled from "styled-components";
 import palette from "../../library/styles/palette";
-import {monthIncreaseAsync} from "../modules/momenter";
+import {monthIncreaseAsync} from "../../modules/momenter";
 
 const DControllerBlock = styled.div`
   margin-top : 5px;

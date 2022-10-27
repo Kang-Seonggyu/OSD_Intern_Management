@@ -1,3 +1,4 @@
+import React from "react";
 import DASHBOARD from "../../Components/Dashboard/DASHBOARD";
 import { useEffect } from "react";
 import {useNavigate} from "react-router-dom";
@@ -7,8 +8,8 @@ import {
     yearDecrease,
     monthDecrease,
     monthIncrease,
-} from "../../Components/modules/momenter";
-import { getHoliday } from "../../Components/modules/momenter";
+} from "../../modules/momenter";
+import { getHoliday } from "../../modules/momenter";
 
 
 function DashboardContainer (props) {
@@ -52,4 +53,4 @@ function DashboardContainer (props) {
     )
 }
 
-export default DashboardContainer;
+export default React.memo(DashboardContainer);

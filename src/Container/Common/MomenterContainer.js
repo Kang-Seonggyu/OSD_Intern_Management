@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {monthDecrease, monthIncrease, yearDecrease, yearIncrease} from "../../Components/modules/momenter";
+import {monthDecrease, monthIncrease, yearDecrease, yearIncrease} from "../../modules/momenter";
 import Momenter from "../../Components/Common/Momenter";
 
 function MomenterContainer () {
