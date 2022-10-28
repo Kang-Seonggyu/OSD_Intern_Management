@@ -3,13 +3,13 @@ import {all} from 'redux-saga/effects'
 import counter from './counter';
 import momenter from "./momenter";
 import loading from "./loading";
-import newEventWrite, {writeSaga} from "./newEventWrite"
+import newEventCRUD, {writeSaga} from "./newEventCRUD"
 
 const rootReducer = combineReducers({
     counter,
     loading,
     momenter,
-    newEventWrite
+    newEventWrite: newEventCRUD
 });
 
 export function* rootSaga() {

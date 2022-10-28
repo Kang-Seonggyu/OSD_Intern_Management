@@ -6,7 +6,7 @@ import {
     monthIncrease,
     monthDecrease,
 } from "../../modules/momenter";
-import {initialize, changeField, writeNewEvent} from "../../modules/newEventWrite"
+import {initialize, changeField, newEventWrite} from "../../modules/newEventCRUD"
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
 import {getHoliday, getEvent} from "../../modules/momenter";
@@ -84,7 +84,7 @@ function CalendarContainer(props) {
         }
         else {
             setNewEvent(false);
-            dispatch(writeNewEvent({
+            dispatch(newEventWrite({
                 title : newEventData.title,
                 category : newEventData.category,
                 startDate: newEventData.startDate,

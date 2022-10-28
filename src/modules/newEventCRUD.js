@@ -3,21 +3,25 @@ import createRequestSaga, {createRequestActionTypes,} from "../library/createReq
 import * as CalendarAPI from "../library/CalendarAPI"
 import { takeLatest } from "redux-saga/effects";
 
-const CHANGE_FIELD = 'newEventWrite/CHANGE_FILED';
-const INITIALIZE = 'newEventWrite/INITIALIZE';
+const CHANGE_FIELD = 'newEventCRUD/CHANGE_FILED';
+const INITIALIZE = 'newEventCRUD/INITIALIZE';
 const [
     NEW_EVENT_WRITE,
     NEW_EVENT_WRITE_SUCCESS,
     NEW_EVENT_WRITE_FAILURE,
-] = createRequestActionTypes('newEventWrite/NEW_EVENT_WRITE');
+] = createRequestActionTypes('newEventCRUD/NEW_EVENT_WRITE');
+const [
+    NEW_EVENT_DELETE,
+    NEW_EVENT_DELETE_SUCCESS,
+    NEW_EVENT_DELETE_FAILURE,
+] = createRequestActionTypes('newEventCRUD/NEW_EVENT_DELETE');
 
 export const initialize = () => ({ type : INITIALIZE});
 export const changeField = ({_key, _value}) => ({ type : CHANGE_FIELD, _key, _value })
 //export const writeNewEvent = ({title, category, startDate, endDate}) => ({ type : NEW_EVENT_WRITE, title, category, startDate, endDate})
-
 // export const initialize = createAction(INITIALIZE);
 // export const changeField = createAction(CHANGE_FIELD, ({key, value}) => ({ key, value, }));
-export const writeNewEvent = createAction(NEW_EVENT_WRITE, ({
+export const newEventWrite = createAction(NEW_EVENT_WRITE, ({
                                                                 title,
                                                                 category,
                                                                 startDate,
@@ -28,9 +32,11 @@ export const writeNewEvent = createAction(NEW_EVENT_WRITE, ({
                                                                 startDate,
                                                                 endDate
                                                     }));
+export const newEventDelete = createAction(NEW_EVENT_DELETE, id => id);
 
 // 사가 생성
 const newEventWriteSaga = createRequestSaga(NEW_EVENT_WRITE, CalendarAPI.addNewEvent);
+const newEventDeleteSaga = createRequestSaga(NEW_EVENT_DELETE, CalendarAPI)
 export function* writeSaga() {
     yield takeLatest(NEW_EVENT_WRITE,newEventWriteSaga);
 }
@@ -47,7 +53,7 @@ const initialState = {
 };
 
 // 다른 방식으로 쓴 코드
-export default function newEventWrite (state = initialState, action) {
+export default function newEventCRUD (state = initialState, action) {
     switch (action.type) {
         case CHANGE_FIELD :
             return  {
@@ -85,7 +91,7 @@ export default function newEventWrite (state = initialState, action) {
     }
 }
 
-// const newEventWrite = handleActions(
+// const newEventCRUD = handleActions(
 //     {
 //         [INITIALIZE] : state => initialState,
 //         [CHANGE_FIELD] : (state, {payload : {key, value} }) => ({
@@ -113,4 +119,4 @@ export default function newEventWrite (state = initialState, action) {
 //     initialState,
 // );
 //
-// export default newEventWrite;
+// export default newEventCRUD;
