@@ -12,30 +12,39 @@ const [
     NEW_EVENT_WRITE_FAILURE,
 ] = createRequestActionTypes('newEventCRUD/NEW_EVENT_WRITE');
 const [
+    NEW_EVENT_UPDATE,
+    NEW_EVENT_UPDATE_SUCCESS,
+    NEW_EVENT_UPDATE_FAILURE,
+] = createRequestActionTypes('newEventCRUD/NEW_EVENT_UPDATE');
+const [
     NEW_EVENT_DELETE,
     NEW_EVENT_DELETE_SUCCESS,
     NEW_EVENT_DELETE_FAILURE,
 ] = createRequestActionTypes('newEventCRUD/NEW_EVENT_DELETE');
 
-export const initialize = () => ({ type : INITIALIZE});
-export const changeField = ({_key, _value}) => ({ type : CHANGE_FIELD, _key, _value })
-export const selectID = _id => ({ type : SELECT_ID, _id})
+// 액션 생성 함수 만들기
 // export const writeNewEvent = ({title, category, startDate, endDate}) => ({ type : NEW_EVENT_WRITE, title, category, startDate, endDate})
 // export const initialize = createAction(INITIALIZE);
 // export const changeField = createAction(CHANGE_FIELD, ({key, value}) => ({ key, value, }));
+export const initialize = () => ({ type : INITIALIZE});
+export const changeField = ({_key, _value}) => ({ type : CHANGE_FIELD, _key, _value })
+export const selectID = _id => ({ type : SELECT_ID, _id})
 export const newEventDBWrite = createAction(NEW_EVENT_WRITE, ({
                                                                   title, category, startDate,endDate
                                                               }) => ({
                                                                 title, category, startDate, endDate
                                                               }));
 export const newEventDBDelete = createAction(NEW_EVENT_DELETE, _id => _id);
+export const newEventDBUpdate = createAction(NEW_EVENT_UPDATE, form => form);
 
 // 사가 생성
 const newEventWriteSaga = createRequestSaga(NEW_EVENT_WRITE, CalendarAPI.addNewEvent);
-const newEventDeleteSaga = createRequestSaga(NEW_EVENT_DELETE, CalendarAPI.deleteNewEvent)
+const newEventDeleteSaga = createRequestSaga(NEW_EVENT_DELETE, CalendarAPI.deleteNewEvent);
+const newEventUpdateSaga = createRequestSaga(NEW_EVENT_UPDATE, CalendarAPI.updateNewEvent);
 export function* writeSaga() {
     yield takeLatest(NEW_EVENT_WRITE,newEventWriteSaga);
     yield takeLatest(NEW_EVENT_DELETE,newEventDeleteSaga);
+    yield takeLatest(NEW_EVENT_UPDATE,newEventUpdateSaga);
 }
 
 const initialState = {
@@ -67,6 +76,7 @@ export default function newEventCRUD (state = initialState, action) {
                 newEventData: initialState.newEventData
             }
         case SELECT_ID :
+            console.log("업데이트 아이디 값",action._id)
             return {
                 ...state,
                 postID: action._id
@@ -79,6 +89,7 @@ export default function newEventCRUD (state = initialState, action) {
                     postError: null,
                 }
         case NEW_EVENT_WRITE_SUCCESS :
+            console.log(action.payload)
             return {
                 ...state,
                 post : action.payload,
@@ -88,11 +99,24 @@ export default function newEventCRUD (state = initialState, action) {
                 ...state,
                 postError: action.payload,
             }
-        case NEW_EVENT_DELETE :
+        case NEW_EVENT_UPDATE :
             return {
                 ...state,
-                initialState
+                newEventData : action.payload,
+                post : null,
+                postError: null,
             }
+        case NEW_EVENT_UPDATE_SUCCESS :
+            return {
+                ...state,
+                post : action.payload,
+            }
+        case NEW_EVENT_UPDATE_FAILURE :
+            return {
+                ...state,
+                postError: action.payload,
+            }
+
         case NEW_EVENT_DELETE_SUCCESS :
             return {
                 ...state,

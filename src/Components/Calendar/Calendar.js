@@ -178,10 +178,13 @@ function Calendar ({
                        Holidays,
                        newEventData,
                        changeTitle,
-                       changeCategory, 
+                       changeCategory,
+                       changeStartDate,
+                       changeEndDate,
                        eventID, 
                        selectEventID,
-                       onDelete
+                       onDelete,
+                       onUpdateEvent
                    }) {
 
     // 이번달의 첫번째 주
@@ -285,6 +288,18 @@ function Calendar ({
                     onChange={changeCategory}
                     placeholder="새로운 이벤트 카테고리"
                 />
+                <input
+                    style={{ margin : "5px" }}
+                    type="date"
+                    value={newEventData.startDate}
+                    onChange={changeStartDate}
+                />
+                <input
+                    style={{ margin : "5px" }}
+                    type="date"
+                    value={newEventData.endDate}
+                    onChange={changeEndDate}
+                />
                 <span>제목 : {newEventData.title}</span>
                 <span>카테고리 값 : {newEventData.category}</span>
                 <span>시작일자 : {newEventData.startDate}</span>
@@ -292,9 +307,11 @@ function Calendar ({
                 <div style={{gridColumn:"1/3"}}>{ newEventData.title == ''? '제목 비어있음' : '제목 작성 완료'} /
                     { newEventData.category == ''?' 카테고리 비어있음' : ' 카테고리 설정 완료' }
                 </div>
-                <span>
+                <span style={{gridColumn:"1/3"}}>
                     <input type="number" value={eventID} onChange={ selectEventID }/>
-                    <button onClick={onDelete}>삭제</button>
+                    <button style={{marginLeft:"10px"}}> 조회</button>
+                    <button style={{marginLeft:"10px"}} onClick={onUpdateEvent}> 수정</button>
+                    <button style={{marginLeft:"10px", background:"lightcoral"}} onClick={onDelete}>삭제</button>
                 </span>
 
             </TestBlock>

@@ -6,7 +6,15 @@ import {
     monthIncrease,
     monthDecrease,
 } from "../../modules/momenter";
-import {initialize, changeField, selectID, newEventDBWrite, newEventDBDelete ,newEventCRUD} from "../../modules/newEventCRUD"
+import {
+    initialize,
+    changeField,
+    selectID,
+    newEventDBWrite,
+    newEventDBDelete,
+    newEventDBUpdate,
+    newEventCRUD,
+} from "../../modules/newEventCRUD"
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
 import {getHoliday, getEvent} from "../../modules/momenter";
@@ -105,6 +113,16 @@ function CalendarContainer(props) {
         console.log(eventID,"삭제")
         dispatch(newEventDBDelete(eventID));
     }
+    const onUpdateEvent = () => {
+        console.log('거의 다왔는데 !!! ,',eventID,newEventData.title)
+        dispatch(newEventDBUpdate({
+            _id : eventID,
+            title : newEventData.title,
+            category : newEventData.category,
+            startDate: newEventData.startDate,
+            endDate: newEventData.endDate
+        }))
+    }
 
     return (
         <div>
@@ -121,9 +139,12 @@ function CalendarContainer(props) {
                 newEventData={newEventData}
                 changeTitle={changeE_title}
                 changeCategory={changeE_category}
+                changeStartDate={changeE_startDate}
+                changeEndDate={changeE_endDate}
                 eventID={eventID}
                 selectEventID={selectEventID}
                 onDelete={onDelete}
+                onUpdateEvent={onUpdateEvent}
             />
             <AddNewEvent
                 visible={NewEvent}

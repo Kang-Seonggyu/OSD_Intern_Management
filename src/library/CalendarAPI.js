@@ -36,7 +36,6 @@ export const getNewEvent = async (CalYear, CalMonth) => {
 }
 
 export const addNewEvent = ({ title, category, startDate, endDate }) => {
-    console.log("지금 잘 왔나?",{ title, category, startDate, endDate })
     const bodyData = {
         cal_title: title,
         cal_category: category,
@@ -45,6 +44,28 @@ export const addNewEvent = ({ title, category, startDate, endDate }) => {
     }
     return client.post(OSDInternURL,bodyData,{
         method : "POST",
+        header : {
+            "Content-Type": "application/json",
+        },
+    })
+        .then(function (res){
+            return res
+        })
+        .catch( function (error) {
+            console.log(error)
+        })
+}
+
+export const updateNewEvent = ({_id, title, category, startDate, endDate }) => {
+    console.log('여기서 못받아가나 ? ',_id)
+    const bodyData = {
+        cal_title: title,
+        cal_category: category,
+        cal_start_day: startDate,
+        cal_end_day: endDate,
+    }
+    return client.put(`${OSDInternURL}${_id}`,bodyData,{
+        method : "PUT",
         header : {
             "Content-Type": "application/json",
         },
