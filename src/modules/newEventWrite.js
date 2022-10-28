@@ -13,10 +13,21 @@ const [
 
 export const initialize = () => ({ type : INITIALIZE});
 export const changeField = ({_key, _value}) => ({ type : CHANGE_FIELD, _key, _value })
+//export const writeNewEvent = ({title, category, startDate, endDate}) => ({ type : NEW_EVENT_WRITE, title, category, startDate, endDate})
 
 // export const initialize = createAction(INITIALIZE);
 // export const changeField = createAction(CHANGE_FIELD, ({key, value}) => ({ key, value, }));
-export const writeNewEvent = createAction(NEW_EVENT_WRITE, ({title, category, startDate, endDate}) => ({title, category, startDate, endDate}));
+export const writeNewEvent = createAction(NEW_EVENT_WRITE, ({
+                                                                title,
+                                                                category,
+                                                                startDate,
+                                                                endDate
+                                                    }) => ({
+                                                                title,
+                                                                category,
+                                                                startDate,
+                                                                endDate
+                                                    }));
 
 // 사가 생성
 const newEventWriteSaga = createRequestSaga(NEW_EVENT_WRITE, CalendarAPI.addNewEvent);
@@ -55,6 +66,7 @@ export default function newEventWrite (state = initialState, action) {
         case NEW_EVENT_WRITE :
             return {
                     ...state,
+                    newEventData : action.payload,
                     post : null,
                     postError: null,
                 }

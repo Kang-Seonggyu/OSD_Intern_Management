@@ -9,7 +9,7 @@ import {
 import {initialize, changeField, writeNewEvent} from "../../modules/newEventWrite"
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
-import {getHoliday} from "../../modules/momenter";
+import {getHoliday, getEvent} from "../../modules/momenter";
 import moment from "moment";
 import useActions from "../../library/useActions";
 
@@ -53,6 +53,7 @@ function CalendarContainer(props) {
 
     useEffect(() => {
         dispatch(getHoliday(momentValue));
+        dispatch(getEvent(momentValue));
     }, [momentValue]);
 
     ////////////////////////////////////////////////////////////////////////////
@@ -89,6 +90,7 @@ function CalendarContainer(props) {
                 startDate: newEventData.startDate,
                 endDate: newEventData.endDate
             }))
+
             makeE_initialize()
         }
     };
