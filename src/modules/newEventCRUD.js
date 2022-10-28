@@ -5,6 +5,7 @@ import { takeLatest } from "redux-saga/effects";
 
 const CHANGE_FIELD = 'newEventCRUD/CHANGE_FILED';
 const INITIALIZE = 'newEventCRUD/INITIALIZE';
+const SELECT_ID = 'newEventCRUD/SELECT_ID';
 const [
     NEW_EVENT_WRITE,
     NEW_EVENT_WRITE_SUCCESS,
@@ -18,27 +19,23 @@ const [
 
 export const initialize = () => ({ type : INITIALIZE});
 export const changeField = ({_key, _value}) => ({ type : CHANGE_FIELD, _key, _value })
-//export const writeNewEvent = ({title, category, startDate, endDate}) => ({ type : NEW_EVENT_WRITE, title, category, startDate, endDate})
+export const selectID = _id => ({ type : SELECT_ID, _id})
+// export const writeNewEvent = ({title, category, startDate, endDate}) => ({ type : NEW_EVENT_WRITE, title, category, startDate, endDate})
 // export const initialize = createAction(INITIALIZE);
 // export const changeField = createAction(CHANGE_FIELD, ({key, value}) => ({ key, value, }));
-export const newEventWrite = createAction(NEW_EVENT_WRITE, ({
-                                                                title,
-                                                                category,
-                                                                startDate,
-                                                                endDate
-                                                    }) => ({
-                                                                title,
-                                                                category,
-                                                                startDate,
-                                                                endDate
-                                                    }));
-export const newEventDelete = createAction(NEW_EVENT_DELETE, id => id);
+export const newEventDBWrite = createAction(NEW_EVENT_WRITE, ({
+                                                                  title, category, startDate,endDate
+                                                              }) => ({
+                                                                title, category, startDate, endDate
+                                                              }));
+export const newEventDBDelete = createAction(NEW_EVENT_DELETE, _id => _id);
 
 // 사가 생성
 const newEventWriteSaga = createRequestSaga(NEW_EVENT_WRITE, CalendarAPI.addNewEvent);
-const newEventDeleteSaga = createRequestSaga(NEW_EVENT_DELETE, CalendarAPI)
+const newEventDeleteSaga = createRequestSaga(NEW_EVENT_DELETE, CalendarAPI.deleteNewEvent)
 export function* writeSaga() {
     yield takeLatest(NEW_EVENT_WRITE,newEventWriteSaga);
+    yield takeLatest(NEW_EVENT_DELETE,newEventDeleteSaga);
 }
 
 const initialState = {
@@ -50,6 +47,7 @@ const initialState = {
     },
     post: null,
     postError: null,
+    postID: 0,
 };
 
 // 다른 방식으로 쓴 코드
@@ -63,11 +61,15 @@ export default function newEventCRUD (state = initialState, action) {
                     [action._key] : action._value
                 }
             }
-
         case INITIALIZE :
             return {
                 ...state,
                 newEventData: initialState.newEventData
+            }
+        case SELECT_ID :
+            return {
+                ...state,
+                postID: action._id
             }
         case NEW_EVENT_WRITE :
             return {
@@ -82,6 +84,21 @@ export default function newEventCRUD (state = initialState, action) {
                 post : action.payload,
             }
         case NEW_EVENT_WRITE_FAILURE :
+            return {
+                ...state,
+                postError: action.payload,
+            }
+        case NEW_EVENT_DELETE :
+            return {
+                ...state,
+                initialState
+            }
+        case NEW_EVENT_DELETE_SUCCESS :
+            return {
+                ...state,
+                post : action.payload,
+            }
+        case NEW_EVENT_DELETE_FAILURE :
             return {
                 ...state,
                 postError: action.payload,

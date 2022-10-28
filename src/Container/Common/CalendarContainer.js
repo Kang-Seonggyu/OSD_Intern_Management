@@ -6,7 +6,7 @@ import {
     monthIncrease,
     monthDecrease,
 } from "../../modules/momenter";
-import {initialize, changeField, newEventWrite} from "../../modules/newEventCRUD"
+import {initialize, changeField, selectID, newEventDBWrite, newEventDBDelete ,newEventCRUD} from "../../modules/newEventCRUD"
 import Calendar from "../../Components/Calendar/Calendar";
 import AddNewEvent from "../../Components/Calendar/AddNewEvent";
 import {getHoliday, getEvent} from "../../modules/momenter";
@@ -17,11 +17,12 @@ function CalendarContainer(props) {
 
     ////////////// Redux 구간 /////////////////////////////////////////////////
 
-    const { momentValue, holiday, loadingHoliday, newEventData} = useSelector(state => ({
+    const { momentValue, holiday, loadingHoliday, newEventData, eventID} = useSelector(state => ({
         momentValue: state.momenter.momentValue,
         holiday: state.momenter.holiday,
         loadingHoliday: state.momenter.loading.GET_HOLIDAY,
-        newEventData : state.newEventWrite.newEventData
+        newEventData : state.newEventCRUD.newEventData,
+        eventID : state.newEventCRUD.postID
     }));
 
     const dispatch = useDispatch();
@@ -41,6 +42,8 @@ function CalendarContainer(props) {
             initialize
         ],[]
     );
+    
+    const selectEventID = e => dispatch(selectID(e.target.value))
 
     const changeE_title = e => dispatch(changeField({_key:'title', _value : e.target.value}))
     const changeE_category = e => {
@@ -84,7 +87,7 @@ function CalendarContainer(props) {
         }
         else {
             setNewEvent(false);
-            dispatch(newEventWrite({
+            dispatch(newEventDBWrite({
                 title : newEventData.title,
                 category : newEventData.category,
                 startDate: newEventData.startDate,
@@ -97,6 +100,10 @@ function CalendarContainer(props) {
 
     const onReload = () => {
         window.location.reload();
+    }
+    const onDelete = () => {
+        console.log(eventID,"삭제")
+        dispatch(newEventDBDelete(eventID));
     }
 
     return (
@@ -114,6 +121,9 @@ function CalendarContainer(props) {
                 newEventData={newEventData}
                 changeTitle={changeE_title}
                 changeCategory={changeE_category}
+                eventID={eventID}
+                selectEventID={selectEventID}
+                onDelete={onDelete}
             />
             <AddNewEvent
                 visible={NewEvent}

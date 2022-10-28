@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
     counter,
     loading,
     momenter,
-    newEventWrite: newEventCRUD
+    newEventCRUD
 });
 
 export function* rootSaga() {

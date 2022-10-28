@@ -136,7 +136,7 @@ const TestBlock = styled.div`
   text-align: center;
   padding: 5px;
   width : 700px;
-  height: 200px;
+  height: 300px;
   border : 1px solid black
 `
 const PushTag = (
@@ -178,7 +178,10 @@ function Calendar ({
                        Holidays,
                        newEventData,
                        changeTitle,
-                       changeCategory
+                       changeCategory, 
+                       eventID, 
+                       selectEventID,
+                       onDelete
                    }) {
 
     // 이번달의 첫번째 주
@@ -289,6 +292,10 @@ function Calendar ({
                 <div style={{gridColumn:"1/3"}}>{ newEventData.title == ''? '제목 비어있음' : '제목 작성 완료'} /
                     { newEventData.category == ''?' 카테고리 비어있음' : ' 카테고리 설정 완료' }
                 </div>
+                <span>
+                    <input type="number" value={eventID} onChange={ selectEventID }/>
+                    <button onClick={onDelete}>삭제</button>
+                </span>
 
             </TestBlock>
         </div>

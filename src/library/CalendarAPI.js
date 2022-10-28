@@ -1,9 +1,6 @@
 import axios from "axios";
-import {useState} from "react";
 
-//const [testData, setTestData] = useState([])
 const client = axios.create();
-
 
 // 공휴일 API
 
@@ -16,12 +13,13 @@ export const getHoliday = (solYear, solMonth) =>
 
 // 우리 DB API
 
-const OSDInternURL = 'http://172.25.4.13:2101/calendar/'
+const OSDInternURL = 'http://172.25.4.5:2101/calendar/'
 
 // export const getNewEvent = (CalYear, CalMonth) => {
-//     console.log(`http://172.25.4.5:2101/calendar/?year=${CalYear}&month=${CalMonth}`);
-//     client.get(`http://172.25.4.5:2101/calendar/?year=${CalYear}&month=${CalMonth}`)
+//     //console.log(`http://172.25.4.5:2101/calendar/?year=${CalYear}&month=${CalMonth}`);
+//     return client.get(`http://172.25.4.5:2101/calendar/?year=${CalYear}&month=${CalMonth}`)
 // }
+
 export const getNewEvent = async (CalYear, CalMonth) => {
     return client.get(OSDInternURL, {
         params : {
@@ -30,11 +28,7 @@ export const getNewEvent = async (CalYear, CalMonth) => {
         }
     })
         .then(function (res) {
-            //setTestData(res)
-            console.log('성공인가?', res)
-
             return res.data
-
         })
         .catch( function (error) {
             console.log(error)
@@ -42,18 +36,18 @@ export const getNewEvent = async (CalYear, CalMonth) => {
 }
 
 export const addNewEvent = ({ title, category, startDate, endDate }) => {
+    console.log("지금 잘 왔나?",{ title, category, startDate, endDate })
     const bodyData = {
         cal_title: title,
         cal_category: category,
         cal_start_day: startDate,
         cal_end_day: endDate,
     }
-    client.post(OSDInternURL,bodyData,{
+    return client.post(OSDInternURL,bodyData,{
         method : "POST",
         header : {
             "Content-Type": "application/json",
         },
-        //body : bodyData
     })
         .then(function (res){
             return res
@@ -61,4 +55,9 @@ export const addNewEvent = ({ title, category, startDate, endDate }) => {
         .catch( function (error) {
             console.log(error)
         })
+}
+
+export const deleteNewEvent = id => {
+    console.log(`${OSDInternURL}${id}`)
+    return client.delete(`${OSDInternURL}${id}`)
 }
