@@ -29,11 +29,7 @@ const [
 export const initialize = () => ({ type : INITIALIZE});
 export const changeField = ({_key, _value}) => ({ type : CHANGE_FIELD, _key, _value })
 export const selectID = _id => ({ type : SELECT_ID, _id})
-export const newEventDBWrite = createAction(NEW_EVENT_WRITE, ({
-                                                                  title, category, startDate,endDate
-                                                              }) => ({
-                                                                title, category, startDate, endDate
-                                                              }));
+export const newEventDBWrite = createAction(NEW_EVENT_WRITE,form => form);
 export const newEventDBDelete = createAction(NEW_EVENT_DELETE, _id => _id);
 export const newEventDBUpdate = createAction(NEW_EVENT_UPDATE, form => form);
 

@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react';
 import moment from 'moment';
 import palette from "../../library/styles/palette";
 import styled from "styled-components";
@@ -176,6 +175,7 @@ function Calendar ({
                        yearIncreaseButton,
                        loadingHoliday,
                        Holidays,
+                       events,
                        newEventData,
                        changeTitle,
                        changeCategory,
@@ -192,7 +192,6 @@ function Calendar ({
     // 이번달의 마지막 주 (만약 마지막 주가 1이 나온다면 53번째 주로 변경)
     const lastWeek = momentValue.clone().endOf('month').week() === 1? 53 : momentValue.clone().endOf('month').week();
 
-
     const calendarArr=()=>{
         let result = [];
         let week = firstWeek;
@@ -207,15 +206,16 @@ function Calendar ({
                 event[event_ID] = holiday.dateName;
             })
         }
+        console.log(event)
 
 
         for ( week; week <= lastWeek; week++) {
             // day = [ 일,월,화,수,목,금,토 ]
             for ( let day=0 ; day < 7 ; day ++ ) {
                 // 'days' : Moment 값
-                // 'date' : ID 값을 넣기 위함.
+                // 'dateID' : ID 값을 넣기 위함.
                 let days = momentValue.clone().startOf('year').week(week).startOf('week').add(day, 'day'); // 'D' 로해도되지만 직관성
-                let date = `Date-${days.format('YYYY-MM-DD')}`
+                let dateID = `Date-${days.format('YYYY-MM-DD')}`
 
                 let todayCheck = moment().format('YYYYMMDD') === days.format('YYYYMMDD') ? 'Today' : 'week';
                 let dayCheck = day === 0 ? 'sunday' : todayCheck;
@@ -223,23 +223,23 @@ function Calendar ({
                 // (이번달, !이번달)로 나눠서 처리.
                 // 이번달은 글씨를 (평일 : 검정, 주말 : 빨강) 처리.
                 if (days.format('MM') === momentValue.format('MM')) {
-                    if (date in event) {
-                        if (date === `Date-${newEventData.startDate}`) {
-                            result.push(PushTag(date, days, dayCheck, event[date], newEventData.category, newEventData.title));
+                    if (dateID in event) {
+                        if (dateID === `Date-${newEventData.startDate}`) {
+                            result.push(PushTag(dateID, days, dayCheck, event[dateID], newEventData.category, newEventData.title));
                         } else {
-                            result.push(PushTag(date, days, dayCheck, event[date], '', ''));
+                            result.push(PushTag(dateID, days, dayCheck, event[dateID], '', ''));
                         }
                     } else {
-                        if (date === `Date-${newEventData.startDate}`) {
-                            result.push(PushTag(date, days, dayCheck, '', newEventData.category, newEventData.title));
+                        if (dateID === `Date-${newEventData.startDate}`) {
+                            result.push(PushTag(dateID, days, dayCheck, '', newEventData.category, newEventData.title));
                         } else {
-                            result.push(PushTag(date, days, dayCheck, '', '', ''));
+                            result.push(PushTag(dateID, days, dayCheck, '', '', ''));
                         }
                     }
                 }
                 // 이번달이 아닌 경우 모두 회색처리.
                 else {
-                    result.push(PushTag(date, days, "anotherMonth"));
+                    result.push(PushTag(dateID, days, "anotherMonth"));
                 }
             }
         }
@@ -305,7 +305,7 @@ function Calendar ({
                 <span>시작일자 : {newEventData.startDate}</span>
                 <span> 종료일자 : {newEventData.endDate}</span>
                 <div style={{gridColumn:"1/3"}}>{ newEventData.title == ''? '제목 비어있음' : '제목 작성 완료'} /
-                    { newEventData.category == ''?' 카테고리 비어있음' : ' 카테고리 설정 완료' }
+                    { newEventData.category === ''?' 카테고리 비어있음' : ' 카테고리 설정 완료' }
                 </div>
                 <span style={{gridColumn:"1/3"}}>
                     <input type="number" value={eventID} onChange={ selectEventID }/>
@@ -313,8 +313,16 @@ function Calendar ({
                     <button style={{marginLeft:"10px"}} onClick={onUpdateEvent}> 수정</button>
                     <button style={{marginLeft:"10px", background:"lightcoral"}} onClick={onDelete}>삭제</button>
                 </span>
+                {
+                    events>0?
+                        <div>으악 !{events[0].cal_title}</div>
+                        :
+                        <div>없음</div>
+                }
+                
 
             </TestBlock>
+
         </div>
     )
 }

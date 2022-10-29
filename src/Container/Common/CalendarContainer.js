@@ -25,9 +25,10 @@ function CalendarContainer(props) {
 
     ////////////// Redux 구간 /////////////////////////////////////////////////
 
-    const { momentValue, holiday, loadingHoliday, newEventData, eventID} = useSelector(state => ({
+    const { momentValue, holiday, events, loadingHoliday, newEventData, eventID} = useSelector(state => ({
         momentValue: state.momenter.momentValue,
         holiday: state.momenter.holiday,
+        events : state.momenter.event,
         loadingHoliday: state.momenter.loading.GET_HOLIDAY,
         newEventData : state.newEventCRUD.newEventData,
         eventID : state.newEventCRUD.postID
@@ -136,6 +137,7 @@ function CalendarContainer(props) {
                 monthDecreaseButton={monthDecreaseButton}
                 loadingHoliday={loadingHoliday} // 공휴일 정보 로딩 확인
                 Holidays={holiday}              // 공휴일 정보
+                events={events}
                 newEventData={newEventData}
                 changeTitle={changeE_title}
                 changeCategory={changeE_category}
