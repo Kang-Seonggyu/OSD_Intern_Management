@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import moment from "moment";
 import styled from "styled-components";
 import palette from "../../library/styles/palette";
@@ -27,9 +27,14 @@ const EventList = styled.div`
   }
 `;
 
+
 //
 function TestComp() {
     const title = "날짜 풀어서 배열화"
+    const [dayPick, setDayPick] = useState('');
+    const onChange= (e) => {
+        setDayPick(e.target.value)
+    }
 
     const events = [
         {
@@ -144,6 +149,34 @@ function TestComp() {
                 </div>
             )})
     }
+    const [foundList, setFoundList] = useState([]);
+
+    const postEvent = ( findDate, EventList ) => {
+        const newEventList = [];
+        let keyValue = 0;
+
+        // 이벤트의 시작일자와 종료일자 사이에 해당하는 Event 들을 newEventList 배열에 다시 넣어주기.
+        // 형태 => newEventList = [   { title : OSD행사 , category : Event , date : 2022-10-20, inputKey : 0 },
+        //                           { title : 홍길동 , category : birthday , date : 2022-01-01, inputKey : 1 }, ... ]
+        EventList.map((oneEvent) => {
+            let currentDate = moment(oneEvent.cal_start_day);
+            let stopDate = moment(oneEvent.cal_end_day);
+            while (currentDate <= stopDate) {
+                newEventList.push({
+                    title: oneEvent.cal_title,
+                    category: oneEvent.cal_category,
+                    date: moment(currentDate).format('YYYY-MM-DD'),
+                    inputKey: keyValue
+                })
+                keyValue++;
+                currentDate = moment(currentDate).add(1, "days");
+            }
+        })
+        let foundEvents = newEventList.filter(e => e.date === findDate);
+        console.log(foundEvents)
+        setFoundList(foundEvents)
+    }
+
 
 
     return (
@@ -170,8 +203,22 @@ function TestComp() {
             }
             </EventList>
             <h2>날짜값 받아서 해당 날짜의 데이터만 불러오기</h2>
+            <div>
+                <label>날짜 입력 :</label>
+                <input type="date" value={dayPick} onChange={onChange}/>
+                <span> 입력된 날짜 : </span>
+                <span>{dayPick}</span>
+                <button onClick={() => postEvent(dayPick, events)}> 찾기 </button>
+            </div>
             <EventList>
-                날짜 입력 : <input type="date"/>
+                { foundList.map((foundEvent) => {
+                    return (
+                        <div key={foundEvent.inputKey}>
+                            <div className={foundEvent.category}>{foundEvent.title}</div>
+                            <div>{foundEvent.date}</div>
+                        </div>
+                    )
+                })}
             </EventList>
         </div>
     );
