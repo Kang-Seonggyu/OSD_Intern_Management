@@ -138,32 +138,6 @@ const TestBlock = styled.div`
   height: 300px;
   border : 1px solid black
 `
-const PushTag = (
-    key,
-    loadedMoment,
-    dayClass,
-    isHoliday,
-    isEvent,
-    eventTitle
-) => {
-    const today = loadedMoment.format('YYYYMMDD') === moment().format('YYYYMMDD');
-
-    return (
-        <TableBody id={key} key={key} className={`${today ? 'today' : ''}`}>
-            <div className={`date ${dayClass}`}>
-                {loadedMoment.format('D')}
-            </div>
-            <div className="holiday">
-                {isHoliday}
-            </div>
-            <div className={isEvent}>
-                {eventTitle}
-            </div>
-
-        </TableBody>
-    )
-
-}
 
 function Calendar ({
                        AddEventClick,
@@ -192,9 +166,9 @@ function Calendar ({
     // 이번달의 마지막 주 (만약 마지막 주가 1이 나온다면 53번째 주로 변경)
     const lastWeek = momentValue.clone().endOf('month').week() === 1? 53 : momentValue.clone().endOf('month').week();
 
-    const calendarArr=()=>{
-        let result = [];
-        let week = firstWeek;
+    const calendarArr=()=> {
+        // 공휴일 데이터 가져오기. (객체형태로)
+        // 예시 : { '2022-10-03' : '개천절' }
         let event = {};
         if(!loadingHoliday && Holidays){
             Holidays.map((holiday) => {
@@ -206,45 +180,59 @@ function Calendar ({
                 event[event_ID] = holiday.dateName;
             })
         }
-        console.log(event)
 
+        //
+        let result = [];
+        let week = firstWeek;
 
-        for ( week; week <= lastWeek; week++) {
+        for (week; week <= lastWeek; week++) {
             // day = [ 일,월,화,수,목,금,토 ]
-            for ( let day=0 ; day < 7 ; day ++ ) {
-                // 'days' : Moment 값
-                // 'dateID' : ID 값을 넣기 위함.
-                let days = momentValue.clone().startOf('year').week(week).startOf('week').add(day, 'day'); // 'D' 로해도되지만 직관성
-                let dateID = `Date-${days.format('YYYY-MM-DD')}`
+            for (let day = 0; day < 7; day++) {
+                let currentMoment = momentValue.clone().startOf('year').week(week).startOf('week').add(day, 'day'); // 'D' 로해도되지만 직관성
+                let dateID = `Date-${currentMoment.format('YYYY-MM-DD')}`
 
-                let todayCheck = moment().format('YYYYMMDD') === days.format('YYYYMMDD') ? 'Today' : 'week';
+                // 해당 날짜에 class 값 넣기위한 조건처리.
+                let todayCheck = currentMoment.format('YYYYMMDD') === moment().format('YYYYMMDD')  ? 'Today' : 'week';
                 let dayCheck = day === 0 ? 'sunday' : todayCheck;
-                //------------------------------- 날짜 처리하는 구간 -------------------------------//
-                // (이번달, !이번달)로 나눠서 처리.
-                // 이번달은 글씨를 (평일 : 검정, 주말 : 빨강) 처리.
-                if (days.format('MM') === momentValue.format('MM')) {
+
+                // 이번달인 경우
+                if (currentMoment.format('MM') === momentValue.format('MM')) {
                     if (dateID in event) {
-                        if (dateID === `Date-${newEventData.startDate}`) {
-                            result.push(PushTag(dateID, days, dayCheck, event[dateID], newEventData.category, newEventData.title));
-                        } else {
-                            result.push(PushTag(dateID, days, dayCheck, event[dateID], '', ''));
-                        }
+                        result.push(PushTag(currentMoment, dateID, dayCheck, event[dateID]));
                     } else {
-                        if (dateID === `Date-${newEventData.startDate}`) {
-                            result.push(PushTag(dateID, days, dayCheck, '', newEventData.category, newEventData.title));
-                        } else {
-                            result.push(PushTag(dateID, days, dayCheck, '', '', ''));
-                        }
+                        result.push(PushTag(currentMoment, dateID, dayCheck, ''));
                     }
-                }
-                // 이번달이 아닌 경우 모두 회색처리.
-                else {
-                    result.push(PushTag(dateID, days, "anotherMonth"));
+                // 이번달이 아닌 경우
+                } else {
+                    result.push(PushTag(currentMoment, dateID,"anotherMonth"));
                 }
             }
         }
         return result;
     }
+
+    // currentMoment  : 해당 날짜의 모멘트값
+    // dayClass       : 해당 날짜의 분류 ( Today, week, sunday, anotherMonth )
+    // Holiday        : 공휴일 정보
+    const PushTag = (currentMoment, dateID, dayClass, HolidayTitle) => {
+        const today = currentMoment.format('YYYYMMDD') === moment().format('YYYYMMDD');
+
+        return (
+            <TableBody id={dateID} key={currentMoment.format('MM-DD')} className={`${today ? 'today' : ''}`}>
+                <div className={`date ${dayClass}`}>
+                    {currentMoment.format('D')}
+                </div>
+                <div className="holiday">
+                    {HolidayTitle}
+                </div>
+                {/*<div className={isEvent}>*/}
+                {/*    {eventTitle}*/}
+                {/*</div>*/}
+            </TableBody>
+        )
+
+    }
+
 
     return(
         <div>

@@ -115,7 +115,6 @@ function CalendarContainer(props) {
         dispatch(newEventDBDelete(eventID));
     }
     const onUpdateEvent = () => {
-        console.log('거의 다왔는데 !!! ,',eventID,newEventData.title)
         dispatch(newEventDBUpdate({
             _id : eventID,
             title : newEventData.title,

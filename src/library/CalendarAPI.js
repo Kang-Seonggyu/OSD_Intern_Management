@@ -57,7 +57,6 @@ export const addNewEvent = ({ title, category, startDate, endDate }) => {
 }
 
 export const updateNewEvent = ({_id, title, category, startDate, endDate }) => {
-    console.log('여기서 못받아가나 ? ',_id)
     const bodyData = {
         cal_title: title,
         cal_category: category,
