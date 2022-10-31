@@ -89,9 +89,12 @@ const TableBody = styled.div`
   grid-auto-rows: minmax(10rem, auto);
   width: 100%;
   min-width: 90px;
+  max-width: 100%;
   height: auto;
   min-height: 90px;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
 
   .date {
     width: 90%;
@@ -133,7 +136,6 @@ const TestBlock = styled.div`
   grid-template-columns: 1fr 1fr;
   justify-content: center;
   align-items: center;
-  text-align: center;
   padding: 5px;
   width : 700px;
   height: 300px;
