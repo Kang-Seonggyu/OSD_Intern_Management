@@ -144,7 +144,6 @@ export default function momenter(state = initialState, action) {
                 loading: {
                     ...state.loading,
                     GET_HOLIDAY: false
-
                 },
                 holiday: action.payload
 

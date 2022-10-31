@@ -123,6 +123,7 @@ function TestComp() {
         }
     ]
 
+    // 시작일자와 종료일자 사이의 날짜들을 풀어서 다시 리스트화
     const makeBetweenDates = ( EventList ) => {
         const newEventList = [];
         let keyValue = 0;
@@ -141,17 +142,20 @@ function TestComp() {
 
             }
         })
-        return newEventList.map((oneEvent) => {
-            return(
-                <div key={oneEvent.inputKey}>
-                    <div className={oneEvent.category}>{oneEvent.title}</div>
-                    <div>{oneEvent.date}</div>
-                </div>
-            )})
+        return newEventList
     }
+    let spreadEventList = makeBetweenDates(events);
+
+    // 해당 날짜마다 전부 값을 넣어주기
+    const PostEventsList = ( eventDate, newEventList ) => {
+        let foundEvents =  newEventList.filter(e => e.date === eventDate);
+        return foundEvents;
+    }
+
+    // 한 날짜의 이벤트 리스트를 나타내는 Function
     const [foundList, setFoundList] = useState([]);
 
-    const postEvent = ( findDate, EventList ) => {
+    const newListAndPostEvent = ( eventDate, EventList ) => {
         const newEventList = [];
         let keyValue = 0;
 
@@ -172,10 +176,12 @@ function TestComp() {
                 currentDate = moment(currentDate).add(1, "days");
             }
         })
-        let foundEvents = newEventList.filter(e => e.date === findDate);
-        console.log(foundEvents)
+        let foundEvents = newEventList.filter(e => e.date === eventDate);
         setFoundList(foundEvents)
     }
+
+    const tempList = [1,2,3,4,5,6,6];
+
 
 
 
@@ -199,7 +205,13 @@ function TestComp() {
             <h2>{title},{typeof (title)}</h2>
             <EventList>
             {
-                makeBetweenDates(events)
+                makeBetweenDates(events).map((oneEvent) => {
+                    return(
+                        <div key={oneEvent.inputKey}>
+                            <div className={oneEvent.category}>{oneEvent.title}</div>
+                            <div>{oneEvent.date}</div>
+                        </div>
+                    )})
             }
             </EventList>
             <h2>날짜값 받아서 해당 날짜의 데이터만 불러오기</h2>
@@ -208,7 +220,7 @@ function TestComp() {
                 <input type="date" value={dayPick} onChange={onChange}/>
                 <span> 입력된 날짜 : </span>
                 <span>{dayPick}</span>
-                <button onClick={() => postEvent(dayPick, events)}> 찾기 </button>
+                <button onClick={() => newListAndPostEvent(dayPick, events)}> 찾기 </button>
             </div>
             <EventList>
                 { foundList.map((foundEvent) => {
@@ -219,6 +231,17 @@ function TestComp() {
                         </div>
                     )
                 })}
+            </EventList>
+            <EventList>
+                {
+                    tempList.map((temp, idx) => {
+                        return (
+                            <div key={idx}>
+                                {temp}
+                            </div>
+                        )
+                    })
+                }
             </EventList>
         </div>
     );

@@ -25,9 +25,10 @@ function CalendarContainer(props) {
 
     ////////////// Redux 구간 /////////////////////////////////////////////////
 
-    const { momentValue, holiday, events, loadingHoliday, newEventData, eventID} = useSelector(state => ({
+    const { momentValue, holiday, events, loadingHoliday, loadingEvents, newEventData, eventID} = useSelector(state => ({
         momentValue: state.momenter.momentValue,
         holiday: state.momenter.holiday,
+        loadingEvents : state.momenter.loading.GET_EVENT,
         events : state.momenter.event,
         loadingHoliday: state.momenter.loading.GET_HOLIDAY,
         newEventData : state.newEventCRUD.newEventData,
@@ -68,10 +69,18 @@ function CalendarContainer(props) {
         dispatch(getEvent(momentValue));
     }, [momentValue]);
 
+
+
     ////////////////////////////////////////////////////////////////////////////
 
     // 일정추가 창 보여주것을 정하는 State
     const [NewEvent, setNewEvent] = useState(false);
+
+
+
+
+
+
 
     let noDataCheck;
     if (newEventData.title !=='' && newEventData.category !=='')
@@ -136,7 +145,8 @@ function CalendarContainer(props) {
                 monthDecreaseButton={monthDecreaseButton}
                 loadingHoliday={loadingHoliday} // 공휴일 정보 로딩 확인
                 Holidays={holiday}              // 공휴일 정보
-                events={events}
+                loadingEvents ={loadingEvents}  // 이벤트 정보 로딩 확인
+                events={events}                 // 이벤트 정보
                 newEventData={newEventData}
                 changeTitle={changeE_title}
                 changeCategory={changeE_category}

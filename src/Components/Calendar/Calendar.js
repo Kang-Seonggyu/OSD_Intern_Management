@@ -1,6 +1,7 @@
 import moment from 'moment';
 import palette from "../../library/styles/palette";
 import styled from "styled-components";
+import React, {useEffect, useState} from "react";
 
 const CalTotalBlock = styled.div`
   width: 100%;
@@ -149,6 +150,7 @@ function Calendar ({
                        yearIncreaseButton,
                        loadingHoliday,
                        Holidays,
+                       loadingEvents,
                        events,
                        newEventData,
                        changeTitle,
@@ -160,28 +162,59 @@ function Calendar ({
                        onDelete,
                        onUpdateEvent
                    }) {
+    const [newEventList, setNewEventList] = useState([])
+
+    useEffect( () => {
+        setNewEventList(spreadEventList(events))
+    }, [events])
 
     // 이번달의 첫번째 주
     const firstWeek = momentValue.clone().startOf('month').week();
     // 이번달의 마지막 주 (만약 마지막 주가 1이 나온다면 53번째 주로 변경)
     const lastWeek = momentValue.clone().endOf('month').week() === 1? 53 : momentValue.clone().endOf('month').week();
 
-    const calendarArr=()=> {
-        // 공휴일 데이터 가져오기. (객체형태로)
-        // 예시 : { '2022-10-03' : '개천절' }
-        let event = {};
-        if(!loadingHoliday && Holidays){
-            Holidays.map((holiday) => {
-                let event_year = holiday.locdate.toString().substring(0,4);
-                let event_month = holiday.locdate.toString().substring(4,6).padStart(2,0);
-                let event_day = holiday.locdate.toString().substring(6,8).padStart(2,0);
-
-                let event_ID = `Date-${event_year}-${event_month}-${event_day}`;
-                event[event_ID] = holiday.dateName;
+    let spreadEventList = ( EventList ) => {
+        const newEventList = [];
+        let keyValue = 0;
+        if (!loadingEvents && EventList) {
+            EventList.map((oneEvent) => {
+                let currentDate = moment(oneEvent.cal_start_day);
+                let stopDate = moment(oneEvent.cal_end_day);
+                while (currentDate <= stopDate) {
+                    newEventList.push({
+                        title : oneEvent.cal_title,
+                        category : oneEvent.cal_category,
+                        date : moment(currentDate).format('YYYY-MM-DD'),
+                        inputKey : keyValue
+                    })
+                    keyValue++;
+                    currentDate = moment(currentDate).add(1, "days");
+                }
             })
         }
 
-        //
+        return newEventList
+    }
+    const PostEventsList = ( eventDate, newEventList ) => {
+        let foundEvents =  newEventList.filter(e => e.date === eventDate);
+        return foundEvents;
+    }
+
+    const calendarArr=()=> {
+        // 공휴일 데이터 가져오기. (객체형태로)
+        // 예시 : { '2022-10-03' : '개천절' }
+        let holidaylist = {};
+        if(!loadingHoliday && Holidays){
+            Holidays.map((holiday) => {
+                let holiday_year = holiday.locdate.toString().substring(0,4);
+                let holiday_month = holiday.locdate.toString().substring(4,6).padStart(2,0);
+                let holiday_day = holiday.locdate.toString().substring(6,8).padStart(2,0);
+
+                let holiday_ID = `Date-${holiday_year}-${holiday_month}-${holiday_day}`;
+                holidaylist[holiday_ID] = holiday.dateName;
+            })
+        }
+
         let result = [];
         let week = firstWeek;
 
@@ -189,7 +222,8 @@ function Calendar ({
             // day = [ 일,월,화,수,목,금,토 ]
             for (let day = 0; day < 7; day++) {
                 let currentMoment = momentValue.clone().startOf('year').week(week).startOf('week').add(day, 'day'); // 'D' 로해도되지만 직관성
-                let dateID = `Date-${currentMoment.format('YYYY-MM-DD')}`
+                let date = currentMoment.format('YYYY-MM-DD')
+                let dateID = `Date-${date}`
 
                 // 해당 날짜에 class 값 넣기위한 조건처리.
                 let todayCheck = currentMoment.format('YYYYMMDD') === moment().format('YYYYMMDD')  ? 'Today' : 'week';
@@ -197,8 +231,8 @@ function Calendar ({
 
                 // 이번달인 경우
                 if (currentMoment.format('MM') === momentValue.format('MM')) {
-                    if (dateID in event) {
-                        result.push(PushTag(currentMoment, dateID, dayCheck, event[dateID]));
+                    if (dateID in holidaylist) {
+                        result.push(PushTag(currentMoment, dateID, dayCheck, holidaylist[dateID]));
                     } else {
                         result.push(PushTag(currentMoment, dateID, dayCheck, ''));
                     }
@@ -212,10 +246,12 @@ function Calendar ({
     }
 
     // currentMoment  : 해당 날짜의 모멘트값
+    // dateID         : 참조하기 위한 ID 값
     // dayClass       : 해당 날짜의 분류 ( Today, week, sunday, anotherMonth )
     // Holiday        : 공휴일 정보
     const PushTag = (currentMoment, dateID, dayClass, HolidayTitle) => {
         const today = currentMoment.format('YYYYMMDD') === moment().format('YYYYMMDD');
+        
 
         return (
             <TableBody id={dateID} key={currentMoment.format('MM-DD')} className={`${today ? 'today' : ''}`}>
@@ -225,10 +261,17 @@ function Calendar ({
                 <div className="holiday">
                     {HolidayTitle}
                 </div>
-                {/*<div className={isEvent}>*/}
-                {/*    {eventTitle}*/}
-                {/*</div>*/}
-            </TableBody>
+                <div>
+                    {!loadingEvents ?
+                        PostEventsList(currentMoment.format('YYYY-MM-DD') ,newEventList).map((foundEvent) => {
+                        return (
+                            <div key={foundEvent.inputKey}>
+                                <div className={foundEvent.category}>{foundEvent.title}</div>
+                            </div>)})  :
+                        '로딩중'
+                    }
+                </div>
+           </TableBody>
         )
 
     }
