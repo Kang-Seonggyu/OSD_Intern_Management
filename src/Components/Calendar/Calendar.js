@@ -10,7 +10,7 @@ const CalTotalBlock = styled.div`
   margin: 1px;
   display: grid;
   align-items: center;
-  justify-items: center;
+  justify-items: center;  
 `
 
 const CalendarBlock = styled.div`
@@ -99,7 +99,6 @@ const TableBody = styled.div`
   .date {
     width: 90%;
     padding-left: 8px;
-    text-align: left;
   }
 
   .sunday {
@@ -134,8 +133,6 @@ const TestBlock = styled.div`
   margin-bottom: 100px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  justify-content: center;
-  align-items: center;
   padding: 5px;
   width : 700px;
   height: 300px;
@@ -263,16 +260,14 @@ function Calendar ({
                 <div className="holiday">
                     {HolidayTitle}
                 </div>
-                <div>
-                    {!loadingEvents ?
-                        PostEventsList(currentMoment.format('YYYY-MM-DD') ,newEventList).map((foundEvent) => {
-                        return (
-                            <div key={foundEvent.inputKey}>
-                                <div className={foundEvent.category}>{foundEvent.title}</div>
-                            </div>)})  :
-                        '로딩중'
-                    }
-                </div>
+                {!loadingEvents && dayClass!=="anotherMonth" ?
+                    PostEventsList(currentMoment.format('YYYY-MM-DD') ,newEventList).map((foundEvent) => {
+                    return (
+                        <div key={foundEvent.inputKey} className={foundEvent.category}>
+                            {foundEvent.title}
+                        </div>)})  :
+                    ''
+                }
            </TableBody>
         )
 
@@ -346,14 +341,6 @@ function Calendar ({
                     <button style={{marginLeft:"10px"}} onClick={onUpdateEvent}> 수정</button>
                     <button style={{marginLeft:"10px", background:"lightcoral"}} onClick={onDelete}>삭제</button>
                 </span>
-                {
-                    events>0?
-                        <div>으악 !{events[0].cal_title}</div>
-                        :
-                        <div>없음</div>
-                }
-                
-
             </TestBlock>
 
         </div>
