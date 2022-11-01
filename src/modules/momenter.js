@@ -39,7 +39,7 @@ const initialState = {
 export const getEvent = momentValue => async dispatch => {
     dispatch({type: GET_EVENT});
     try {
-        const response = await api.getNewEvent(momentValue.format('YYYY'), momentValue.format('MM')); // API 호출
+        const response = await api.getNewEvent(momentValue.format('YYYY'), momentValue.format('MM')); // API 호출\
         dispatch({
             type: GET_EVENT_SUCCESS,
             payload: response ? response : null
