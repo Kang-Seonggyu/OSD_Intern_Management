@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Bobfriend from "./DashBob";
 import DashCalendar from "./DashCalendar";
-import Holiday from "../Calendar/Holiday";
 
 const standardSize = 10;
 
@@ -31,6 +30,10 @@ function DASHBOARD ({ onClick,
                         yearDecreaseButton,
                         monthDecreaseButton,
                         monthIncreaseButton,
+                        loadingHoliday,
+                        Holidays,
+                        loadingEvents,
+                        newEventList
     })  {
     // 임시로 배열 만들기.
     function makeArray () {
@@ -51,6 +54,10 @@ function DASHBOARD ({ onClick,
                                   yearDecreaseButton={yearDecreaseButton}
                                   monthDecreaseButton={monthDecreaseButton}
                                   monthIncreaseButton={monthIncreaseButton}
+                                  loadingHoliday={loadingHoliday}
+                                  Holidays={Holidays}
+                                  loadingEvents={loadingEvents}
+                                  newEventList={newEventList}
                     />
                 </DashboardMain>
                 <DashboardMain>

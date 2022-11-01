@@ -1,8 +1,7 @@
-import {useEffect, useState} from 'react';
+import React from 'react';
 import moment from 'moment';
 import styled from "styled-components";
 import palette from "../../library/styles/palette";
-import {monthIncreaseAsync} from "../../modules/momenter";
 
 const DControllerBlock = styled.div`
   margin-top : 5px;
@@ -102,7 +101,7 @@ const DTableBody = styled.div`
 
   .date {
     width: 100%;
-    padding-left: 8px;
+    padding-left: 2px;
     text-align: left;
   }
 
@@ -115,7 +114,6 @@ const DTableBody = styled.div`
   .holiday {
     background: ${palette.holi};
     width: 90%;
-    padding-left: 6px;
     font-size: 1vh;
   }
   .birthday {
@@ -144,25 +142,6 @@ const DTableBody = styled.div`
   }
 `
 
-const DPushTag = (key,
-                  loadedMoment,
-                  dayClass,
-                  isHoliday,
-) => {
-    const today = loadedMoment.format('YYYYMMDD') === moment().format('YYYYMMDD');
-
-    return (
-        <DTableBody id={key} key={key} className={`${today ? 'today' : ''}`}>
-            <div className={`date ${dayClass}`}>
-                {loadedMoment.format('D')}
-            </div>
-            <div className="holiday">
-                {isHoliday}
-            </div>
-        </DTableBody>
-    )
-}
-
 function DashCalendar({
                           onClick,
                           momentValue,
@@ -170,82 +149,92 @@ function DashCalendar({
                           yearDecreaseButton,
                           monthIncreaseButton,
                           monthDecreaseButton,
+                          loadingHoliday,
+                          Holidays,
+                          loadingEvents,
+                          newEventList,
                       }) {
-    const [Holidays, setHolidays] = useState([]);
-
-    //// 나중에 API 받으면 수정해야할 부분
-    ////
-    ////
-
-
-    ////
-    ////
-    //////////////////수정 여기까지
-
     // 이번달의 첫번째 주
     const firstWeek = momentValue.clone().startOf('month').week();
     // 이번달의 마지막 주 (만약 마지막 주가 1이 나온다면 53번째 주로 변경)
     const lastWeek = momentValue.clone().endOf('month').week() === 1? 53 : momentValue.clone().endOf('month').week();
 
-    const API_KEY = "E6c3ACjloHKJTdlaQSkPVuUcoZEWV8zH9knCD4EFe7gqpiCWNhNwdX8laJuPFjvAouKFvRsoV%2FruPjl2kz4Yqw%3D%3D"
-    let solYear = momentValue.format('YYYY');
-    let solMonth = momentValue.format('MM');
-    const operation = 'getHoliDeInfo';
-
-    let url = `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/${operation}?solYear=${solYear}&solMonth=${solMonth}&ServiceKey=${API_KEY}&_type=json`;
-
-    const getHolidays = async () => {
-        let res = await fetch(url);
-        let json = await res.json();
-        const item = json.response.body.items.item;
-
-        if (item) {
-            setHolidays(item?.length ? item : [item]);
-        }
-    }
-
-    useEffect(() => {
-        getHolidays()
-    }, [solYear,solMonth]);
-
     const calendarArr=()=> {
-        let result = [];
-        let week = firstWeek;
-        let event = {};
-        if(Holidays){
+        let holidaylist = {};
+        if(!loadingHoliday && Holidays){
+            console.log(Holidays)
             Holidays.map((holiday) => {
-                let event_year = holiday.locdate.toString().substring(0,4);
-                let event_month = holiday.locdate.toString().substring(4,6).padStart(2,0);
-                let event_day = holiday.locdate.toString().substring(6,8).padStart(2,0);
 
-                let event_ID = `Date-${event_year}-${event_month}-${event_day}`;
-                event[event_ID] = holiday.dateName;
+                let holiday_year = holiday.locdate.toString().substring(0,4);
+                let holiday_month = holiday.locdate.toString().substring(4,6).padStart(2,0);
+                let holiday_day = holiday.locdate.toString().substring(6,8).padStart(2,0);
+
+                let holiday_ID = `Date-${holiday_year}-${holiday_month}-${holiday_day}`;
+                holidaylist[holiday_ID] = holiday.dateName;
             })
         }
+        let result = [];
+        let week = firstWeek;
+
+        console.log(holidaylist)
+
         for (week; week <= lastWeek; week++) {
             for (let day = 0; day < 7; day++) {
-                let days = momentValue.clone().startOf('year').week(week).startOf('week').add(day, 'day'); // 'D' 로해도되지만 직관성
-                let date = `Date-${days.format('YYYY-MM-DD')}`
+                let currentMoment = momentValue.clone().startOf('year').week(week).startOf('week').add(day, 'day'); // 'D' 로해도되지만 직관성
+                let date = currentMoment.format('YYYY-MM-DD')
+                let dateID = `Date-${date}`
 
-                let todayCheck = moment().format('YYYYMMDD') === days.format('YYYYMMDD') ? 'Today' : 'week';
+                // 해당 날짜에 class 값 넣기위한 조건처리.
+                let todayCheck = currentMoment.format('YYYYMMDD') === moment().format('YYYYMMDD')  ? 'Today' : 'week';
                 let dayCheck = day === 0 ? 'sunday' : todayCheck;
                 //------------------------------- 날짜 처리하는 구간 -------------------------------//
                 // (이번달, !이번달)로 나눠서 처리.
                 // 이번달은 글씨를 (평일 : 검정, 주말 : 빨강) 처리.
-                if (days.format('MM') === momentValue.format('MM')) {
-                    if (date in event) {
-                        result.push(DPushTag(date, days, dayCheck, event[date]));
+                if (currentMoment.format('MM') === momentValue.format('MM')) {
+                    if (dateID in holidaylist) {
+                        result.push(DPushTag(currentMoment, dateID, dayCheck, holidaylist[dateID]));
                     } else {
-                        result.push(DPushTag(date, days, dayCheck, ''));
+                        result.push(DPushTag(currentMoment, dateID, dayCheck, ''));
                     }
                 }
                 // 이번달이 아닌 경우 모두 회색처리.
                 else {
-                    result.push (DPushTag(date, days,"anotherMonth"));
+                    result.push (DPushTag(currentMoment, dateID,"anotherMonth",''));
                 }
             }
         }
         return result;
+    }
+
+    const DPushTag = (currentMoment, dateID, dayClass, HolidayTitle) => {
+        const today = currentMoment.format('YYYYMMDD') === moment().format('YYYYMMDD');
+
+        return (
+            <DTableBody id={dateID} key={currentMoment.format('MM-DD')} className={`${today ? 'today' : ''}`}>
+                <span>
+                    <span className={HolidayTitle === ''? `date ${dayClass}`: `date sunday`}>
+                        {currentMoment.format('D')}
+                    </span>
+                    <span className="holiday">
+                        {HolidayTitle}
+                    </span>
+                </span>
+                {!loadingEvents && dayClass!=="anotherMonth" ?
+                    PostEventsList(currentMoment.format('YYYY-MM-DD') ,newEventList).map((foundEvent) => {
+                        return (
+                            <div key={foundEvent.inputKey} id={foundEvent.inputKey} className={foundEvent.category}>
+                                {foundEvent.title}
+                            </div>)})  :
+                            ''
+
+                }
+            </DTableBody>
+        )
+    }
+
+    const PostEventsList = ( eventDate, newEventList ) => {
+        let foundEvents =  newEventList.filter(e => e.date === eventDate);
+        return foundEvents;
     }
 
     return (
