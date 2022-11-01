@@ -36,12 +36,6 @@ export const getNewEvent = async (CalYear, CalMonth) => {
 }
 export const getOneEventData = async pickEventID => {
     return client.get(`${OSDInternURL}${pickEventID}`)
-        .then(res => {
-            return res.data
-        })
-        .catch(error => {
-            console.log(error)
-        })
 }
 
 export const addNewEvent = ({ title, category, startDate, endDate }) => {

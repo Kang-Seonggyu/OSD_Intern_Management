@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import moment from "moment";
 import styled from "styled-components";
 import palette from "../../library/styles/palette";
+import AskModal from "./AskModal";
 
 const EventList = styled.div`
   margin : 10px;
@@ -243,6 +244,10 @@ function TestComp() {
                     })
                 }
             </EventList>
+            <button>팝업 !</button>
+            <AskModal
+                visible={false}
+            />
         </div>
     );
 }

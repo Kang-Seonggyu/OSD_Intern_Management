@@ -20,6 +20,8 @@ import AddNewEvent from "../../Components/Calendar/AddNewEvent";
 import {getHoliday, getEvent} from "../../modules/momenter";
 import moment from "moment";
 import useActions from "../../library/useActions";
+import AskModal from "../../Components/Common/AskModal";
+import {getOneEventData} from "../../library/CalendarAPI";
 
 function CalendarContainer(props) {
     ////////////// Redux 구간 /////////////////////////////////////////////////
@@ -99,6 +101,7 @@ function CalendarContainer(props) {
 
     // 일정추가 창 보여주것을 정하는 State
     const [NewEvent, setNewEvent] = useState('NoPopUp');
+    const [checkConfirm, setCheckConfirm] = useState(false);
 
     let noDataCheck;
     if ( !loadingEvents ) {
@@ -116,10 +119,17 @@ function CalendarContainer(props) {
         makeE_initialize()
     };
     const onDelete = () => {
-        setNewEvent('NoPopUp');
-        console.log(eventID, "삭제")
-        dispatch(newEventDBDelete(eventID));
+        setCheckConfirm(true)
     };
+    const modalConfirm = () => {
+        alert('삭제되었습니다')
+        setCheckConfirm(false)
+        setNewEvent('NoPopUp');
+        dispatch(newEventDBDelete(eventID));
+    }
+    const modalCancel = () => {
+        setCheckConfirm(false)
+    }
     const ConfirmClick = (e) => {
         if(newEventData.title === ''){
             e.preventDefault() //제출완료 페이지로 넘어가는 것 방지
@@ -188,15 +198,14 @@ function CalendarContainer(props) {
     const onReload = () => {
         monthIncreaseButton();
         monthDecreaseButton();
-        //window.location.reload();
     }
-    let pickCategory = ''
-    const onEventClick = e => {
+
+    const onEventClick = async e => {
         setNewEvent('changeEvent');
         dispatch(selectID(e.target.id))
-        dispatch(changeField({_key:'title', _value : e.target.innerText}))
-        //dispatch(changeField({_key:'category', _value : e.target.className.split(' ')[2]}))
+        await getOneEventData(e.target.id).then(res => {return res.data[0]});
     }
+
     return (
         <div>
             <Calendar
@@ -225,7 +234,13 @@ function CalendarContainer(props) {
                 changeE_endDate={changeE_endDate}
                 onUpdateEvent={onUpdateEvent}
                 onDelete={onDelete}
-                eventID={eventID}
+            />
+            <AskModal
+                visible={checkConfirm}
+                title="일정 삭제"
+                description="해당 일정을 정말로 삭제하시겠습니까?"
+                onConfirm={modalConfirm}
+                onCancel={modalCancel}
             />
         </div>
     );
