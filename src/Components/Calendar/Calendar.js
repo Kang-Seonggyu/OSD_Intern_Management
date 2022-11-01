@@ -10,7 +10,7 @@ const CalTotalBlock = styled.div`
   margin: 1px;
   display: grid;
   align-items: center;
-  justify-items: center;
+  justify-items: center;  
 `
 
 const CalendarBlock = styled.div`
@@ -85,19 +85,20 @@ const TableBody = styled.div`
   background: white;
   display: flex;
   flex-direction: column;
+  align-items: center;
   grid-auto-rows: minmax(10rem, auto);
   width: 100%;
   min-width: 90px;
   max-width: 100%;
   height: auto;
   min-height: 90px;
-  padding-left : 4px;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
 
   .date {
-    padding-left: 5px;
+    width: 90%;
+    padding-left: 8px;
   }
 
   .sunday {
@@ -107,9 +108,8 @@ const TableBody = styled.div`
     color: lightgray !important;
   }
   .holiday {
-    color: red;
     background: ${palette.holi};
-    border-radius: 7px;
+    width: 90%;
   }
   .birthday {
     background: ${palette.birth};
@@ -129,10 +129,10 @@ const TableBody = styled.div`
   }
 `
 const EventDiv = styled.div`
-  cursor: pointer;
-  :hover{
-    filter: brightness(85%);
-  }
+    cursor: pointer;
+    :hover{
+      filter: brightness(85%);
+    }
 `
 
 function Calendar ({
@@ -194,9 +194,9 @@ function Calendar ({
                     } else {
                         result.push(PushTag(currentMoment, dateID, dayCheck, ''));
                     }
-                    // 이번달이 아닌 경우
+                // 이번달이 아닌 경우
                 } else {
-                    result.push(PushTag(currentMoment, dateID,"anotherMonth",''));
+                    result.push(PushTag(currentMoment, dateID,"anotherMonth"));
                 }
             }
         }
@@ -212,23 +212,21 @@ function Calendar ({
 
         return (
             <TableBody id={dateID} key={currentMoment.format('MM-DD')} className={`${today ? 'today' : ''}`}>
-                <span>
-                    <span className={HolidayTitle === ''? `date ${dayClass}`: `date sunday`}>
-                        {currentMoment.format('D')}
-                    </span>
-                    <span className="holiday">
-                        {HolidayTitle}
-                    </span>
-                </span>
+                <div className={`date ${dayClass}`}>
+                    {currentMoment.format('D')}
+                </div>
+                <div className="holiday">
+                    {HolidayTitle}
+                </div>
                 {!loadingEvents && dayClass!=="anotherMonth" ?
                     PostEventsList(currentMoment.format('YYYY-MM-DD') ,newEventList).map((foundEvent) => {
-                        return (
-                            <EventDiv key={foundEvent.inputKey} id={foundEvent.inputKey} onClick={onEventClick} className={foundEvent.category}>
-                                {foundEvent.title}
-                            </EventDiv>)})  :
+                    return (
+                        <EventDiv key={foundEvent.inputKey} id={foundEvent.inputKey} onClick={onEventClick} className={foundEvent.category}>
+                            {foundEvent.title}
+                        </EventDiv>)})  :
                     ''
                 }
-            </TableBody>
+           </TableBody>
         )
     }
 
