@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import {getOneEvent} from "../../library/CalendarAPI";
+import {getOneEventData} from "../../library/CalendarAPI";
+
 
 const Fullscreen = styled.div`
   position : fixed;
@@ -99,13 +100,12 @@ const AddNewEvent = ({
                          changeE_startDate,
                          changeE_endDate,
                          onUpdateEvent,
-                         onDelete
+                         onDelete,
+                         eventID,
                      }) =>
 
 {
     if (visible ==='NoPopUp') return null;
-    console.log(getOneEvent(1))
-
     return (
         <Fullscreen>
             <AddNewEventBlock>
@@ -119,7 +119,7 @@ const AddNewEvent = ({
                            value={newEventData.title}
                            onChange={changeE_title}
                     >
-                        {}
+                        {/*visible === 'changeEvent'? getOneEvent(eventID)[0].cal_title : ''*/}
                     </input>
                     <ErrorMessage>{newEventData.title===''?'제목을 작성해주세요.':''} </ErrorMessage>
                 </span>

@@ -172,7 +172,7 @@ function CalendarContainer(props) {
                 }))
             }
             else {
-                dispatch(newEventDBWrite({
+                dispatch(newEventDBUpdate({
                     _id : eventID,
                     title: newEventData.title,
                     category: newEventData.category,
@@ -186,13 +186,17 @@ function CalendarContainer(props) {
     ////////////// 캘린더 구간 /////////////////////////////////////////////////
 
     const onReload = () => {
-        window.location.reload();
+        monthIncreaseButton();
+        monthDecreaseButton();
+        //window.location.reload();
     }
+    let pickCategory = ''
     const onEventClick = e => {
         setNewEvent('changeEvent');
         dispatch(selectID(e.target.id))
+        dispatch(changeField({_key:'title', _value : e.target.innerText}))
+        //dispatch(changeField({_key:'category', _value : e.target.className.split(' ')[2]}))
     }
-
     return (
         <div>
             <Calendar
@@ -206,7 +210,7 @@ function CalendarContainer(props) {
                 loadingHoliday={loadingHoliday} // 공휴일 정보 로딩 확인
                 Holidays={holiday}              // 공휴일 정보
                 loadingEvents ={loadingEvents}  // 이벤트 정보 로딩 확인
-                newEventList={newEventList}                 // 이벤트 정보
+                newEventList={newEventList}     // 이벤트 정보
                 onEventClick={onEventClick}
             />
             <AddNewEvent
@@ -221,6 +225,7 @@ function CalendarContainer(props) {
                 changeE_endDate={changeE_endDate}
                 onUpdateEvent={onUpdateEvent}
                 onDelete={onDelete}
+                eventID={eventID}
             />
         </div>
     );

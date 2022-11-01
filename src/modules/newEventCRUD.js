@@ -6,6 +6,7 @@ import { takeLatest } from "redux-saga/effects";
 const CHANGE_FIELD = 'newEventCRUD/CHANGE_FILED';
 const INITIALIZE = 'newEventCRUD/INITIALIZE';
 const SELECT_ID = 'newEventCRUD/SELECT_ID';
+
 const [
     NEW_EVENT_WRITE,
     NEW_EVENT_WRITE_SUCCESS,
@@ -27,8 +28,9 @@ const [
 // export const initialize = createAction(INITIALIZE);
 // export const changeField = createAction(CHANGE_FIELD, ({key, value}) => ({ key, value, }));
 export const initialize = () => ({ type : INITIALIZE});
-export const changeField = ({_key, _value}) => ({ type : CHANGE_FIELD, _key, _value })
-export const selectID = _id => ({ type : SELECT_ID, _id})
+export const changeField = ({_key, _value}) => ({ type : CHANGE_FIELD, _key, _value });
+export const selectID = _id => ({ type : SELECT_ID, _id});
+
 export const newEventDBWrite = createAction(NEW_EVENT_WRITE,form => form);
 export const newEventDBDelete = createAction(NEW_EVENT_DELETE, _id => _id);
 export const newEventDBUpdate = createAction(NEW_EVENT_UPDATE, form => form);
@@ -50,10 +52,12 @@ const initialState = {
         startDate : '',
         endDate : ''
     },
+    loading : false,
     post: null,
     postError: null,
     postID: 0,
 };
+
 
 export default function newEventCRUD (state = initialState, action) {
     switch (action.type) {

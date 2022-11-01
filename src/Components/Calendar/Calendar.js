@@ -135,7 +135,6 @@ const EventDiv = styled.div`
     }
 `
 
-
 function Calendar ({
                        AddEventClick,
                        onReload,
@@ -156,12 +155,6 @@ function Calendar ({
     const firstWeek = momentValue.clone().startOf('month').week();
     // 이번달의 마지막 주 (만약 마지막 주가 1이 나온다면 53번째 주로 변경)
     const lastWeek = momentValue.clone().endOf('month').week() === 1? 53 : momentValue.clone().endOf('month').week();
-
-
-    const PostEventsList = ( eventDate, newEventList ) => {
-        let foundEvents =  newEventList.filter(e => e.date === eventDate);
-        return foundEvents;
-    }
 
     const calendarArr=()=> {
         // 공휴일 데이터 가져오기. (객체형태로)
@@ -235,7 +228,11 @@ function Calendar ({
                 }
            </TableBody>
         )
+    }
 
+    const PostEventsList = ( eventDate, newEventList ) => {
+        let foundEvents =  newEventList.filter(e => e.date === eventDate);
+        return foundEvents;
     }
 
 
