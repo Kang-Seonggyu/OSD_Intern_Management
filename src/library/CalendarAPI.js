@@ -1,15 +1,16 @@
 import axios from "axios";
-
 const client = axios.create();
 
 // 공휴일 API
 
+//const API_KEY = process.env.REACT_APP_HOLIDAY_API_KEY;
 const API_KEY = "E6c3ACjloHKJTdlaQSkPVuUcoZEWV8zH9knCD4EFe7gqpiCWNhNwdX8laJuPFjvAouKFvRsoV%2FruPjl2kz4Yqw%3D%3D";
 const operation = 'getHoliDeInfo';
 
-export const getHoliday = (solYear, solMonth) =>
+export const getHoliday = (solYear, solMonth) => {
+    console.log(API_KEY)
     client.get(`https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/${operation}?solYear=${solYear}&solMonth=${solMonth}&ServiceKey=${API_KEY}&_type=json`);
-
+}
 
 // 우리 DB API
 
@@ -21,6 +22,7 @@ const OSDInternURL = 'http://172.25.4.5:2101/calendar/'
 // }
 
 export const getNewEvent = async (CalYear, CalMonth) => {
+
     return client.get(OSDInternURL, {
         params : {
             year : CalYear,

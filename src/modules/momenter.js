@@ -59,6 +59,7 @@ export const getHoliday = momentValue => async dispatch => {
     dispatch({ type: GET_HOLIDAY });
     try {
         const response = await api.getHoliday(momentValue.format('YYYY'),momentValue.format('MM')); // API 호출
+        console.log('====000', response)
         const item = response.data.response.body.items.item;
         dispatch({
             type: GET_HOLIDAY_SUCCESS,
