@@ -128,16 +128,13 @@ const TableBody = styled.div`
     width: 90%;
   }
 `
-const TestBlock = styled.div`
-  margin-left : 30px;
-  margin-bottom: 100px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 5px;
-  width : 700px;
-  height: 300px;
-  border : 1px solid black
+const EventDiv = styled.div`
+    cursor: pointer;
+    :hover{
+      filter: brightness(85%);
+    }
 `
+
 
 function Calendar ({
                        AddEventClick,
@@ -150,50 +147,17 @@ function Calendar ({
                        loadingHoliday,
                        Holidays,
                        loadingEvents,
-                       events,
-                       newEventData,
-                       changeTitle,
-                       changeCategory,
-                       changeStartDate,
-                       changeEndDate,
-                       eventID, 
-                       selectEventID,
-                       onDelete,
-                       onUpdateEvent
+                       newEventList,
+                       onEventClick,
                    }) {
-    const [newEventList, setNewEventList] = useState([])
 
-    useEffect( () => {
-        setNewEventList(spreadEventList(events))
-    }, [events])
 
     // 이번달의 첫번째 주
     const firstWeek = momentValue.clone().startOf('month').week();
     // 이번달의 마지막 주 (만약 마지막 주가 1이 나온다면 53번째 주로 변경)
     const lastWeek = momentValue.clone().endOf('month').week() === 1? 53 : momentValue.clone().endOf('month').week();
 
-    let spreadEventList = ( EventList ) => {
-        const newEventList = [];
-        let keyValue = 0;
-        if (!loadingEvents && EventList) {
-            EventList.map((oneEvent) => {
-                let currentDate = moment(oneEvent.cal_start_day);
-                let stopDate = moment(oneEvent.cal_end_day);
-                while (currentDate <= stopDate) {
-                    newEventList.push({
-                        title : oneEvent.cal_title,
-                        category : oneEvent.cal_category,
-                        date : moment(currentDate).format('YYYY-MM-DD'),
-                        inputKey : keyValue
-                    })
-                    keyValue++;
-                    currentDate = moment(currentDate).add(1, "days");
-                }
-            })
-        }
 
-        return newEventList
-    }
     const PostEventsList = ( eventDate, newEventList ) => {
         let foundEvents =  newEventList.filter(e => e.date === eventDate);
         return foundEvents;
@@ -205,6 +169,7 @@ function Calendar ({
         let holidaylist = {};
         if(!loadingHoliday && Holidays){
             Holidays.map((holiday) => {
+
                 let holiday_year = holiday.locdate.toString().substring(0,4);
                 let holiday_month = holiday.locdate.toString().substring(4,6).padStart(2,0);
                 let holiday_day = holiday.locdate.toString().substring(6,8).padStart(2,0);
@@ -214,6 +179,7 @@ function Calendar ({
             })
         }
 
+        // 달력 만드는 구간
         let result = [];
         let week = firstWeek;
 
@@ -250,7 +216,6 @@ function Calendar ({
     // Holiday        : 공휴일 정보
     const PushTag = (currentMoment, dateID, dayClass, HolidayTitle) => {
         const today = currentMoment.format('YYYYMMDD') === moment().format('YYYYMMDD');
-        
 
         return (
             <TableBody id={dateID} key={currentMoment.format('MM-DD')} className={`${today ? 'today' : ''}`}>
@@ -263,9 +228,9 @@ function Calendar ({
                 {!loadingEvents && dayClass!=="anotherMonth" ?
                     PostEventsList(currentMoment.format('YYYY-MM-DD') ,newEventList).map((foundEvent) => {
                     return (
-                        <div key={foundEvent.inputKey} className={foundEvent.category}>
+                        <EventDiv key={foundEvent.inputKey} id={foundEvent.inputKey} onClick={onEventClick} className={foundEvent.category}>
                             {foundEvent.title}
-                        </div>)})  :
+                        </EventDiv>)})  :
                     ''
                 }
            </TableBody>
@@ -303,46 +268,6 @@ function Calendar ({
                     </CalendarBox>
                 </CalendarBlock>
             </CalTotalBlock>
-            <TestBlock>
-                <input
-                    style={{ margin : "5px" }}
-                    value={newEventData.title}
-                    onChange={changeTitle}
-                    placeholder="새로운 이벤트 제목"
-                />
-                <input
-                    style={{ margin : "5px" }}
-                    value={newEventData.category}
-                    onChange={changeCategory}
-                    placeholder="새로운 이벤트 카테고리"
-                />
-                <input
-                    style={{ margin : "5px" }}
-                    type="date"
-                    value={newEventData.startDate}
-                    onChange={changeStartDate}
-                />
-                <input
-                    style={{ margin : "5px" }}
-                    type="date"
-                    value={newEventData.endDate}
-                    onChange={changeEndDate}
-                />
-                <span>제목 : {newEventData.title}</span>
-                <span>카테고리 값 : {newEventData.category}</span>
-                <span>시작일자 : {newEventData.startDate}</span>
-                <span> 종료일자 : {newEventData.endDate}</span>
-                <div style={{gridColumn:"1/3"}}>{ newEventData.title == ''? '제목 비어있음' : '제목 작성 완료'} /
-                    { newEventData.category === ''?' 카테고리 비어있음' : ' 카테고리 설정 완료' }
-                </div>
-                <span style={{gridColumn:"1/3"}}>
-                    <input type="number" value={eventID} onChange={ selectEventID }/>
-                    <button style={{marginLeft:"10px"}}> 조회</button>
-                    <button style={{marginLeft:"10px"}} onClick={onUpdateEvent}> 수정</button>
-                    <button style={{marginLeft:"10px", background:"lightcoral"}} onClick={onDelete}>삭제</button>
-                </span>
-            </TestBlock>
-
         </div>
     )
 }

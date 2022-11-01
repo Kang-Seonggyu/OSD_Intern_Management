@@ -37,13 +37,12 @@ const initialState = {
 
 };
 export const getEvent = momentValue => async dispatch => {
-    dispatch({ type: GET_EVENT });
+    dispatch({type: GET_EVENT});
     try {
-        const response = await api.getNewEvent(momentValue.format('YYYY'),momentValue.format('MM')); // API 호출
-        console.log("가져온 이벤트 : ", response)
+        const response = await api.getNewEvent(momentValue.format('YYYY'), momentValue.format('MM')); // API 호출
         dispatch({
             type: GET_EVENT_SUCCESS,
-            payload: response? response : null
+            payload: response ? response : null
         });
     } catch (e) {
         dispatch({
@@ -53,14 +52,14 @@ export const getEvent = momentValue => async dispatch => {
         });
         throw e;
     }
-};
+}
+
 
 export const getHoliday = momentValue => async dispatch => {
     dispatch({ type: GET_HOLIDAY });
     try {
         const response = await api.getHoliday(momentValue.format('YYYY'),momentValue.format('MM')); // API 호출
         const item = response.data.response.body.items.item;
-        console.log("공휴일 데이터 : ",item)
         dispatch({
             type: GET_HOLIDAY_SUCCESS,
             payload: item ? item.length? item : [item] : null

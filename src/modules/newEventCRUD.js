@@ -55,7 +55,6 @@ const initialState = {
     postID: 0,
 };
 
-// 다른 방식으로 쓴 코드
 export default function newEventCRUD (state = initialState, action) {
     switch (action.type) {
         case CHANGE_FIELD :
@@ -72,11 +71,11 @@ export default function newEventCRUD (state = initialState, action) {
                 newEventData: initialState.newEventData
             }
         case SELECT_ID :
-            console.log("업데이트 아이디 값",action._id)
             return {
                 ...state,
                 postID: action._id
             }
+
         case NEW_EVENT_WRITE :
             return {
                     ...state,
@@ -127,7 +126,7 @@ export default function newEventCRUD (state = initialState, action) {
             return state;
     }
 }
-
+// 다른 방식으로 쓴 코드
 // const newEventCRUD = handleActions(
 //     {
 //         [INITIALIZE] : state => initialState,
