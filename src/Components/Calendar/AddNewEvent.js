@@ -138,7 +138,6 @@ const AddNewEvent = ({
                             <option value="birthday" >생일</option>
                             <option value="Event">OSD 행사</option>
                             <option value="others">기타(워크샾 등)</option>
-                            <option value="dd">{visible}</option>
                         </select>
                         :
                         <select

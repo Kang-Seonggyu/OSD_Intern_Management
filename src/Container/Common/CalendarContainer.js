@@ -4,7 +4,7 @@ import {
     yearDecrease,
     yearIncrease,
     monthIncrease,
-    monthDecrease,
+    monthDecrease, getVacation,
 } from "../../modules/momenter";
 import {
     initialize,
@@ -26,12 +26,14 @@ import {getOneEventData} from "../../library/CalendarAPI";
 function CalendarContainer(props) {
     ////////////// Redux 구간 /////////////////////////////////////////////////
 
-    const { momentValue, holiday, events, loadingHoliday, loadingEvents, newEventData, eventID} = useSelector(state => ({
+    const { momentValue, holiday, events, vacation, loadingHoliday, loadingEvents, loadingVacation, newEventData, eventID} = useSelector(state => ({
         momentValue: state.momenter.momentValue,
         holiday: state.momenter.holiday,
         loadingEvents : state.momenter.loading.GET_EVENT,
         events : state.momenter.event,
         loadingHoliday: state.momenter.loading.GET_HOLIDAY,
+        vacation : state.momenter.vacation,
+        loadingVacation : state.momenter.loading.GET_VACATION,
         newEventData : state.newEventCRUD.newEventData,
         eventID : state.newEventCRUD.postID
     }));
@@ -70,10 +72,10 @@ function CalendarContainer(props) {
     useEffect(() => {
         dispatch(getHoliday(momentValue));
         dispatch(getEvent(momentValue));
+        dispatch(getVacation(momentValue));
     }, [momentValue]);
 
     ////////////////////////////////////////////////////////////////////////////
-
 
 
     ////////////// 이벤트리스트 처리 구간 /////////////////////////////////////////////////
@@ -117,6 +119,21 @@ function CalendarContainer(props) {
     }
     else { noDataCheck = true }
 
+    const dataCheck = () => {
+        if(newEventData.title === ''){
+            alert('제목을 입력하세요')
+            return false
+        }
+        else if(newEventData.category === ''){
+            alert('일정분류를 선택하세요')
+            return false
+        }
+        else if(newEventData.startDate > newEventData.endDate) {
+            alert('일자를 확인하세요')
+            return false
+        }
+        else return true
+    };
     const AddEventClick = () => {
         setNewEvent('createEvent');
     };
@@ -132,20 +149,12 @@ function CalendarContainer(props) {
         setCheckConfirm(false)
         setNewEvent('NoPopUp');
         dispatch(newEventDBDelete(eventID));
-    }
+    };
     const modalCancel = () => {
         setCheckConfirm(false)
-    }
+    };
     const ConfirmClick = (e) => {
-        if(newEventData.title === ''){
-            e.preventDefault() //제출완료 페이지로 넘어가는 것 방지
-            alert('제목을 입력하세요')
-        }
-        else if(newEventData.category === ''){
-            e.preventDefault()
-            alert('일정분류를 선택하세요')
-        }
-        else {
+        if (dataCheck() === true) {
             setNewEvent('NoPopUp');
             if (newEventData.category === 'birthday') {
                 alert('일정이 추가되었습니다.')
@@ -167,18 +176,12 @@ function CalendarContainer(props) {
             }
             makeE_initialize()
         }
-    };
-
-    const onUpdateEvent = e => {
-        if(newEventData.title === ''){
-            e.preventDefault() //제출완료 페이지로 넘어가는 것 방지
-            alert('제목을 입력하세요')
-        }
-        else if(newEventData.category === ''){
-            e.preventDefault()
-            alert('일정분류를 선택하세요')
-        }
         else {
+            e.preventDefault()
+        }
+    };
+    const onUpdateEvent = e => {
+        if (dataCheck() === true) {
             setNewEvent('NoPopUp');
             if (newEventData.category === 'birthday') {
                 alert('일정이 변경되었습니다.')
@@ -202,8 +205,10 @@ function CalendarContainer(props) {
                 }))
                 makeE_initialize()
             }
+        } else {
+            e.preventDefault()
         }
-    }
+    };
 
     ////////////// 캘린더 구간 /////////////////////////////////////////////////
 
@@ -218,8 +223,8 @@ function CalendarContainer(props) {
         const getData = await getOneEventData(e.target.id).then(res => {return res.data[0]});
         dispatch(changeField({_key:'title', _value : getData.cal_title}))
         dispatch(changeField({_key:'category', _value : getData.cal_category}))
-        dispatch(changeField({_key:'startDate', _value : getData.cal_start_day.substring(0,10)}))
-        dispatch(changeField({_key:'endDate', _value : getData.cal_end_day.substring(0,10)}))
+        dispatch(changeField({_key:'startDate', _value : getData.cal_start_day}))
+        dispatch(changeField({_key:'endDate', _value : getData.cal_end_day}))
     }
 
     return (
@@ -236,6 +241,8 @@ function CalendarContainer(props) {
                 Holidays={holiday}              // 공휴일 정보
                 loadingEvents ={loadingEvents}  // 이벤트 정보 로딩 확인
                 newEventList={newEventList}     // 이벤트 정보
+                loadingVacation={loadingVacation}// 휴가 정보 로딩 확인
+                vacation={vacation}             // 휴가 정보
                 onEventClick={onEventClick}
             />
             <AddNewEvent

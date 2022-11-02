@@ -1,5 +1,5 @@
 import React from "react";
-import TestComp from "../../Components/Common/TestComp";
+import ArrayTestComp from "../../Components/Test/ArrayTestComp";
 
 function MomenterContainer () {
 
@@ -8,7 +8,7 @@ function MomenterContainer () {
     return (
         <div>
             <h1>테스트 페이지</h1>
-            <TestComp/>
+            <ArrayTestComp/>
         </div>
 
     )

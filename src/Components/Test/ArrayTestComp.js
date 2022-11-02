@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import moment from "moment";
 import styled from "styled-components";
 import palette from "../../library/styles/palette";
-import AskModal from "./AskModal";
+import AskModal from "../Common/AskModal";
 
 const EventList = styled.div`
   margin : 10px;
@@ -30,7 +30,7 @@ const EventList = styled.div`
 
 
 //
-function TestComp() {
+function ArrayTestComp() {
     const title = "날짜 풀어서 배열화"
     const [dayPick, setDayPick] = useState('');
     const onChange= (e) => {
@@ -252,6 +252,6 @@ function TestComp() {
     );
 }
 
-export default TestComp;
+export default ArrayTestComp;
 
 

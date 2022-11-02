@@ -45,7 +45,8 @@ function NaviBar () {
             <NaviLink href="/Calendar"> <i className="fas fa-calendar-alt fa-fw me-1"></i> Calendar </NaviLink>
             <NaviLink href="/board"> <i className="fas fa-edit fa-fw me-1"></i> New Post </NaviLink>
             <NaviLink href="https://onesoftdigm.com/index.php?getLang=ko"> <i className="fas fa-building fa-fw me-1"></i> Company </NaviLink>
-            <NaviLink href="/test"> <i className="fas fa-flask fa-fw me-1"></i> TestPage </NaviLink>
+            <NaviLink href="/ArrayTest"> <i className="fas fa-flask fa-fw me-1"></i> Array Test </NaviLink>
+            <NaviLink href="/Vacation"> <i className="fas fa-flask fa-fw me-1"></i> Vacation Test </NaviLink>
         </NaviBlock>
     )
 }

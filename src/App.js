@@ -3,7 +3,8 @@ import LoginPage from "./Pages/LoginPage";
 import DashboardPage from "./Pages/DashboardPage";
 import CalendarPage from "./Pages/CalendarPage";
 import BobfriendPage from "./Pages/BobfriendPage";
-import TestPage from "./Pages/TestPage";
+import ArrayTestPage from "./Pages/ArrayTestPage";
+import VacationPage from "./Pages/VacationPage";
 
 
 const App = () => {
@@ -14,7 +15,8 @@ const App = () => {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/calendar" element={<CalendarPage />} />
                     <Route path="/bob" element={<BobfriendPage />} />
-                    <Route path="/test" element={<TestPage />} />
+                    <Route path="/ArrayTest" element={<ArrayTestPage />} />
+                    <Route path="/Vacation" element={<VacationPage />} />
                 </Routes>
             </Router>
     )

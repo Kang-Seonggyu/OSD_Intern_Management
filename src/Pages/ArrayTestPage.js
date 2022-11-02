@@ -2,7 +2,7 @@ import HeaderContainer from "../Container/Common/HeaderContainer";
 import FooterContainer from "../Container/Common/FooterContainer";
 import MomenterContainer from "../Container/Common/MomenterContainer";
 
-function TestPage () {
+function ArrayTestPage () {
     return (
         <div>
             <HeaderContainer />
@@ -12,4 +12,4 @@ function TestPage () {
     )
 }
 
-export default TestPage;
+export default ArrayTestPage;
