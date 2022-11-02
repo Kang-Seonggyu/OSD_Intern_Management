@@ -162,7 +162,6 @@ function DashCalendar({
     const calendarArr=()=> {
         let holidaylist = {};
         if(!loadingHoliday && Holidays){
-            console.log(Holidays)
             Holidays.map((holiday) => {
 
                 let holiday_year = holiday.locdate.toString().substring(0,4);
@@ -175,8 +174,6 @@ function DashCalendar({
         }
         let result = [];
         let week = firstWeek;
-
-        console.log(holidaylist)
 
         for (week; week <= lastWeek; week++) {
             for (let day = 0; day < 7; day++) {
