@@ -88,7 +88,6 @@ export default function newEventCRUD (state = initialState, action) {
                     postError: null,
                 }
         case NEW_EVENT_WRITE_SUCCESS :
-            console.log(action.payload)
             return {
                 ...state,
                 post : action.payload,

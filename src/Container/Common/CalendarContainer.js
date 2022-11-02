@@ -22,6 +22,7 @@ import moment from "moment";
 import useActions from "../../library/useActions";
 import AskModal from "../../Components/Common/AskModal";
 import {getOneEventData} from "../../library/CalendarAPI";
+import VacationInfo from "../../Components/Calendar/VacationInfo";
 
 function CalendarContainer(props) {
     ////////////// Redux 구간 /////////////////////////////////////////////////
@@ -79,7 +80,7 @@ function CalendarContainer(props) {
 
 
     ////////////// 받아온 API DATA 처리 구간 /////////////////////////////////////////////////
-    /// 받아온 DATA 의 시작날짜 종료날짜를 풀어줌. ///
+    /// 받아온 DATA 의 시작날짜 종료날짜 사이의 값 만큼을 생성. ///
     const [newEventList, setNewEventList] = useState([])
     const [newVacationList, setNewVacationList] = useState([])
 
@@ -128,7 +129,8 @@ function CalendarContainer(props) {
                 while (currentDate <= stopDate) {
                     newVArr.push({
                         title : oneDayInfo.mnm,
-                        date : moment(currentDate).format('YYYY-MM-DD')
+                        date : moment(currentDate).format('YYYY-MM-DD'),
+                        category : oneDayInfo.v_type
                     })
                     currentDate = moment(currentDate).add(1,"days");
                 }
@@ -243,6 +245,7 @@ function CalendarContainer(props) {
     };
 
     ////////////// 캘린더 구간 /////////////////////////////////////////////////
+    const [vacationPopUp, setVacationPopUp] = useState(false);
 
     const onReload = () => {
         monthIncreaseButton();
@@ -257,6 +260,15 @@ function CalendarContainer(props) {
         dispatch(changeField({_key:'category', _value : getData.cal_category}))
         dispatch(changeField({_key:'startDate', _value : getData.cal_start_day}))
         dispatch(changeField({_key:'endDate', _value : getData.cal_end_day}))
+    }
+
+    const onVacationClick = (e) => {
+        setVacationPopUp(true)
+        dispatch(selectID(e.target.id))
+    }
+    const VacationOutClick = () => {
+        setVacationPopUp(false)
+        dispatch(selectID(null))
     }
 
     return (
@@ -289,6 +301,7 @@ function CalendarContainer(props) {
                 loadingVacation={loadingVacation}// 휴가 정보 로딩 확인
                 newVacationList={newVacationList}// 휴가 정보
                 onEventClick={onEventClick}
+                onVacationClick={onVacationClick}
             />
             <AskModal
                 visible={checkConfirm}
@@ -296,6 +309,12 @@ function CalendarContainer(props) {
                 description="해당 일정을 정말로 삭제하시겠습니까?"
                 onConfirm={modalConfirm}
                 onCancel={modalCancel}
+            />
+            <VacationInfo
+                visible={vacationPopUp}
+                PickedId={eventID}
+                newVacationList={newVacationList}
+                VacationOutClick={VacationOutClick}
             />
         </div>
     );
