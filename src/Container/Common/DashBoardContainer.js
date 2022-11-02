@@ -56,10 +56,16 @@ function DashboardContainer (props) {
     ////////////// 이벤트리스트 처리 구간 /////////////////////////////////////////////////
     /// 받아온 이벤트 리스트 시작날짜 종료날짜를 풀어줌. ///
     const [newEventList, setNewEventList] = useState([])
+    const [newVacationList, setNewVacationList] = useState([])
 
     useEffect( () => {
         setNewEventList(spreadEventList(events))
     }, [events])
+
+    useEffect( () => {
+        setNewVacationList(spreadVacationList())
+    }, [vacation])
+
     let spreadEventList = ( EventList ) => {
         const newEventList = [];
         if (!loadingEvents && EventList) {
@@ -80,6 +86,30 @@ function DashboardContainer (props) {
 
         return newEventList
     }
+    const spreadVacationList = () => {
+        let newVArr = [];
+        if(!loadingVacation && vacation) {
+            vacation.map((oneDayInfo) => {
+                let currentDate = moment(oneDayInfo.strdt);
+                let stopDate = ''
+                if(oneDayInfo.enddte === null) {
+                    stopDate = moment(oneDayInfo.strdt)
+
+                } else {
+                    stopDate = moment(oneDayInfo.enddte)
+                }
+                while (currentDate <= stopDate) {
+                    newVArr.push({
+                        title : oneDayInfo.mnm,
+                        date : moment(currentDate).format('YYYY-MM-DD')
+                    })
+                    currentDate = moment(currentDate).add(1,"days");
+                }
+            })
+        }
+        return newVArr
+    }
+
 
     return (
         <>
@@ -92,7 +122,7 @@ function DashboardContainer (props) {
                 monthDecreaseButton={monthDecreaseButton}
                 Holidays={holiday}
                 newEventList={newEventList}
-                vacation={vacation}
+                newVacationList={newVacationList}
                 loadingHoliday={loadingHoliday}
                 loadingEvents ={loadingEvents}
                 loadingVacation={loadingVacation}

@@ -28,14 +28,14 @@ function CalendarContainer(props) {
 
     const { momentValue, holiday, events, vacation, loadingHoliday, loadingEvents, loadingVacation, newEventData, eventID} = useSelector(state => ({
         momentValue: state.momenter.momentValue,
-        holiday: state.momenter.holiday,
-        loadingEvents : state.momenter.loading.GET_EVENT,
-        events : state.momenter.event,
-        loadingHoliday: state.momenter.loading.GET_HOLIDAY,
-        vacation : state.momenter.vacation,
-        loadingVacation : state.momenter.loading.GET_VACATION,
         newEventData : state.newEventCRUD.newEventData,
-        eventID : state.newEventCRUD.postID
+        eventID : state.newEventCRUD.postID,
+        holiday: state.momenter.holiday,
+        events : state.momenter.event,
+        vacation : state.momenter.vacation,
+        loadingHoliday: state.momenter.loading.GET_HOLIDAY,
+        loadingEvents : state.momenter.loading.GET_EVENT,
+        loadingVacation : state.momenter.loading.GET_VACATION,
     }));
     const dispatch = useDispatch();
 
@@ -78,16 +78,24 @@ function CalendarContainer(props) {
     ////////////////////////////////////////////////////////////////////////////
 
 
-    ////////////// 이벤트리스트 처리 구간 /////////////////////////////////////////////////
-    /// 받아온 이벤트 리스트 시작날짜 종료날짜를 풀어줌. ///
+    ////////////// 받아온 API DATA 처리 구간 /////////////////////////////////////////////////
+    /// 받아온 DATA 의 시작날짜 종료날짜를 풀어줌. ///
     const [newEventList, setNewEventList] = useState([])
+    const [newVacationList, setNewVacationList] = useState([])
+
     useEffect( () => {
-        setNewEventList(spreadEventList(events))
+        setNewEventList(spreadEventList())
     }, [events])
-    let spreadEventList = ( EventList ) => {
+
+    useEffect( () => {
+        setNewVacationList(spreadVacationList())
+    }, [vacation])
+
+
+    const spreadEventList = () => {
         const newEventList = [];
-        if (!loadingEvents && EventList) {
-            EventList.map((oneEvent) => {
+        if (!loadingEvents && events) {
+            events.map((oneEvent) => {
                 let currentDate = moment(oneEvent.cal_start_day);
                 let stopDate = moment(oneEvent.cal_end_day);
                 while (currentDate <= stopDate) {
@@ -103,6 +111,30 @@ function CalendarContainer(props) {
         }
 
         return newEventList
+    }
+
+    const spreadVacationList = () => {
+        let newVArr = [];
+        if(!loadingVacation && vacation) {
+            vacation.map((oneDayInfo) => {
+                let currentDate = moment(oneDayInfo.strdt);
+                let stopDate = ''
+                if(oneDayInfo.enddte === null) {
+                    stopDate = moment(oneDayInfo.strdt)
+
+                } else {
+                    stopDate = moment(oneDayInfo.enddte)
+                }
+                while (currentDate <= stopDate) {
+                    newVArr.push({
+                        title : oneDayInfo.mnm,
+                        date : moment(currentDate).format('YYYY-MM-DD')
+                    })
+                    currentDate = moment(currentDate).add(1,"days");
+                }
+            })
+        }
+        return newVArr
     }
 
     ////////////// 이벤트 추가 구간 /////////////////////////////////////////////////
@@ -229,6 +261,19 @@ function CalendarContainer(props) {
 
     return (
         <div>
+            <AddNewEvent
+                visible={NewEvent}
+                onCancel={CancelClick}
+                onConfirm={ConfirmClick}
+                newEventData={newEventData}
+                noDataCheck={noDataCheck}
+                changeE_title={changeE_title}
+                changeE_category={changeE_category}
+                changeE_startDate={changeE_startDate}
+                changeE_endDate={changeE_endDate}
+                onUpdateEvent={onUpdateEvent}
+                onDelete={onDelete}
+            />
             <Calendar
                 AddEventClick={AddEventClick}   // 일정추가 클릭
                 onReload={onReload}             // 새로고침
@@ -242,21 +287,8 @@ function CalendarContainer(props) {
                 loadingEvents ={loadingEvents}  // 이벤트 정보 로딩 확인
                 newEventList={newEventList}     // 이벤트 정보
                 loadingVacation={loadingVacation}// 휴가 정보 로딩 확인
-                vacation={vacation}             // 휴가 정보
+                newVacationList={newVacationList}// 휴가 정보
                 onEventClick={onEventClick}
-            />
-            <AddNewEvent
-                visible={NewEvent}
-                onCancel={CancelClick}
-                onConfirm={ConfirmClick}
-                newEventData={newEventData}
-                noDataCheck={noDataCheck}
-                changeE_title={changeE_title}
-                changeE_category={changeE_category}
-                changeE_startDate={changeE_startDate}
-                changeE_endDate={changeE_endDate}
-                onUpdateEvent={onUpdateEvent}
-                onDelete={onDelete}
             />
             <AskModal
                 visible={checkConfirm}

@@ -145,7 +145,6 @@ function ArrayTestComp() {
         })
         return newEventList
     }
-    let spreadEventList = makeBetweenDates(events);
 
     // 해당 날짜마다 전부 값을 넣어주기
     const PostEventsList = ( eventDate, newEventList ) => {

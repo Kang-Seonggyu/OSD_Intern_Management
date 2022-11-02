@@ -1,10 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
+import moment from "moment";
 
+const H2 = styled.h2`
+  background: lightgrey;
+`
 const ArraySheet = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  border: 1px solid black;
+  grid-template-columns: repeat(9, 1fr);
+  grid-gap: 4px;
   margin-bottom: 15px;
+`
+const KidDiv = styled.div`
+  :nth-child(odd) {
+    background: #bde8bd;
+  }
+
+  :nth-child(even) {
+    background: #f5fff5;
+  }
 `
 
 function TestVaction({
@@ -33,15 +48,41 @@ function TestVaction({
         if(!loading && vacation){
             let sortedVacation = sortDate(vacation)
             sortedVacation.map((huga, idx) => {
-                VArr.push(<div key={idx}>
-                    <div>{huga.mnm}</div> <div>{huga.strdt} </div>
-                </div>)
+                VArr.push(
+                    <KidDiv key={idx}>
+                        <div>{huga.mnm}</div>
+                        <div>{huga.strdt} </div>
+                        <div>{huga.enddte} </div>
+                    </KidDiv>)
             })
         }
         return VArr;
     }
+    const newVacationArr = () => {
+        let newVArr = [];
+        if(!loading && vacation) {
+            vacation.map((oneDayInfo) => {
+                let currentDate = moment(oneDayInfo.strdt);
+                let stopDate = ''
+                if(oneDayInfo.enddte === null) {
+                    stopDate = moment(oneDayInfo.strdt)
 
-    const oneDayData = () => {
+                } else {
+                    stopDate = moment(oneDayInfo.enddte)
+                }
+                while (currentDate <= stopDate) {
+                    newVArr.push({
+                        title : oneDayInfo.mnm,
+                        date : moment(currentDate).format('YYYY-MM-DD')
+                    })
+                    currentDate = moment(currentDate).add(1,"days");
+                }
+            })
+        }
+        return newVArr
+    }
+
+    const oneDayDataMerge = () => {
         if(!loading && vacation){
             const oneDayFilter = vacation.filter(e => e.strdt === findDate)
             if(oneDayFilter.length >1 ) {
@@ -53,10 +94,28 @@ function TestVaction({
             else { return ''}
         }
     }
+    const oneDayDataSpread = () => {
+        if(!loading && vacation) {
+            const oneDayFilter = vacation.filter(e => e.strdt === findDate)
+            return oneDayFilter.map((data, idx) => {
+                return(
+                <KidDiv key={idx}>
+                    <div>{data.mnm}</div>
+                    <div>{data.depnm}</div>
+                    <div>{data.strdt}</div>
+                    <div>{data.enddte}</div>
+                    <div>{data.reason}</div>
+                    <div>{data.v_type}</div>
+                </KidDiv>
+                )
+            })
+        }
+    }
 
     return (
         <div>
-            <h1>휴가 정보 담기</h1>
+            <h1>휴가 정보 처리</h1>
+            <H2>원본 휴가 정보 정리</H2>
             <button title="1년전" onClick={yearDecreaseButton}>«</button>
             <button title="1달전" onClick={monthDecreaseButton}>‹</button>
             <span>{momentValue.format('YYYY-MM')}</span>
@@ -65,11 +124,29 @@ function TestVaction({
             <ArraySheet>
                 {vacationArr()}
             </ArraySheet>
-            <input type="date" onChange={onChange} value={findDate}/>
-            <div>{findDate}</div>
+            <H2>날짜를 푼 휴가 정보</H2>
             <ArraySheet>
-                {oneDayData()}
+                {newVacationArr().map((data, idx) => {
+                    return (
+                        <KidDiv key={idx}>
+                            <div>{data.title}</div>
+                            <div>{data.date}</div>
+                        </KidDiv>
+                    )
+
+                })}
             </ArraySheet>
+            <H2>데이터 검색</H2>
+            <input type="date" onChange={onChange} value={findDate}/>
+            <div>{findDate} 데이터 모으기</div>
+            <ArraySheet>
+                {oneDayDataMerge()}
+            </ArraySheet>
+            <div>{findDate} 데이터 펼치기</div>
+            <ArraySheet>
+                {oneDayDataSpread()}
+            </ArraySheet>
+            <div style={{marginTop:"60px"}}>.</div>
         </div>
     );
 }

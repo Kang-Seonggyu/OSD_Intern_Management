@@ -86,8 +86,7 @@ const TableBody = styled.div`
   display: flex;
   flex-direction: column;
   grid-auto-rows: minmax(10rem, auto);
-  width: 100%;
-  min-width: 90px;
+  min-width: 30px;
   max-width: 100%;
   height: auto;
   min-height: 90px;
@@ -114,18 +113,22 @@ const TableBody = styled.div`
   .birthday {
     background: ${palette.birth};
     width: 90%;
+    border-radius: 7px;
   }
   .vacation {
     background: ${palette.vaca};
     width: 90%;
+    border-radius: 7px;
   }
   .Event {
     background: ${palette.Event};
     width: 90%;
+    border-radius: 7px;
   }
   .others {
     background: ${palette.others};
     width: 90%;
+    border-radius: 7px;
   }
 `
 const EventDiv = styled.div`
@@ -147,7 +150,7 @@ function Calendar ({
                        loadingHoliday,
                        Holidays,
                        loadingEvents,
-                       vacation,
+                       newVacationList,
                        loadingVacation,
                        newEventList,
                        onEventClick,
@@ -247,13 +250,13 @@ function Calendar ({
     }
 
     const oneDayData = (eventDate) => {
-        if(!loadingVacation && vacation){
-            const oneDayFilter = vacation.filter(e => e.strdt === eventDate)
+        if(!loadingVacation && newVacationList){
+            const oneDayFilter = newVacationList.filter(e => e.date === eventDate)
             if(oneDayFilter.length > 1 ) {
-                return `${oneDayFilter[0].mnm}외 ${oneDayFilter.length-1}명`
+                return `${oneDayFilter[0].title}외 ${oneDayFilter.length-1}명`
             }
             else if (oneDayFilter.length === 1) {
-                return oneDayFilter[0].mnm
+                return oneDayFilter[0].title
             }
             else { return ''}
         }

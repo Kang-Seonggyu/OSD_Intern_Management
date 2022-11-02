@@ -33,7 +33,7 @@ function DASHBOARD ({
                         monthIncreaseButton,
                         Holidays,
                         newEventList,
-                        vacation,
+                        newVacationList,
                         loadingHoliday,
                         loadingEvents,
                         loadingVacation,
@@ -60,7 +60,7 @@ function DASHBOARD ({
                         monthIncreaseButton={monthIncreaseButton}
                         Holidays={Holidays}
                         newEventList={newEventList}
-                        vacation={vacation}
+                        newVacationList={newVacationList}
                         loadingHoliday={loadingHoliday}
                         loadingEvents={loadingEvents}
                         loadingVacation={loadingVacation}
