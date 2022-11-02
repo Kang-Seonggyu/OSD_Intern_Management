@@ -6,7 +6,7 @@ import {
     yearIncrease,
     yearDecrease,
     monthDecrease,
-    monthIncrease, getEvent,
+    monthIncrease, getEvent, getVacation,
 } from "../../modules/momenter";
 import { getHoliday } from "../../modules/momenter";
 import useActions from "../../library/useActions";
@@ -20,12 +20,14 @@ function DashboardContainer (props) {
         navigate('/calendar');
     };
 
-    const { momentValue, holiday, events, loadingHoliday, loadingEvents } = useSelector(state => ({
+    const { momentValue, holiday, events, vacation, loadingHoliday, loadingEvents, loadingVacation } = useSelector(state => ({
         momentValue : state.momenter.momentValue,
         holiday: state.momenter.holiday,
-        loadingHoliday: state.momenter.loading.GET_HOLIDAY,
         events : state.momenter.event,
+        vacation : state.momenter.vacation,
+        loadingHoliday: state.momenter.loading.GET_HOLIDAY,
         loadingEvents : state.momenter.loading.GET_EVENT,
+        loadingVacation : state.momenter.loading.GET_VACATION,
     }));
 
     const dispatch = useDispatch();
@@ -47,6 +49,7 @@ function DashboardContainer (props) {
     useEffect(() => {
         dispatch(getHoliday(momentValue));
         dispatch(getEvent(momentValue));
+        dispatch(getVacation(momentValue));
     }, [momentValue]);
 
 
@@ -87,10 +90,12 @@ function DashboardContainer (props) {
                 yearDecreaseButton={yearDecreaseButton}
                 monthIncreaseButton={monthIncreaseButton}
                 monthDecreaseButton={monthDecreaseButton}
-                loadingHoliday={loadingHoliday}
                 Holidays={holiday}
-                loadingEvents ={loadingEvents}
                 newEventList={newEventList}
+                vacation={vacation}
+                loadingHoliday={loadingHoliday}
+                loadingEvents ={loadingEvents}
+                loadingVacation={loadingVacation}
             />
         </>
     )

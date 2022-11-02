@@ -224,7 +224,7 @@ function Calendar ({
                     </span>
                 </span>
                 {!loadingVacation && dayClass !=="anotherMonth" ?
-                    <EventDiv className="vacation">휴가 !</EventDiv>
+                    <EventDiv className="vacation">{oneDayData(currentMoment.format('YYYY-MM-DD'))}</EventDiv>
                     :
                     ''
                 }
@@ -244,6 +244,19 @@ function Calendar ({
     const PostEventsList = ( eventDate, newEventList ) => {
         let foundEvents =  newEventList.filter(e => e.date === eventDate);
         return foundEvents;
+    }
+
+    const oneDayData = (eventDate) => {
+        if(!loadingVacation && vacation){
+            const oneDayFilter = vacation.filter(e => e.strdt === eventDate)
+            if(oneDayFilter.length > 1 ) {
+                return `${oneDayFilter[0].mnm}외 ${oneDayFilter.length-1}명`
+            }
+            else if (oneDayFilter.length === 1) {
+                return oneDayFilter[0].mnm
+            }
+            else { return ''}
+        }
     }
 
 

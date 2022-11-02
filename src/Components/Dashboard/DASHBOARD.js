@@ -24,16 +24,19 @@ const DashboardMain = styled.div`
 `
 
 
-function DASHBOARD ({ onClick,
+function DASHBOARD ({
+                        onClick,
                         momentValue,
                         yearIncreaseButton,
                         yearDecreaseButton,
                         monthDecreaseButton,
                         monthIncreaseButton,
-                        loadingHoliday,
                         Holidays,
+                        newEventList,
+                        vacation,
+                        loadingHoliday,
                         loadingEvents,
-                        newEventList
+                        loadingVacation,
     })  {
     // 임시로 배열 만들기.
     function makeArray () {
@@ -48,16 +51,19 @@ function DASHBOARD ({ onClick,
         <DashboardBlock>
             <DashboardMainBlock>
                 <DashboardMain>
-                    <DashCalendar onClick={onClick}
-                                  momentValue={momentValue}
-                                  yearIncreaseButton={yearIncreaseButton}
-                                  yearDecreaseButton={yearDecreaseButton}
-                                  monthDecreaseButton={monthDecreaseButton}
-                                  monthIncreaseButton={monthIncreaseButton}
-                                  loadingHoliday={loadingHoliday}
-                                  Holidays={Holidays}
-                                  loadingEvents={loadingEvents}
-                                  newEventList={newEventList}
+                    <DashCalendar
+                        onClick={onClick}
+                        momentValue={momentValue}
+                        yearIncreaseButton={yearIncreaseButton}
+                        yearDecreaseButton={yearDecreaseButton}
+                        monthDecreaseButton={monthDecreaseButton}
+                        monthIncreaseButton={monthIncreaseButton}
+                        Holidays={Holidays}
+                        newEventList={newEventList}
+                        vacation={vacation}
+                        loadingHoliday={loadingHoliday}
+                        loadingEvents={loadingEvents}
+                        loadingVacation={loadingVacation}
                     />
                 </DashboardMain>
                 <DashboardMain>
